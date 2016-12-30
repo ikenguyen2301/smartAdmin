@@ -1,0 +1,29 @@
+<div class="ajax-dropdown" ng-controller="ActivitiesCtrl as activitiesDropdown" >
+
+   <!--&lt;!&ndash; the ID links are fetched via AJAX to the ajax container "ajax-notifications" &ndash;&gt;-->
+   <!--<div class="btn-group btn-group-justified" data-toggle="buttons">-->
+      <!--<label class="btn btn-default" ng-class="{active : isActive(type.name)}" \-->
+               <!--ng-repeat="(key, type) in activities.types" ng-click="setTab(type.name)">-->
+         <!--<input type="radio" name="activity">-->
+         <!--{{type.title}} ({{type.length}}) -->
+      <!--</label>-->
+   <!--</div>-->
+
+   <!--&lt;!&ndash; notification content &ndash;&gt;-->
+   <!--<div class="ajax-notifications custom-scroll" ng-switch="activeTab">-->
+         <!--<div smart-include="app/dashboard/activities/tabs/tab-msgs.html" ng-switch-when="msgs"></div>-->
+         <!--<div smart-include="app/dashboard/activities/tabs/tab-notify.html" ng-switch-when="notify"></div>-->
+         <!--<div smart-include="app/dashboard/activities/tabs/tab-tasks.html" ng-switch-when="tasks"></div>-->
+         <!--<div smart-include="app/dashboard/activities/tabs/tab-default.html" ng-switch-when="default"></div>-->
+   <!--</div>-->
+   <!--&lt;!&ndash; end notification content &ndash;&gt;-->
+
+   <!--&lt;!&ndash; footer: refresh area &ndash;&gt;-->
+   <!--<span> Last updated on: {{activities.last_update}}-->
+      <!--<button type="button" data-loading-text="<i class='fa fa-refresh fa-spin'></i> Loading..." class="btn btn-xs btn-default pull-right">-->
+         <!--<i class="fa fa-refresh"></i>-->
+      <!--</button> -->
+      <!--</span>-->
+   <!--&lt;!&ndash; end footer &ndash;&gt;-->
+
+</div>
