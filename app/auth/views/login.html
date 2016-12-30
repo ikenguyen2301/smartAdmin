@@ -44,20 +44,21 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
                 <div class="well no-padding">
-                    <form id="login-form" class="smart-form client-form"  data-smart-validate-form>
+                    <form id="login-form" name="loginForm" class="smart-form client-form" method="post" ng-submit="login(loginForm)">
                         <header>
                             Sign In
                         </header>
                         <fieldset>
                             <section>
-                                <label class="label">E-mail</label>
+                                <label class="label">Username</label>
                                 <label class="input"> <i class="icon-append fa fa-user"></i>
-                                    <input type="email" name="email"
+                                    <input type="text" name="username"
                                            data-smart-validate-input
                                            data-required
                                            data-email
                                            data-message-required="Please enter your email address"
-                                           data-message-email="Please enter a VALID email address">
+                                           data-message-email="Please enter a VALID email address"
+                                           ng-model="credentials.username">
                                     <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i>
                                         Please enter email address/username</b></label>
                             </section>
@@ -69,7 +70,8 @@
                                           data-required
                                           data-minlength="3"
                                           data-maxnlength="20"
-                                          data-message="Please enter your email password">
+                                          data-message="Please enter your email password"
+                                          ng-model="credentials.pass">
                                     <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter
                                         your password</b> </label>
 
@@ -84,7 +86,7 @@
                             <!--</section>-->
                         </fieldset>
                         <footer>
-                            <button ng-click="login" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary">
                                 Sign in
                             </button>
                         </footer>

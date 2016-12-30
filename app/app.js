@@ -85,14 +85,26 @@ angular.module('app', [
 .constant('APP_CONFIG', window.appConfig)
 
 .run(function ($rootScope
-    , $state, $stateParams
+    , $state, $stateParams, AuthService
     ) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
 
-    if(!$rootScope.userLogin){
-        $state.go("login");
-    }
+    $rootScope.userLogin = AuthService.isAuthenticated();
+
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
+        var shouldLogin = toState.data && toState.data.requireLogin && !AuthService.isAuthenticated();
+
+        // NOT authenticated - wants any private stuff
+        if(shouldLogin)
+        {
+            $state.go('login');
+            event.preventDefault();
+            return;
+        }
+        
+        $rootScope.userLogin = AuthService.isAuthenticated();
+    });
     // editableOptions.theme = 'bs3';
 
 });

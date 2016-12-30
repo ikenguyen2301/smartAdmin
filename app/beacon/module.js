@@ -33,7 +33,8 @@ angular.module('app.beacon', [
                 }
             },
             data:{
-                title: 'Bulk Congifuration'
+                title: 'Bulk Congifuration',
+                requireLogin : true
             }
         })
         .state('app.beacon.detail', {
@@ -45,7 +46,8 @@ angular.module('app.beacon', [
                 }
             },
             data:{
-                title: 'Bulk Congifuration Detail'
+                title: 'Bulk Congifuration Detail',
+                requireLogin : true
             }
         });
 });
