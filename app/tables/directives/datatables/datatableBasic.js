@@ -84,7 +84,7 @@ angular.module('app.tables').directive('datatableBasic', function ($compile) {
             _dataTable =  element.DataTable(options);
 
             if(attributes.bindFilters){
-                element.parent().find("div.toolbar").html('<div class="text-right"><img src="styles/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+                element.parent().find("div.toolbar").html('<div class="text-right"><img src="styles/img/logo.png" alt="TransX" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
 
                 element.on( 'keyup change', 'thead th input[type=text]', function () {
 

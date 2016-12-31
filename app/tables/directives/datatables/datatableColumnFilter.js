@@ -57,7 +57,7 @@ angular.module('app.tables').directive('datatableColumnFilter', function () {
             });
 
             // custom toolbar
-            element.parent().find("div.toolbar").html('<div class="text-right"><img src="styles/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+            element.parent().find("div.toolbar").html('<div class="text-right"><img src="styles/img/logo.png" alt="TransX" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
 
             // Apply the filter
             element.on( 'keyup change', 'thead th input[type=text]', function () {
