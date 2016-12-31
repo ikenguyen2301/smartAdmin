@@ -17,7 +17,7 @@ angular.module('app.auth').factory('AuthService', function ($http, $window) {
                     username: 'humana01',
                     pass: 'humana01@transx',
                     name: 'TransX',
-                    picture: 'styles/img/avatars/1.png'
+                    picture: 'styles/img/avatars/4.png'
                 }
             ],
             isValid = false;

@@ -98,11 +98,12 @@ angular.module('app', [
         // NOT authenticated - wants any private stuff
         if(shouldLogin)
         {
-            $state.go('login');
+            $timeout(function () {
+                $state.go('login');
+            },200);
             event.preventDefault();
             return;
         }
-
         $rootScope.userLogin = AuthService.isAuthenticated();
     });
     // editableOptions.theme = 'bs3';
