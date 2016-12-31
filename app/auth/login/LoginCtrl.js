@@ -22,8 +22,8 @@ angular.module('app.auth').controller('LoginCtrl', function ($scope, $rootScope,
 
     $scope.login = function(loginForm){
         if(loginForm.$valid){
-            var isValid = AuthService.login($scope.credentials);
-            if(isValid){
+            $scope.isValid = AuthService.login($scope.credentials);
+            if($scope.isValid){
                 $state.go('app.beacon');
             } else {
                 alert('Wrong username or password.')
