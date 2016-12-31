@@ -1855,7 +1855,7 @@ $templateCache.put("app/dashboard/projects/recent-projects.tpl.html","<div class
 $templateCache.put("app/dashboard/todo/todo-widget.tpl.html","<div id=\"todo-widget\" jarvis-widget data-widget-editbutton=\"false\" data-widget-color=\"blue\"\r\n     ng-controller=\"TodoCtrl\">\r\n    <header>\r\n        <span class=\"widget-icon\"> <i class=\"fa fa-check txt-color-white\"></i> </span>\r\n\r\n        <h2> ToDo\'s </h2>\r\n\r\n        <div class=\"widget-toolbar\">\r\n            <!-- add: non-hidden - to disable auto hide -->\r\n            <button class=\"btn btn-xs btn-default\" ng-class=\"{active: newTodo}\" ng-click=\"toggleAdd()\"><i ng-class=\"{ \'fa fa-plus\': !newTodo, \'fa fa-times\': newTodo}\"></i> Add</button>\r\n\r\n        </div>\r\n    </header>\r\n    <!-- widget div-->\r\n    <div>\r\n        <div class=\"widget-body no-padding smart-form\">\r\n            <!-- content goes here -->\r\n            <div ng-show=\"newTodo\">\r\n                <h5 class=\"todo-group-title\"><i class=\"fa fa-plus-circle\"></i> New Todo</h5>\r\n\r\n                <form name=\"newTodoForm\" class=\"smart-form\">\r\n                    <fieldset>\r\n                        <section>\r\n                            <label class=\"input\">\r\n                                <input type=\"text\" required class=\"input-lg\" ng-model=\"newTodo.title\"\r\n                                       placeholder=\"What needs to be done?\">\r\n                            </label>\r\n                        </section>\r\n                        <section>\r\n                            <div class=\"col-xs-6\">\r\n                                <label class=\"select\">\r\n                                    <select class=\"input-sm\" ng-model=\"newTodo.state\"\r\n                                            ng-options=\"state as state for state in states\"></select> <i></i> </label>\r\n                            </div>\r\n                        </section>\r\n                    </fieldset>\r\n                    <footer>\r\n                        <button ng-disabled=\"newTodoForm.$invalid\" type=\"button\" class=\"btn btn-primary\"\r\n                                ng-click=\"createTodo()\">\r\n                            Add\r\n                        </button>\r\n                        <button type=\"button\" class=\"btn btn-default\" ng-click=\"toggleAdd()\">\r\n                            Cancel\r\n                        </button>\r\n                    </footer>\r\n                </form>\r\n            </div>\r\n\r\n            <todo-list state=\"Critical\"  title=\"Critical Tasks\" icon=\"warning\" todos=\"todos\"></todo-list>\r\n\r\n            <todo-list state=\"Important\" title=\"Important Tasks\" icon=\"exclamation\" todos=\"todos\"></todo-list>\r\n\r\n            <todo-list state=\"Completed\" title=\"Completed Tasks\" icon=\"check\" todos=\"todos\"></todo-list>\r\n\r\n            <!-- end content -->\r\n        </div>\r\n\r\n    </div>\r\n    <!-- end widget div -->\r\n</div>");
 $templateCache.put("app/layout/language/language-selector.tpl.html","<ul class=\"header-dropdown-list hidden-xs ng-cloak\" ng-controller=\"LanguagesCtrl\">\r\n    <li class=\"dropdown\" dropdown>\r\n        <a class=\"dropdown-toggle\"  data-toggle=\"dropdown\" href> <img src=\"styles/img/blank.gif\" class=\"flag flag-{{currentLanguage.key}}\" alt=\"{{currentLanguage.alt}}\"> <span> {{currentLanguage.title}} </span>\r\n            <i class=\"fa fa-angle-down\"></i> </a>\r\n        <ul class=\"dropdown-menu pull-right\">\r\n            <li ng-class=\"{active: language==currentLanguage}\" ng-repeat=\"language in languages\">\r\n                <a ng-click=\"selectLanguage(language)\" ><img src=\"styles/img/blank.gif\" class=\"flag flag-{{language.key}}\"\r\n                                                   alt=\"{{language.alt}}\"> {{language.title}}</a>\r\n            </li>\r\n        </ul>\r\n    </li>\r\n</ul>");
 $templateCache.put("app/layout/partials/footer.tpl.html","<div class=\"page-footer\">\r\n    <div class=\"row\">\r\n        <div class=\"col-xs-12 col-sm-6\">\r\n            <span class=\"txt-color-white\">TransX © 2014</span>\r\n        </div>\r\n\r\n        <div class=\"col-xs-6 col-sm-6 text-right hidden-xs\">\r\n            <div class=\"txt-color-white inline-block\">\r\n                <i class=\"txt-color-blueLight hidden-mobile\">Last account activity <i class=\"fa fa-clock-o\"></i>\r\n                    <strong>52 mins ago &nbsp;</strong> </i>\r\n\r\n                <div class=\"btn-group dropup\">\r\n                    <button class=\"btn btn-xs dropdown-toggle bg-color-blue txt-color-white\" data-toggle=\"dropdown\">\r\n                        <i class=\"fa fa-link\"></i> <span class=\"caret\"></span>\r\n                    </button>\r\n                    <ul class=\"dropdown-menu pull-right text-left\">\r\n                        <li>\r\n                            <div class=\"padding-5\">\r\n                                <p class=\"txt-color-darken font-sm no-margin\">Download Progress</p>\r\n\r\n                                <div class=\"progress progress-micro no-margin\">\r\n                                    <div class=\"progress-bar progress-bar-success\" style=\"width: 50%;\"></div>\r\n                                </div>\r\n                            </div>\r\n                        </li>\r\n                        <li class=\"divider\"></li>\r\n                        <li>\r\n                            <div class=\"padding-5\">\r\n                                <p class=\"txt-color-darken font-sm no-margin\">Server Load</p>\r\n\r\n                                <div class=\"progress progress-micro no-margin\">\r\n                                    <div class=\"progress-bar progress-bar-success\" style=\"width: 20%;\"></div>\r\n                                </div>\r\n                            </div>\r\n                        </li>\r\n                        <li class=\"divider\"></li>\r\n                        <li>\r\n                            <div class=\"padding-5\">\r\n                                <p class=\"txt-color-darken font-sm no-margin\">Memory Load <span class=\"text-danger\">*critical*</span>\r\n                                </p>\r\n\r\n                                <div class=\"progress progress-micro no-margin\">\r\n                                    <div class=\"progress-bar progress-bar-danger\" style=\"width: 70%;\"></div>\r\n                                </div>\r\n                            </div>\r\n                        </li>\r\n                        <li class=\"divider\"></li>\r\n                        <li>\r\n                            <div class=\"padding-5\">\r\n                                <button class=\"btn btn-block btn-default\">refresh</button>\r\n                            </div>\r\n                        </li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>");
-$templateCache.put("app/layout/partials/header.tpl.html","<header id=\"header\">\r\n<div id=\"logo-group\">\r\n\r\n    <!-- PLACE YOUR LOGO HERE -->\r\n    <span id=\"logo\"> <img src=\"styles/img/logo.png\" alt=\"SmartAdmin\"> </span>\r\n    <!-- END LOGO PLACEHOLDER -->\r\n\r\n    <!-- Note: The activity badge color changes when clicked and resets the number to 0\r\n    Suggestion: You may want to set a flag when this happens to tick off all checked messages / notifications -->\r\n    <!--<span id=\"activity\" class=\"activity-dropdown\" activities-dropdown-toggle> -->\r\n        <!--<i class=\"fa fa-user\"></i> -->\r\n        <!--<b class=\"badge bg-color-red\">21</b> -->\r\n    <!--</span>-->\r\n    <!--<div smart-include=\"app/dashboard/activities/activities.html\"></div>-->\r\n</div>\r\n\r\n\r\n<recent-projects></recent-projects>\r\n\r\n\r\n\r\n<!-- pulled right: nav area -->\r\n<div class=\"pull-right\">\r\n\r\n    <!-- collapse menu button -->\r\n    <div id=\"hide-menu\" class=\"btn-header pull-right\">\r\n        <span> <a toggle-menu title=\"Collapse Menu\"><i\r\n                class=\"fa fa-reorder\"></i></a> </span>\r\n    </div>\r\n    <!-- end collapse menu -->\r\n\r\n    <!-- #MOBILE -->\r\n    <!-- Top menu profile link : this shows only when top menu is active -->\r\n    <ul id=\"mobile-profile-img\" class=\"header-dropdown-list hidden-xs padding-5\">\r\n        <li class=\"\">\r\n            <a href=\"#\" class=\"dropdown-toggle no-margin userdropdown\" data-toggle=\"dropdown\">\r\n                <img src=\"styles/img/avatars/sunny.png\" alt=\"John Doe\" class=\"online\"/>\r\n            </a>\r\n            <ul class=\"dropdown-menu pull-right\">\r\n                <li>\r\n                    <a href-void class=\"padding-10 padding-top-0 padding-bottom-0\"><i\r\n                            class=\"fa fa-cog\"></i> Setting</a>\r\n                </li>\r\n                <li class=\"divider\"></li>\r\n                <li>\r\n                    <a ui-sref=\"app.appViews.profileDemo\" class=\"padding-10 padding-top-0 padding-bottom-0\"> <i class=\"fa fa-user\"></i>\r\n                        <u>P</u>rofile</a>\r\n                </li>\r\n                <li class=\"divider\"></li>\r\n                <li>\r\n                    <a href-void class=\"padding-10 padding-top-0 padding-bottom-0\"\r\n                       data-action=\"toggleShortcut\"><i class=\"fa fa-arrow-down\"></i> <u>S</u>hortcut</a>\r\n                </li>\r\n                <li class=\"divider\"></li>\r\n                <li>\r\n                    <a href-void class=\"padding-10 padding-top-0 padding-bottom-0\"\r\n                       data-action=\"launchFullscreen\"><i class=\"fa fa-arrows-alt\"></i> Full <u>S</u>creen</a>\r\n                </li>\r\n                <li class=\"divider\"></li>\r\n                <li>\r\n                    <a href=\"#/login\" class=\"padding-10 padding-top-5 padding-bottom-5\" data-action=\"userLogout\"><i\r\n                            class=\"fa fa-sign-out fa-lg\"></i> <strong><u>L</u>ogout</strong></a>\r\n                </li>\r\n            </ul>\r\n        </li>\r\n    </ul>\r\n\r\n    <!-- logout button -->\r\n    <div id=\"logout\" class=\"btn-header transparent pull-right\">\r\n        <span> <a ui-sref=\"login\" title=\"Sign Out\" data-action=\"userLogout\"\r\n                  data-logout-msg=\"You can improve your security further after logging out by closing this opened browser\"><i\r\n                class=\"fa fa-sign-out\"></i></a> </span>\r\n    </div>\r\n    <!-- end logout button -->\r\n\r\n    <!-- search mobile button (this is hidden till mobile view port) -->\r\n    <div id=\"search-mobile\" class=\"btn-header transparent pull-right\" data-search-mobile>\r\n        <span> <a href=\"#\" title=\"Search\"><i class=\"fa fa-search\"></i></a> </span>\r\n    </div>\r\n    <!-- end search mobile button -->\r\n\r\n    <!-- input: search field -->\r\n    <form action=\"#/search\" class=\"header-search pull-right\">\r\n        <input id=\"search-fld\" type=\"text\" name=\"param\" placeholder=\"Find reports and more\" data-autocomplete=\'[\r\n					\"ActionScript\",\r\n					\"AppleScript\",\r\n					\"Asp\",\r\n					\"BASIC\",\r\n					\"C\",\r\n					\"C++\",\r\n					\"Clojure\",\r\n					\"COBOL\",\r\n					\"ColdFusion\",\r\n					\"Erlang\",\r\n					\"Fortran\",\r\n					\"Groovy\",\r\n					\"Haskell\",\r\n					\"Java\",\r\n					\"JavaScript\",\r\n					\"Lisp\",\r\n					\"Perl\",\r\n					\"PHP\",\r\n					\"Python\",\r\n					\"Ruby\",\r\n					\"Scala\",\r\n					\"Scheme\"]\'>\r\n        <button type=\"submit\">\r\n            <i class=\"fa fa-search\"></i>\r\n        </button>\r\n        <a href=\"$\" id=\"cancel-search-js\" title=\"Cancel Search\"><i class=\"fa fa-times\"></i></a>\r\n    </form>\r\n    <!-- end input: search field -->\r\n\r\n    <!-- fullscreen button -->\r\n    <div id=\"fullscreen\" class=\"btn-header transparent pull-right\">\r\n        <span> <a full-screen title=\"Full Screen\"><i\r\n                class=\"fa fa-arrows-alt\"></i></a> </span>\r\n    </div>\r\n    <!-- end fullscreen button -->\r\n\r\n    <!-- #Voice Command: Start Speech -->\r\n    <div id=\"speech-btn\" class=\"btn-header transparent pull-right hidden-sm hidden-xs\">\r\n        <div>\r\n            <a title=\"Voice Command\" id=\"voice-command-btn\" speech-recognition><i class=\"fa fa-microphone\"></i></a>\r\n\r\n            <div class=\"popover bottom\">\r\n                <div class=\"arrow\"></div>\r\n                <div class=\"popover-content\">\r\n                    <h4 class=\"vc-title\">Voice command activated <br>\r\n                        <small>Please speak clearly into the mic</small>\r\n                    </h4>\r\n                    <h4 class=\"vc-title-error text-center\">\r\n                        <i class=\"fa fa-microphone-slash\"></i> Voice command failed\r\n                        <br>\r\n                        <small class=\"txt-color-red\">Must <strong>\"Allow\"</strong> Microphone</small>\r\n                        <br>\r\n                        <small class=\"txt-color-red\">Must have <strong>Internet Connection</strong></small>\r\n                    </h4>\r\n                    <a href-void class=\"btn btn-success\" id=\"speech-help-btn\">See Commands</a>\r\n                    <a href-void class=\"btn bg-color-purple txt-color-white\"\r\n                       onclick=\"$(\'#speech-btn .popover\').fadeOut(50);\">Close Popup</a>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <!-- end voice command -->\r\n\r\n\r\n\r\n    <!-- multiple lang dropdown : find all flags in the flags page -->\r\n    <language-selector></language-selector>\r\n    <!-- end multiple lang -->\r\n\r\n</div>\r\n<!-- end pulled right: nav area -->\r\n\r\n</header>");
+$templateCache.put("app/layout/partials/header.tpl.html","<header id=\"header\">\r\n<div id=\"logo-group\">\r\n\r\n    <!-- PLACE YOUR LOGO HERE -->\r\n    <span id=\"logo\"> <img src=\"styles/img/logo.png\" alt=\"SmartAdmin\"> </span>\r\n    <!-- END LOGO PLACEHOLDER -->\r\n\r\n    <!-- Note: The activity badge color changes when clicked and resets the number to 0\r\n    Suggestion: You may want to set a flag when this happens to tick off all checked messages / notifications -->\r\n    <!--<span id=\"activity\" class=\"activity-dropdown\" activities-dropdown-toggle> -->\r\n        <!--<i class=\"fa fa-user\"></i> -->\r\n        <!--<b class=\"badge bg-color-red\">21</b> -->\r\n    <!--</span>-->\r\n    <!--<div smart-include=\"app/dashboard/activities/activities.html\"></div>-->\r\n</div>\r\n\r\n\r\n<recent-projects></recent-projects>\r\n\r\n\r\n\r\n<!-- pulled right: nav area -->\r\n<div class=\"pull-right\">\r\n\r\n    <!-- collapse menu button -->\r\n    <div id=\"hide-menu\" class=\"btn-header pull-right\">\r\n        <span> <a toggle-menu title=\"Collapse Menu\"><i\r\n                class=\"fa fa-reorder\"></i></a> </span>\r\n    </div>\r\n    <!-- end collapse menu -->\r\n\r\n    <!-- #MOBILE -->\r\n    <!-- Top menu profile link : this shows only when top menu is active -->\r\n    <ul id=\"mobile-profile-img\" class=\"header-dropdown-list hidden-xs padding-5\">\r\n        <li class=\"\">\r\n            <a href=\"#\" class=\"dropdown-toggle no-margin userdropdown\" data-toggle=\"dropdown\">\r\n                <img src=\"styles/img/avatars/sunny.png\" alt=\"John Doe\" class=\"online\"/>\r\n            </a>\r\n            <ul class=\"dropdown-menu pull-right\">\r\n                <li>\r\n                    <a href-void class=\"padding-10 padding-top-0 padding-bottom-0\"><i\r\n                            class=\"fa fa-cog\"></i> Setting</a>\r\n                </li>\r\n                <li class=\"divider\"></li>\r\n                <li>\r\n                    <a ui-sref=\"app.appViews.profileDemo\" class=\"padding-10 padding-top-0 padding-bottom-0\"> <i class=\"fa fa-user\"></i>\r\n                        <u>P</u>rofile</a>\r\n                </li>\r\n                <li class=\"divider\"></li>\r\n                <li>\r\n                    <a href-void class=\"padding-10 padding-top-0 padding-bottom-0\"\r\n                       data-action=\"toggleShortcut\"><i class=\"fa fa-arrow-down\"></i> <u>S</u>hortcut</a>\r\n                </li>\r\n                <li class=\"divider\"></li>\r\n                <li>\r\n                    <a href-void class=\"padding-10 padding-top-0 padding-bottom-0\"\r\n                       data-action=\"launchFullscreen\"><i class=\"fa fa-arrows-alt\"></i> Full <u>S</u>creen</a>\r\n                </li>\r\n                <li class=\"divider\"></li>\r\n                <li>\r\n                    <a href=\"#/login\" class=\"padding-10 padding-top-5 padding-bottom-5\" data-action=\"userLogout\"><i\r\n                            class=\"fa fa-sign-out fa-lg\"></i> <strong><u>L</u>ogout</strong></a>\r\n                </li>\r\n            </ul>\r\n        </li>\r\n    </ul>\r\n\r\n    <!-- logout button -->\r\n    <div id=\"logout\" class=\"btn-header transparent pull-right\">\r\n        <span> <a ui-sref=\"login\" title=\"Sign Out\" data-action=\"userLogout\"\r\n                  data-logout-msg=\"You can improve your security further after logging out by closing this opened browser\"><i\r\n                class=\"fa fa-sign-out\"></i></a> </span>\r\n    </div>\r\n    <!-- end logout button -->\r\n\r\n    <!-- search mobile button (this is hidden till mobile view port) -->\r\n    <div id=\"search-mobile\" class=\"btn-header transparent pull-right\" data-search-mobile>\r\n        <span> <a href=\"#\" title=\"Search\"><i class=\"fa fa-search\"></i></a> </span>\r\n    </div>\r\n    <!-- end search mobile button -->\r\n\r\n    <!-- input: search field -->\r\n    <!--<form action=\"#/search\" class=\"header-search pull-right\">-->\r\n        <!--<input id=\"search-fld\" type=\"text\" name=\"param\" placeholder=\"Find reports and more\" data-autocomplete=\'[-->\r\n					<!--\"ActionScript\",-->\r\n					<!--\"AppleScript\",-->\r\n					<!--\"Asp\",-->\r\n					<!--\"BASIC\",-->\r\n					<!--\"C\",-->\r\n					<!--\"C++\",-->\r\n					<!--\"Clojure\",-->\r\n					<!--\"COBOL\",-->\r\n					<!--\"ColdFusion\",-->\r\n					<!--\"Erlang\",-->\r\n					<!--\"Fortran\",-->\r\n					<!--\"Groovy\",-->\r\n					<!--\"Haskell\",-->\r\n					<!--\"Java\",-->\r\n					<!--\"JavaScript\",-->\r\n					<!--\"Lisp\",-->\r\n					<!--\"Perl\",-->\r\n					<!--\"PHP\",-->\r\n					<!--\"Python\",-->\r\n					<!--\"Ruby\",-->\r\n					<!--\"Scala\",-->\r\n					<!--\"Scheme\"]\'>-->\r\n        <!--<button type=\"submit\">-->\r\n            <!--<i class=\"fa fa-search\"></i>-->\r\n        <!--</button>-->\r\n        <!--<a href=\"$\" id=\"cancel-search-js\" title=\"Cancel Search\"><i class=\"fa fa-times\"></i></a>-->\r\n    <!--</form>-->\r\n    <!-- end input: search field -->\r\n\r\n    <!-- fullscreen button -->\r\n    <div id=\"fullscreen\" class=\"btn-header transparent pull-right\">\r\n        <span> <a full-screen title=\"Full Screen\"><i\r\n                class=\"fa fa-arrows-alt\"></i></a> </span>\r\n    </div>\r\n    <!-- end fullscreen button -->\r\n\r\n    <!-- #Voice Command: Start Speech -->\r\n    <!--<div id=\"speech-btn\" class=\"btn-header transparent pull-right hidden-sm hidden-xs\">-->\r\n        <!--<div>-->\r\n            <!--<a title=\"Voice Command\" id=\"voice-command-btn\" speech-recognition><i class=\"fa fa-microphone\"></i></a>-->\r\n\r\n            <!--<div class=\"popover bottom\">-->\r\n                <!--<div class=\"arrow\"></div>-->\r\n                <!--<div class=\"popover-content\">-->\r\n                    <!--<h4 class=\"vc-title\">Voice command activated <br>-->\r\n                        <!--<small>Please speak clearly into the mic</small>-->\r\n                    <!--</h4>-->\r\n                    <!--<h4 class=\"vc-title-error text-center\">-->\r\n                        <!--<i class=\"fa fa-microphone-slash\"></i> Voice command failed-->\r\n                        <!--<br>-->\r\n                        <!--<small class=\"txt-color-red\">Must <strong>\"Allow\"</strong> Microphone</small>-->\r\n                        <!--<br>-->\r\n                        <!--<small class=\"txt-color-red\">Must have <strong>Internet Connection</strong></small>-->\r\n                    <!--</h4>-->\r\n                    <!--<a href-void class=\"btn btn-success\" id=\"speech-help-btn\">See Commands</a>-->\r\n                    <!--<a href-void class=\"btn bg-color-purple txt-color-white\"-->\r\n                       <!--onclick=\"$(\'#speech-btn .popover\').fadeOut(50);\">Close Popup</a>-->\r\n                <!--</div>-->\r\n            <!--</div>-->\r\n        <!--</div>-->\r\n    <!--</div>-->\r\n    <!-- end voice command -->\r\n\r\n\r\n\r\n    <!-- multiple lang dropdown : find all flags in the flags page -->\r\n    <!--<language-selector></language-selector>-->\r\n    <!-- end multiple lang -->\r\n\r\n</div>\r\n<!-- end pulled right: nav area -->\r\n\r\n</header>");
 $templateCache.put("app/layout/partials/navigation.tpl.html","<aside id=\"left-panel\">\r\n\r\n    <!-- User info -->\r\n    <div login-info></div>\r\n    <!-- end user info -->\r\n\r\n    <nav>\r\n        <!-- NOTE: Notice the gaps after each icon usage <i></i>..\r\n        Please note that these links work a bit different than\r\n        traditional href=\"\" links. See documentation for details.\r\n        -->\r\n\r\n        <ul data-smart-menu>\r\n            <li  data-ui-sref-active=\"active\">\r\n                <a data-ui-sref=\"app.beacon\" title=\"Bulk Configuration\"><i class=\"fa fa-lg fa-fw fa-home\"></i> <span\r\n                        class=\"menu-item-parent\">{{getWord(\'Bulk Configuration\')}}</span></a>\r\n            </li>\r\n\r\n            <!--<li data-menu-collapse class=\"top-menu-invisible\">-->\r\n                <!--<a href=\"#\"><i class=\"fa fa-lg fa-fw fa-cube txt-color-blue\"></i> <span class=\"menu-item-parent\">{{getWord(\'SmartAdmin Intel\')}}</span></a>-->\r\n                <!--<ul>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.smartAdmin.appLayouts\"><i class=\"fa fa-gear\"></i>-->\r\n                            <!--{{getWord(\'App Layouts\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.smartAdmin.prebuiltSkins\"><i class=\"fa fa-picture-o\"></i>-->\r\n                            <!--{{getWord(\'Prebuilt Skins\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--&lt;!&ndash;<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.smartAdmin.appLayout\"><i class=\"fa fa-cube\"></i> {{getWord(\'App Settings\')}}</a>-->\r\n                    <!--</li>&ndash;&gt;-->\r\n                <!--</ul>-->\r\n            <!--</li>-->\r\n\r\n            <!--<li data-ui-sref-active=\"active\">-->\r\n                <!--<a data-ui-sref=\"app.inbox.folder\" title=\"Outlook\">-->\r\n                    <!--<i class=\"fa fa-lg fa-fw fa-inbox\"></i> <span class=\"menu-item-parent\">{{getWord(\'Outlook\')}}</span><span-->\r\n                        <!--unread-messages-count class=\"badge pull-right inbox-badge\"></span></a>-->\r\n            <!--</li>-->\r\n\r\n            <!--<li data-menu-collapse>-->\r\n                <!--<a href=\"#\"><i class=\"fa fa-lg fa-fw fa-bar-chart-o\"></i> <span class=\"menu-item-parent\">{{getWord(\'Graphs\')}}</span></a>-->\r\n                <!--<ul>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.graphs.flot\">{{getWord(\'Flot Chart\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.graphs.morris\">{{getWord(\'Morris Charts\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.graphs.sparkline\">{{getWord(\'Sparkline\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.graphs.easyPieCharts\">{{getWord(\'Easy Pie Charts\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.graphs.dygraphs\">{{getWord(\'Dygraphs\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.graphs.chartjs\">Chart.js</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.graphs.highchartTables\">Highchart Tables <span-->\r\n                                <!--class=\"badge pull-right inbox-badge bg-color-yellow\">new</span></a>-->\r\n                    <!--</li>-->\r\n                <!--</ul>-->\r\n            <!--</li>-->\r\n\r\n            <!--<li data-menu-collapse>-->\r\n                <!--<a href=\"#\"><i class=\"fa fa-lg fa-fw fa-table\"></i> <span-->\r\n                        <!--class=\"menu-item-parent\">{{getWord(\'Tables\')}}</span></a>-->\r\n                <!--<ul>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.tables.normal\">{{getWord(\'Normal Tables\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.tables.datatables\">{{getWord(\'Data Tables\')}} <span-->\r\n                                <!--class=\"badge inbox-badge bg-color-greenLight\">v1.10</span></a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.tables.jqgrid\">{{getWord(\'Jquery Grid\')}}</a>-->\r\n                    <!--</li>-->\r\n                <!--</ul>-->\r\n            <!--</li>-->\r\n\r\n            <!--<li data-menu-collapse>-->\r\n                <!--<a href=\"#\"><i class=\"fa fa-lg fa-fw fa-pencil-square-o\"></i> <span class=\"menu-item-parent\">{{getWord(\'Forms\')}}</span></a>-->\r\n                <!--<ul>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.form.elements\">{{getWord(\'Smart Form Elements\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.form.layouts\">{{getWord(\'Smart Form Layouts\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.form.validation\">{{getWord(\'Smart Form Validation\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.form.bootstrapForms\">{{getWord(\'Bootstrap Form Elements\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.form.bootstrapValidation\">{{getWord(\'Bootstrap Form Validation\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.form.plugins\">{{getWord(\'Form Plugins\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.form.wizards\">{{getWord(\'Wizards\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.form.editors\">{{getWord(\'Bootstrap Editors\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.form.dropzone\">{{getWord(\'Dropzone\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.form.imageEditor\">{{getWord(\'Image Cropping\')}} <span-->\r\n                                <!--class=\"badge pull-right inbox-badge bg-color-yellow\">new</span></a>-->\r\n                    <!--</li>-->\r\n                <!--</ul>-->\r\n            <!--</li>-->\r\n\r\n            <!--<li data-menu-collapse>-->\r\n                <!--<a href=\"#\"><i class=\"fa fa-lg fa-fw fa-desktop\"></i> <span class=\"menu-item-parent\">{{getWord(\'UI Elements\')}}</span></a>-->\r\n                <!--<ul>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.ui.general\">{{getWord(\'General Elements\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.ui.buttons\">{{getWord(\'Buttons\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-menu-collapse>-->\r\n                        <!--<a href=\"#\">{{getWord(\'Icons\')}}</a>-->\r\n                        <!--<ul>-->\r\n                            <!--<li data-ui-sref-active=\"active\">-->\r\n                                <!--<a data-ui-sref=\"app.ui.iconsFa\"><i class=\"fa fa-plane\"></i> {{getWord(\'Font Awesome\')}}</a>-->\r\n                            <!--</li>-->\r\n                            <!--<li data-ui-sref-active=\"active\">-->\r\n                                <!--<a data-ui-sref=\"app.ui.iconsGlyph\"><i class=\"glyphicon glyphicon-plane\"></i>-->\r\n                                    <!--{{getWord(\'Glyph Icons\')}}</a>-->\r\n                            <!--</li>-->\r\n                            <!--<li data-ui-sref-active=\"active\">-->\r\n                                <!--<a data-ui-sref=\"app.ui.iconsFlags\"><i class=\"fa fa-flag\"></i> {{getWord(\'Flags\')}}</a>-->\r\n                            <!--</li>-->\r\n                        <!--</ul>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.ui.grid\">{{getWord(\'Grid\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.ui.treeView\">{{getWord(\'Tree View\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.ui.nestableLists\">{{getWord(\'Nestable Lists\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.ui.jqueryUi\">{{getWord(\'JQuery UI\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.ui.typography\">{{getWord(\'Typography\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-menu-collapse>-->\r\n                        <!--<a href=\"#\">{{getWord(\'Six Level Menu\')}}</a>-->\r\n                        <!--<ul>-->\r\n                            <!--<li data-menu-collapse>-->\r\n                                <!--<a href=\"#\"><i class=\"fa fa-fw fa-folder-open\"></i> {{getWord(\'Item #2\')}}</a>-->\r\n                                <!--<ul>-->\r\n                                    <!--<li data-menu-collapse>-->\r\n                                        <!--<a href=\"#\"><i class=\"fa fa-fw fa-folder-open\"></i> {{getWord(\'Sub #2.1\')}} </a>-->\r\n                                        <!--<ul>-->\r\n                                            <!--<li>-->\r\n                                                <!--<a href=\"#\"><i class=\"fa fa-fw fa-file-text\"></i> {{getWord(\'Item-->\r\n                                                    <!--#2.1.1\')}}</a>-->\r\n                                            <!--</li>-->\r\n                                            <!--<li data-menu-collapse>-->\r\n                                                <!--<a href=\"#\"><i class=\"fa fa-fw fa-plus\"></i>{{getWord(\'Expand\')}}</a>-->\r\n                                                <!--<ul>-->\r\n                                                    <!--<li>-->\r\n                                                        <!--<a href=\"#\"><i class=\"fa fa-fw fa-file-text\"></i>-->\r\n                                                            <!--{{getWord(\'File\')}}</a>-->\r\n                                                    <!--</li>-->\r\n                                                    <!--<li>-->\r\n                                                        <!--<a href=\"#\"><i class=\"fa fa-fw fa-trash-o\"></i>-->\r\n                                                            <!--{{getWord(\'Delete\')}}</a></li>-->\r\n                                                <!--</ul>-->\r\n                                            <!--</li>-->\r\n                                        <!--</ul>-->\r\n                                    <!--</li>-->\r\n                                <!--</ul>-->\r\n                            <!--</li>-->\r\n                            <!--<li data-menu-collapse>-->\r\n                                <!--<a href=\"#\"><i class=\"fa fa-fw fa-folder-open\"></i> {{getWord(\'Item #3\')}}</a>-->\r\n\r\n                                <!--<ul>-->\r\n                                    <!--<li data-menu-collapse>-->\r\n                                        <!--<a href=\"#\"><i class=\"fa fa-fw fa-folder-open\"></i> {{getWord(\'3ed Level\')}}-->\r\n                                        <!--</a>-->\r\n                                        <!--<ul>-->\r\n                                            <!--<li>-->\r\n                                                <!--<a href=\"#\"><i class=\"fa fa-fw fa-file-text\"></i>-->\r\n                                                    <!--{{getWord(\'File\')}}</a>-->\r\n                                            <!--</li>-->\r\n                                            <!--<li>-->\r\n                                                <!--<a href=\"#\"><i class=\"fa fa-fw fa-file-text\"></i>-->\r\n                                                    <!--{{getWord(\'File\')}}</a>-->\r\n                                            <!--</li>-->\r\n                                        <!--</ul>-->\r\n                                    <!--</li>-->\r\n                                <!--</ul>-->\r\n\r\n                            <!--</li>-->\r\n                        <!--</ul>-->\r\n                    <!--</li>-->\r\n                <!--</ul>-->\r\n            <!--</li>-->\r\n\r\n\r\n            <!--<li data-ui-sref-active=\"active\">-->\r\n                <!--<a data-ui-sref=\"app.widgets\" title=\"Widgets\"><i class=\"fa fa-lg fa-fw fa-list-alt\"></i><span-->\r\n                        <!--class=\"menu-item-parent\">{{getWord(\'Widgets\')}}</span></a>-->\r\n            <!--</li>-->\r\n\r\n\r\n\r\n            <!--<li data-menu-collapse>-->\r\n                <!--<a href=\"#\">-->\r\n                    <!--<i class=\"fa fa-lg fa-fw fa-cloud\"><em>3</em></i> <span class=\"menu-item-parent\">{{getWord(\'Cool Features\')}}</span></a>-->\r\n                <!--<ul>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.calendar\" title=\"Calendar\"><i-->\r\n                                <!--class=\"fa fa-lg fa-fw fa-calendar\"></i> <span-->\r\n                                <!--class=\"menu-item-parent\">{{getWord(\'Calendar\')}}</span></a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.maps\"><i class=\"fa fa-lg fa-fw fa-map-marker\"></i> <span class=\"menu-item-parent\">{{getWord(\'GMap Skins\')}}</span><span-->\r\n                                <!--class=\"badge bg-color-greenLight pull-right inbox-badge\">9</span></a>-->\r\n                    <!--</li>-->\r\n                <!--</ul>-->\r\n            <!--</li>-->\r\n\r\n            <!--<li data-menu-collapse>-->\r\n                <!--<a href=\"#\">-->\r\n                    <!--<i class=\"fa fa-lg fa-fw fa-puzzle-piece\"></i> <span class=\"menu-item-parent\">{{getWord(\'App Views\')}}</span></a>-->\r\n                <!--<ul>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.appViews.projects\"><i class=\"fa fa-file-text-o\"></i>-->\r\n                            <!--{{getWord(\'Projects\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.appViews.blogDemo\"><i class=\"fa fa-paragraph\"></i> {{getWord(\'Blog\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.appViews.galleryDemo\"><i class=\"fa fa-picture-o\"></i>-->\r\n                            <!--{{getWord(\'Gallery\')}}</a>-->\r\n                    <!--</li>-->\r\n\r\n                    <!--<li data-menu-collapse>-->\r\n                        <!--<a href=\"#\"><i class=\"fa fa-comments\"></i> {{getWord(\'Forum Layout\')}}</a>-->\r\n                        <!--<ul>-->\r\n                            <!--<li data-ui-sref-active=\"active\">-->\r\n                                <!--<a data-ui-sref=\"app.appViews.forumDemo\"><i class=\"fa fa-picture-o\"></i>-->\r\n                                    <!--{{getWord(\'General View\')}}</a>-->\r\n                            <!--</li>-->\r\n                            <!--<li data-ui-sref-active=\"active\">-->\r\n                                <!--<a data-ui-sref=\"app.appViews.forumTopicDemo\"><i class=\"fa fa-picture-o\"></i>-->\r\n                                    <!--{{getWord(\'Topic View\')}}</a>-->\r\n                            <!--</li>-->\r\n                            <!--<li data-ui-sref-active=\"active\">-->\r\n                                <!--<a data-ui-sref=\"app.appViews.forumPostDemo\"><i class=\"fa fa-picture-o\"></i>-->\r\n                                    <!--{{getWord(\'Post View\')}}</a>-->\r\n                            <!--</li>-->\r\n                        <!--</ul>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.appViews.profileDemo\"><i class=\"fa fa-group\"></i>-->\r\n                            <!--{{getWord(\'Profile\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.appViews.timelineDemo\"><i class=\"fa fa-clock-o\"></i>-->\r\n                            <!--{{getWord(\'Timeline\')}}</a>-->\r\n                    <!--</li>-->\r\n                <!--</ul>-->\r\n            <!--</li>-->\r\n\r\n            <!--<li data-menu-collapse>-->\r\n                <!--<a href=\"#\">-->\r\n                    <!--<i class=\"fa fa-lg fa-fw fa-shopping-cart\"></i> <span class=\"menu-item-parent\">{{getWord(\'E-Commerce\')}}</span></a>-->\r\n                <!--<ul>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.eCommerce.orders\" title=\"Orders\"> {{getWord(\'Orders\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.eCommerce.products\" title=\"Products View\"> {{getWord(\'Products View\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.eCommerce.detail\" title=\"Products Detail\"> {{getWord(\'Products Detail\')}}</a>-->\r\n                    <!--</li>-->\r\n                <!--</ul>-->\r\n            <!--</li>-->\r\n\r\n            <!--<li data-menu-collapse>-->\r\n                <!--<a href=\"#\"><i class=\"fa fa-lg fa-fw fa-windows\"></i> <span class=\"menu-item-parent\">{{getWord(\'Miscellaneous\')}}</span></a>-->\r\n                <!--<ul>-->\r\n                    <!--<li>-->\r\n                        <!--<a href=\"http://bootstraphunter.com/smartadmin-landing/\" target=\"_blank\">{{getWord(\'Landing-->\r\n                            <!--Page\')}} <i class=\"fa fa-external-link\"></i></a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.misc.pricingTable\">{{getWord(\'Pricing Tables\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.misc.invoice\">{{getWord(\'Invoice\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"login\">{{getWord(\'Login\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"register\">{{getWord(\'Register\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"lock\">{{getWord(\'Locked Screen\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.misc.error404\">{{getWord(\'Error 404\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.misc.error500\">{{getWord(\'Error 500\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.misc.blank\">{{getWord(\'Blank Page\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.misc.emailTemplate\">{{getWord(\'Email Template\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.misc.search\">{{getWord(\'Search Page\')}}</a>-->\r\n                    <!--</li>-->\r\n                    <!--<li data-ui-sref-active=\"active\">-->\r\n                        <!--<a data-ui-sref=\"app.misc.ckeditor\">{{getWord(\'CK Editor\')}}</a>-->\r\n                    <!--</li>-->\r\n                <!--</ul>-->\r\n            <!--</li>-->\r\n\r\n            <!--<li data-menu-collapse class=\"chat-users top-menu-invisible\">-->\r\n                <!--<a href=\"#\"><i class=\"fa fa-lg fa-fw fa-comment-o\"><em class=\"bg-color-pink flash animated\">!</em></i>-->\r\n                    <!--<span class=\"menu-item-parent\">{{getWord(\'Smart Chat API\')}} <sup>{{getWord(\'beta\')}}</sup></span></a>-->\r\n                <!--<div aside-chat-widget></div>-->\r\n            <!--</li>-->\r\n        </ul>\r\n\r\n        <!-- NOTE: This allows you to pull menu items from server -->\r\n        <!-- <ul data-smart-menu-items=\"/api/menu-items.json\"></ul> -->\r\n    </nav>\r\n\r\n  <span class=\"minifyme\" data-action=\"minifyMenu\" minify-menu>\r\n    <i class=\"fa fa-arrow-circle-left hit\"></i>\r\n  </span>\r\n\r\n</aside>");
 $templateCache.put("app/layout/partials/sub-header.tpl.html","<div class=\"col-xs-12 col-sm-5 col-md-5 col-lg-8\" data-sparkline-container>\r\n    <ul id=\"sparks\" class=\"\">\r\n        <li class=\"sparks-info\">\r\n            <h5> My Income <span class=\"txt-color-blue\">$47,171</span></h5>\r\n            <div class=\"sparkline txt-color-blue hidden-mobile hidden-md hidden-sm\">\r\n                1300, 1877, 2500, 2577, 2000, 2100, 3000, 2700, 3631, 2471, 2700, 3631, 2471\r\n            </div>\r\n        </li>\r\n        <li class=\"sparks-info\">\r\n            <h5> Site Traffic <span class=\"txt-color-purple\"><i class=\"fa fa-arrow-circle-up\"></i>&nbsp;45%</span></h5>\r\n            <div class=\"sparkline txt-color-purple hidden-mobile hidden-md hidden-sm\">\r\n                110,150,300,130,400,240,220,310,220,300, 270, 210\r\n            </div>\r\n        </li>\r\n        <li class=\"sparks-info\">\r\n            <h5> Site Orders <span class=\"txt-color-greenDark\"><i class=\"fa fa-shopping-cart\"></i>&nbsp;2447</span></h5>\r\n            <div class=\"sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm\">\r\n                110,150,300,130,400,240,220,310,220,300, 270, 210\r\n            </div>\r\n        </li>\r\n    </ul>\r\n</div>\r\n			");
 $templateCache.put("app/layout/partials/voice-commands.tpl.html","<!-- TRIGGER BUTTON:\r\n<a href=\"/my-ajax-page.html\" data-toggle=\"modal\" data-target=\"#remoteModal\" class=\"btn btn-default\">Open Modal</a>  -->\r\n\r\n<!-- MODAL PLACE HOLDER\r\n<div class=\"modal fade\" id=\"remoteModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"remoteModalLabel\" aria-hidden=\"true\">\r\n<div class=\"modal-dialog\">\r\n<div class=\"modal-content\"></div>\r\n</div>\r\n</div>   -->\r\n<!--////////////////////////////////////-->\r\n\r\n<!--<div class=\"modal-header\">\r\n<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">\r\n&times;\r\n</button>\r\n<h4 class=\"modal-title\" id=\"myModalLabel\">Command List</h4>\r\n</div>-->\r\n<div class=\"modal-body\">\r\n\r\n	<h1><i class=\"fa fa-microphone text-muted\"></i>&nbsp;&nbsp; SmartAdmin Voice Command</h1>\r\n	<hr class=\"simple\">\r\n	<h5>Instruction</h5>\r\n\r\n	Click <span class=\"text-success\">\"Allow\"</span> to access your microphone and activate Voice Command.\r\n	You will notice a <span class=\"text-primary\"><strong>BLUE</strong> Flash</span> on the microphone icon indicating activation.\r\n	The icon will appear <span class=\"text-danger\"><strong>RED</strong></span> <span class=\"label label-danger\"><i class=\"fa fa-microphone fa-lg\"></i></span> if you <span class=\"text-danger\">\"Deny\"</span> access or don\'t have any microphone installed.\r\n	<br>\r\n	<br>\r\n	As a security precaution, your browser will disconnect the microphone every 60 to 120 seconds (sooner if not being used). In which case Voice Command will prompt you again to <span class=\"text-success\">\"Allow\"</span> or <span class=\"text-danger\">\"Deny\"</span> access to your microphone.\r\n	<br>\r\n	<br>\r\n	If you host your page over <strong>http<span class=\"text-success\">s</span></strong> (secure socket layer) protocol you can wave this security measure and have an unintrupted Voice Command.\r\n	<br>\r\n	<br>\r\n	<h5>Commands</h5>\r\n	<ul>\r\n		<li>\r\n			<strong>\'show\' </strong> then say the <strong>*page*</strong> you want to go to. For example <strong>\"show inbox\"</strong> or <strong>\"show calendar\"</strong>\r\n		</li>\r\n		<li>\r\n			<strong>\'mute\' </strong> - mutes all sound effects for the theme.\r\n		</li>\r\n		<li>\r\n			<strong>\'sound on\'</strong> - unmutes all sound effects for the theme.\r\n		</li>\r\n		<li>\r\n			<span class=\"text-danger\"><strong>\'stop\'</strong></span> - deactivates voice command.\r\n		</li>\r\n		<li>\r\n			<span class=\"text-primary\"><strong>\'help\'</strong></span> - brings up the command list\r\n		</li>\r\n		<li>\r\n			<span class=\"text-danger\"><strong>\'got it\'</strong></span> - closes help modal\r\n		</li>\r\n		<li>\r\n			<strong>\'hide navigation\'</strong> - toggle navigation collapse\r\n		</li>\r\n		<li>\r\n			<strong>\'show navigation\'</strong> - toggle navigation to open (can be used again to close)\r\n		</li>\r\n		<li>\r\n			<strong>\'scroll up\'</strong> - scrolls to the top of the page\r\n		</li>\r\n		<li>\r\n			<strong>\'scroll down\'</strong> - scrollts to the bottom of the page\r\n		</li>\r\n		<li>\r\n			<strong>\'go back\' </strong> - goes back in history (history -1 click)\r\n		</li>\r\n		<li>\r\n			<strong>\'logout\'</strong> - logs you out\r\n		</li>\r\n	</ul>\r\n	<br>\r\n	<h5>Adding your own commands</h5>\r\n	Voice Command supports up to 80 languages. Adding your own commands is extreamly easy. All commands are stored inside <strong>app.config.js</strong> file under the <code>var commands = {...}</code>. \r\n\r\n	<hr class=\"simple\">\r\n	<div class=\"text-right\">\r\n		<button type=\"button\" class=\"btn btn-success btn-lg\" data-dismiss=\"modal\">\r\n			Got it!\r\n		</button>\r\n	</div>\r\n\r\n</div>\r\n<!--<div class=\"modal-footer\">\r\n<button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">Got it!</button>\r\n</div> -->");
@@ -10303,196 +10303,6 @@ angular.module('SmartAdmin.Forms').directive('bootstrapTogglingForm', function()
 });
 'use strict';
 
-angular.module('SmartAdmin.Forms').directive('smartJcrop', function ($q) {
-    return {
-        restrict: 'A',
-        scope: {
-            coords: '=',
-            options: '=',
-            selection: '='
-        },
-        link: function (scope, element, attributes) {
-            var jcropApi, imageWidth, imageHeight, imageLoaded = $q.defer();
-
-            var listeners = {
-                onSelectHandlers: [],
-                onChangeHandlers: [],
-                onSelect: function (c) {
-                    angular.forEach(listeners.onSelectHandlers, function (handler) {
-                        handler.call(jcropApi, c)
-                    })
-                },
-                onChange: function (c) {
-                    angular.forEach(listeners.onChangeHandlers, function (handler) {
-                        handler.call(jcropApi, c)
-                    })
-                }
-            };
-
-            if (attributes.coords) {
-                var coordsUpdate = function (c) {
-                    scope.$apply(function () {
-                        scope.coords = c;
-                    });
-                };
-                listeners.onSelectHandlers.push(coordsUpdate);
-                listeners.onChangeHandlers.push(coordsUpdate);
-            }
-
-            var $previewPane = $(attributes.smartJcropPreview),
-                $previewContainer = $previewPane.find('.preview-container'),
-                $previewImg = $previewPane.find('img');
-
-            if ($previewPane.length && $previewImg.length) {
-                var previewUpdate = function (coords) {
-                    if (parseInt(coords.w) > 0) {
-                        var rx = $previewContainer.width() / coords.w;
-                        var ry = $previewContainer.height() / coords.h;
-
-                        $previewImg.css({
-                            width: Math.round(rx * imageWidth) + 'px',
-                            height: Math.round(ry * imageHeight) + 'px',
-                            marginLeft: '-' + Math.round(rx * coords.x) + 'px',
-                            marginTop: '-' + Math.round(ry * coords.y) + 'px'
-                        });
-                    }
-                };
-                listeners.onSelectHandlers.push(previewUpdate);
-                listeners.onChangeHandlers.push(previewUpdate);
-            }
-
-
-            var options = {
-                onSelect: listeners.onSelect,
-                onChange: listeners.onChange
-            };
-
-            if ($previewContainer.length) {
-                options.aspectRatio = $previewContainer.width() / $previewContainer.height()
-            }
-
-            if (attributes.selection) {
-                scope.$watch('selection', function (newVal, oldVal) {
-                    if (newVal != oldVal) {
-                        var rectangle = newVal == 'release' ? [imageWidth / 2, imageHeight / 2, imageWidth / 2, imageHeight / 2] : newVal;
-
-                        var callback = newVal == 'release' ? function () {
-                            jcropApi.release();
-                        } : angular.noop;
-
-                        imageLoaded.promise.then(function () {
-                            if (scope.options && scope.options.animate) {
-                                jcropApi.animateTo(rectangle, callback);
-                            } else {
-                                jcropApi.setSelect(rectangle);
-                            }
-                        });
-                    }
-                });
-            }
-
-            if (attributes.options) {
-
-                var optionNames = [
-                    'bgOpacity', 'bgColor', 'bgFade', 'shade', 'outerImage',
-                    'allowSelect', 'allowMove', 'allowResize',
-                    'aspectRatio'
-                ];
-
-                angular.forEach(optionNames, function (name) {
-                    if (scope.options[name])
-                        options[name] = scope.options[name]
-
-                    scope.$watch('options.' + name, function (newVal, oldVal) {
-                        if (newVal != oldVal) {
-                            imageLoaded.promise.then(function () {
-                                var update = {};
-                                update[name] = newVal;
-                                jcropApi.setOptions(update);
-                            });
-                        }
-                    });
-
-                });
-
-
-                scope.$watch('options.disabled', function (newVal, oldVal) {
-                    if (newVal != oldVal) {
-                        if (newVal) {
-                            jcropApi.disable();
-                        } else {
-                            jcropApi.enable();
-                        }
-                    }
-                });
-
-                scope.$watch('options.destroyed', function (newVal, oldVal) {
-                    if (newVal != oldVal) {
-                        if (newVal) {
-                            jcropApi.destroy();
-                        } else {
-                            _init();
-                        }
-                    }
-                });
-
-                scope.$watch('options.src', function (newVal, oldVal) {
-                    imageLoaded = $q.defer();
-                    if (newVal != oldVal) {
-                        jcropApi.setImage(scope.options.src, function () {
-                            imageLoaded.resolve();
-                        });
-                    }
-                });
-
-                var updateSize = function(){
-                    jcropApi.setOptions({
-                        minSize: [scope.options.minSizeWidth, scope.options.minSizeHeight],
-                        maxSize: [scope.options.maxSizeWidth, scope.options.maxSizeHeight]
-                    });
-                };
-
-                scope.$watch('options.minSizeWidth', function (newVal, oldVal) {
-                    if (newVal != oldVal) updateSize();
-                });
-                scope.$watch('options.minSizeHeight', function (newVal, oldVal) {
-                    if (newVal != oldVal) updateSize();
-                });
-                scope.$watch('options.maxSizeWidth', function (newVal, oldVal) {
-                    if (newVal != oldVal) updateSize();
-                });
-                scope.$watch('options.maxSizeHeight', function (newVal, oldVal) {
-                    if (newVal != oldVal) updateSize();
-                });
-            }
-
-            var _init = function () {
-                element.Jcrop(options, function () {
-                    jcropApi = this;
-                    // Use the API to get the real image size
-                    var bounds = this.getBounds();
-                    imageWidth = bounds[0];
-                    imageHeight = bounds[1];
-
-                    if (attributes.selection && angular.isArray(scope.selection)) {
-                        if (scope.options && scope.options.animate) {
-                            jcropApi.animateTo(scope.selection);
-                        } else {
-                            jcropApi.setSelect(scope.selection);
-                        }
-                    }
-                    imageLoaded.resolve();
-                });
-            };
-
-            _init()
-
-
-        }
-    }
-});
-'use strict';
-
 angular.module('SmartAdmin.Forms').directive('smartCkEditor', function () {
     return {
         restrict: 'A',
@@ -10990,6 +10800,196 @@ angular.module('SmartAdmin.Forms').directive('smartReviewForm', function (formsC
 
                 }, formsCommon.validateOptions));
             });
+        }
+    }
+});
+'use strict';
+
+angular.module('SmartAdmin.Forms').directive('smartJcrop', function ($q) {
+    return {
+        restrict: 'A',
+        scope: {
+            coords: '=',
+            options: '=',
+            selection: '='
+        },
+        link: function (scope, element, attributes) {
+            var jcropApi, imageWidth, imageHeight, imageLoaded = $q.defer();
+
+            var listeners = {
+                onSelectHandlers: [],
+                onChangeHandlers: [],
+                onSelect: function (c) {
+                    angular.forEach(listeners.onSelectHandlers, function (handler) {
+                        handler.call(jcropApi, c)
+                    })
+                },
+                onChange: function (c) {
+                    angular.forEach(listeners.onChangeHandlers, function (handler) {
+                        handler.call(jcropApi, c)
+                    })
+                }
+            };
+
+            if (attributes.coords) {
+                var coordsUpdate = function (c) {
+                    scope.$apply(function () {
+                        scope.coords = c;
+                    });
+                };
+                listeners.onSelectHandlers.push(coordsUpdate);
+                listeners.onChangeHandlers.push(coordsUpdate);
+            }
+
+            var $previewPane = $(attributes.smartJcropPreview),
+                $previewContainer = $previewPane.find('.preview-container'),
+                $previewImg = $previewPane.find('img');
+
+            if ($previewPane.length && $previewImg.length) {
+                var previewUpdate = function (coords) {
+                    if (parseInt(coords.w) > 0) {
+                        var rx = $previewContainer.width() / coords.w;
+                        var ry = $previewContainer.height() / coords.h;
+
+                        $previewImg.css({
+                            width: Math.round(rx * imageWidth) + 'px',
+                            height: Math.round(ry * imageHeight) + 'px',
+                            marginLeft: '-' + Math.round(rx * coords.x) + 'px',
+                            marginTop: '-' + Math.round(ry * coords.y) + 'px'
+                        });
+                    }
+                };
+                listeners.onSelectHandlers.push(previewUpdate);
+                listeners.onChangeHandlers.push(previewUpdate);
+            }
+
+
+            var options = {
+                onSelect: listeners.onSelect,
+                onChange: listeners.onChange
+            };
+
+            if ($previewContainer.length) {
+                options.aspectRatio = $previewContainer.width() / $previewContainer.height()
+            }
+
+            if (attributes.selection) {
+                scope.$watch('selection', function (newVal, oldVal) {
+                    if (newVal != oldVal) {
+                        var rectangle = newVal == 'release' ? [imageWidth / 2, imageHeight / 2, imageWidth / 2, imageHeight / 2] : newVal;
+
+                        var callback = newVal == 'release' ? function () {
+                            jcropApi.release();
+                        } : angular.noop;
+
+                        imageLoaded.promise.then(function () {
+                            if (scope.options && scope.options.animate) {
+                                jcropApi.animateTo(rectangle, callback);
+                            } else {
+                                jcropApi.setSelect(rectangle);
+                            }
+                        });
+                    }
+                });
+            }
+
+            if (attributes.options) {
+
+                var optionNames = [
+                    'bgOpacity', 'bgColor', 'bgFade', 'shade', 'outerImage',
+                    'allowSelect', 'allowMove', 'allowResize',
+                    'aspectRatio'
+                ];
+
+                angular.forEach(optionNames, function (name) {
+                    if (scope.options[name])
+                        options[name] = scope.options[name]
+
+                    scope.$watch('options.' + name, function (newVal, oldVal) {
+                        if (newVal != oldVal) {
+                            imageLoaded.promise.then(function () {
+                                var update = {};
+                                update[name] = newVal;
+                                jcropApi.setOptions(update);
+                            });
+                        }
+                    });
+
+                });
+
+
+                scope.$watch('options.disabled', function (newVal, oldVal) {
+                    if (newVal != oldVal) {
+                        if (newVal) {
+                            jcropApi.disable();
+                        } else {
+                            jcropApi.enable();
+                        }
+                    }
+                });
+
+                scope.$watch('options.destroyed', function (newVal, oldVal) {
+                    if (newVal != oldVal) {
+                        if (newVal) {
+                            jcropApi.destroy();
+                        } else {
+                            _init();
+                        }
+                    }
+                });
+
+                scope.$watch('options.src', function (newVal, oldVal) {
+                    imageLoaded = $q.defer();
+                    if (newVal != oldVal) {
+                        jcropApi.setImage(scope.options.src, function () {
+                            imageLoaded.resolve();
+                        });
+                    }
+                });
+
+                var updateSize = function(){
+                    jcropApi.setOptions({
+                        minSize: [scope.options.minSizeWidth, scope.options.minSizeHeight],
+                        maxSize: [scope.options.maxSizeWidth, scope.options.maxSizeHeight]
+                    });
+                };
+
+                scope.$watch('options.minSizeWidth', function (newVal, oldVal) {
+                    if (newVal != oldVal) updateSize();
+                });
+                scope.$watch('options.minSizeHeight', function (newVal, oldVal) {
+                    if (newVal != oldVal) updateSize();
+                });
+                scope.$watch('options.maxSizeWidth', function (newVal, oldVal) {
+                    if (newVal != oldVal) updateSize();
+                });
+                scope.$watch('options.maxSizeHeight', function (newVal, oldVal) {
+                    if (newVal != oldVal) updateSize();
+                });
+            }
+
+            var _init = function () {
+                element.Jcrop(options, function () {
+                    jcropApi = this;
+                    // Use the API to get the real image size
+                    var bounds = this.getBounds();
+                    imageWidth = bounds[0];
+                    imageHeight = bounds[1];
+
+                    if (attributes.selection && angular.isArray(scope.selection)) {
+                        if (scope.options && scope.options.animate) {
+                            jcropApi.animateTo(scope.selection);
+                        } else {
+                            jcropApi.setSelect(scope.selection);
+                        }
+                    }
+                    imageLoaded.resolve();
+                });
+            };
+
+            _init()
+
+
         }
     }
 });
