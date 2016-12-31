@@ -85,7 +85,7 @@ angular.module('app', [
 .constant('APP_CONFIG', window.appConfig)
 
 .run(function ($rootScope
-    , $state, $stateParams, AuthService
+    , $state, $stateParams, $timeout, AuthService
     ) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;

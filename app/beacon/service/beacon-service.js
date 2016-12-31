@@ -1,16 +1,20 @@
 "use strict";
 
 angular.module('app').factory('beaconService', function($http, $log, APP_CONFIG, $rootScope) {
-	var config = {
-		headers: {
-			'username': $rootScope.userLogin.username,
-			'Content-Type': 'application/json'
-		}
-	};
+	function getHttpConfig() {
+		var config = {
+			headers: {
+				'Content-Type': 'application/json',
+				'username': $rootScope.userLogin.username
+			}
+		};
+
+		return config;
+	}
 
 	function getAllBulkconfiguration(callback){
 
-		$http.get(APP_CONFIG.serverUrl + 'bulkconfiguration/all',config).success(function(data){
+		$http.get(APP_CONFIG.serverUrl + 'bulkconfiguration/all', getHttpConfig()).success(function(data){
 			callback(data);
 		}).error(function(){
 			$log.log('Error');
@@ -18,7 +22,8 @@ angular.module('app').factory('beaconService', function($http, $log, APP_CONFIG,
 		});
 	}
 	function getBulkconfigurationById(id,callback){
-		$http.get(APP_CONFIG.serverUrl + 'bulkconfiguration/'+ id, config).success(function(data){
+		config.headers.username = $rootScope.userLogin.username;
+		$http.get(APP_CONFIG.serverUrl + 'bulkconfiguration/'+ id, getHttpConfig()).success(function(data){
 			callback(data);
 		}).error(function(){
 			$log.log('Error');
@@ -26,7 +31,7 @@ angular.module('app').factory('beaconService', function($http, $log, APP_CONFIG,
 		});
 	}
 	function createNewBulk(data,callback){
-		$http.post(APP_CONFIG.serverUrl + 'bulkconfiguration/', data, config).success(function(data){
+		$http.post(APP_CONFIG.serverUrl + 'bulkconfiguration/', data, getHttpConfig()).success(function(data){
 			callback(data);
 		}).error(function(){
 			$log.log('Error');
@@ -34,7 +39,7 @@ angular.module('app').factory('beaconService', function($http, $log, APP_CONFIG,
 		});
 	}
 	function updateBulk(data,callback){
-		$http.put(APP_CONFIG.serverUrl + 'bulkconfiguration/' + data.objectId, data, config).success(function(data){
+		$http.put(APP_CONFIG.serverUrl + 'bulkconfiguration/' + data.objectId, data, getHttpConfig()).success(function(data){
 			callback(data);
 		}).error(function(){
 			$log.log('Error');
@@ -42,7 +47,7 @@ angular.module('app').factory('beaconService', function($http, $log, APP_CONFIG,
 		});
 	}
 	function deleteBulk(objectId,callback){
-		$http.delete(APP_CONFIG.serverUrl + 'bulkconfiguration/' + objectId, config).success(function(data){
+		$http.delete(APP_CONFIG.serverUrl + 'bulkconfiguration/' + objectId, getHttpConfig()).success(function(data){
 			callback(data);
 		}).error(function(){
 			$log.log('Error');
