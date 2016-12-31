@@ -4,8 +4,8 @@ angular.module('app.beacon').controller('BeaconDetailCtrl', function ($scope, $i
 
 
     $scope.getDetail = function(){
-        var id = $stateParams.id;
-        beaconService.get(id,function(data){
+        $scope.id = $stateParams.id;
+        beaconService.get($scope.id, function(data){
             $scope.itemDetail = data.data;
             console.log("scope.itemDetail",$scope.itemDetail);
         });
@@ -18,14 +18,18 @@ angular.module('app.beacon').controller('BeaconDetailCtrl', function ($scope, $i
     }
 
     $scope.save = function(data){
-        beaconService.post(data,function(data){
-            // Implement toaster here when create successful
-            console.log("success")
-            $state.go("app.beacon");
-        });
+        if(!data.objectId) {
+            beaconService.post(data, function (data) {
+                // Implement toaster here when create successful
+                console.log("success")
+                $state.go("app.beacon");
+            });
+        } else {
+            beaconService.put(data, function (data) {
+                // Implement toaster here when create successful
+                console.log("success")
+                $state.go("app.beacon");
+            });
+        }
     }
-
-
-
-
 });

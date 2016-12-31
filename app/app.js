@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc overview
- * @name app [smartadminApp]
+ * @name app [TransX]
  * @description
- * # app [smartadminApp]
+ * # app [TransX]
  *
  * Main module of the application.
  */
@@ -16,7 +16,7 @@ angular.module('app', [
     'ui.router',
     'ui.bootstrap',
 
-    // Smartadmin Angular Common Module
+    // TransX Angular Common Module
     'SmartAdmin',
 
     // App
@@ -102,7 +102,7 @@ angular.module('app', [
             event.preventDefault();
             return;
         }
-        
+
         $rootScope.userLogin = AuthService.isAuthenticated();
     });
     // editableOptions.theme = 'bs3';

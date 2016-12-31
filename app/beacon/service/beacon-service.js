@@ -22,7 +22,7 @@ angular.module('app').factory('beaconService', function($http, $log, APP_CONFIG)
 				'Content-Type': 'application/json'
 			}
 		};
-		$http.get(APP_CONFIG.serverUrl + 'bulkconfiguration/'+id,config).success(function(data){
+		$http.get(APP_CONFIG.serverUrl + 'bulkconfiguration/'+ id, config).success(function(data){
 			callback(data);
 		}).error(function(){
 			$log.log('Error');
@@ -36,7 +36,7 @@ angular.module('app').factory('beaconService', function($http, $log, APP_CONFIG)
 				'Content-Type': 'application/json'
 			}
 		};
-		$http.post(APP_CONFIG.serverUrl + 'bulkconfiguration/',data,config).success(function(data){
+		$http.post(APP_CONFIG.serverUrl + 'bulkconfiguration/', data, config).success(function(data){
 			callback(data);
 		}).error(function(){
 			$log.log('Error');
@@ -50,11 +50,25 @@ angular.module('app').factory('beaconService', function($http, $log, APP_CONFIG)
 				'Content-Type': 'application/json'
 			}
 		};
-		$http.put(APP_CONFIG.serverUrl + 'bulkconfiguration/'+data.objectId,config).success(function(data){
+		$http.put(APP_CONFIG.serverUrl + 'bulkconfiguration/' + data.objectId, data, config).success(function(data){
 			callback(data);
 		}).error(function(){
 			$log.log('Error');
 			callback([]);
+		});
+	}
+	function deleteBulk(objectId,callback){
+		var config = {
+			headers: {
+				'username': 'transx',
+				'Content-Type': 'application/json'
+			}
+		};
+		$http.delete(APP_CONFIG.serverUrl + 'bulkconfiguration/' + objectId, config).success(function(data){
+			callback(data);
+		}).error(function(){
+			$log.log('Error');
+			callback(false);
 		});
 	}
 	return {
@@ -69,6 +83,9 @@ angular.module('app').factory('beaconService', function($http, $log, APP_CONFIG)
 		},
 		put:function(data,callback){
 			updateBulk(data,callback);
+		},
+		delete:function(data,callback){
+			deleteBulk(data,callback);
 		}
 	}
 });

@@ -10,8 +10,8 @@
 
 		<div jarvis-widget id="standard-datatable-widget" data-widget-color="darken" data-widget-editbutton="false">
 			<header>
-				<span class="widget-icon"> <i class="fa fa-table"></i> </span>
-				<h2>Standard Data Tables </h2>
+				<span class="widget-icon"> <i class="fa fa-cog"></i> </span>
+				<h2>Bulk Configurations</h2>
 			</header>
 			<div>
 				<div class="widget-body no-padding">
@@ -25,7 +25,7 @@
 							<th>Minor</th>
 							<th data-hide="phone,tablet">Instance ID</th>
 							<th data-hide="phone,tablet">Proximity UUID</th>
-							<th data-hide="phone,tablet"><button class="btn btn-xs btn-default dropdown-toggle" ng-click="addBulk()">Add</button> </th>
+							<th data-hide="phone,tablet"><button class="btn btn-xs btn btn-success dropdown-toggle icon-" ng-click="addBulk()"><i class="fa fa-plus"></i> Add New</button> </th>
 						</tr>
 						</thead>
 						<tr ng-repeat="item in bulklist">
@@ -38,6 +38,7 @@
 							<td>{{item.proximityUuid}}</td>
 							<td>
 								<button class="btn btn-xs btn-default dropdown-toggle" ng-click="editBulk(item)">Edit</button>
+								<button class="btn btn-xs btn-danger dropdown-toggle" ng-click="deleteBulk($index)">Delete</button>
 							</td>
 						</tr>
 					</table>

@@ -33,7 +33,7 @@ angular.module('app.beacon', [
                 }
             },
             data:{
-                title: 'Bulk Congifuration',
+                title: 'Bulk Configuration',
                 requireLogin : true
             }
         })
@@ -46,7 +46,7 @@ angular.module('app.beacon', [
                 }
             },
             data:{
-                title: 'Bulk Congifuration Detail',
+                title: 'Bulk Configuration Detail',
                 requireLogin : true
             }
         });
