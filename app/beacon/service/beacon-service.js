@@ -22,7 +22,6 @@ angular.module('app').factory('beaconService', function($http, $log, APP_CONFIG,
 		});
 	}
 	function getBulkconfigurationById(id,callback){
-		config.headers.username = $rootScope.userLogin.username;
 		$http.get(APP_CONFIG.serverUrl + 'bulkconfiguration/'+ id, getHttpConfig()).success(function(data){
 			callback(data);
 		}).error(function(){
