@@ -1,4 +1,4 @@
-<form id="contact-form" class="smart-form">
+<form id="configuration-form" name="configurationForm" class="smart-form" ng-submit="save(itemDetail,configurationForm.$valid)" novalidate >
     <header>Basic properties</header>
 
     <fieldset>
@@ -6,28 +6,38 @@
             <section class="col col-6">
                 <label class="label">Alias</label>
                 <label class="input">
-                    <input type="text" name="name" readonly id="named" ng-model="itemDetail.alias" ng-init="itemDetail.alias= 'TransX'" ng-if="!id">
-                    <input type="text" name="name" readonly id="named" ng-model="itemDetail.alias" ng-if="id">
+                    <input type="text" name="name" readonly id="named" ng-model="itemDetail.alias">                    
                 </label>
             </section>
             <section class="col col-6">
                 <label class="label">PROXIMITY UUID</label>
-                <label class="input">
-                    <input type="text" name="email" id="emaild" ng-model="itemDetail.proximityUuid" >
+                <label class="input " >
+                    <input type="text" name="proxiuuid" id="proxiuuid" ng-model="itemDetail.proximityUuid" required="true" >
+                     <span ng-show="configurationForm.proxiuuid.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You proxiuuid is required.</span>
                 </label>
             </section>
         </div>
         <div class="row">
+            <!-- <div class="form-group">
+                <label class="col col-6 control-label">MAJOR</label>
+                <div class="col-xs- col-lg-6 inputGroupContainer">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="MAJOR" />
+                    </div>
+                </div>
+            </div> -->
             <section class="col col-6">
                 <label class="label">MAJOR</label>
                 <label class="input">
-                    <input type="text" name="name" id="named" ng-model="itemDetail.major" >
+                    <input type="text" name="major" id="major" ng-model="itemDetail.major" required="true">
+                    <span ng-show="configurationForm.major.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You major is required.</span>
                 </label>
             </section>
             <section class="col col-6">
                 <label class="label">MINOR</label>
                 <label class="input">
-                    <input type="text" name="email" id="emaild" ng-model="itemDetail.minor" >
+                    <input type="text" name="minor" id="minor" ng-model="itemDetail.minor" required="true">
+                    <span ng-show="configurationForm.minor.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You minor is required.</span>
                 </label>
             </section>
         </div>
@@ -50,7 +60,8 @@
             <section class="col col-6">
                 <label class="label">INTERVAL (MS)</label>
                 <label class="input">
-                    <input type="text" name="email" id="emaild" ng-model="itemDetail.interval" >
+                    <input type="text" name="intervalms" id="emaild" ng-model="itemDetail.interval" required>
+                    <span ng-show="configurationForm.intervalms.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You interval is required.</span>
                 </label>
             </section>
         </div>
@@ -64,7 +75,9 @@
             <section class="col col-6">
                 <label class="label">INSTANCE ID</label>
                 <label class="input">
-                    <input type="text" name="email" id="emaild" ng-model="itemDetail.instanceId">
+                    <input type="text" name="instanceId" id="instanceId" ng-model="itemDetail.instanceId" required>
+                    <span ng-show="configurationForm.instanceId.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You instanceId is required.</span>
+                   
                 </label>
             </section>
         </div>
@@ -72,7 +85,7 @@
             <section class="col col-6">
                 <label class="label">URL</label>
                 <label class="input">
-                    <input type="text" name="name" id="named" ng-model="itemDetail.url" >
+                    <input type="text" readonly="true" name="name" id="named" ng-model="itemDetail.url" >
                 </label>
             </section>
         </div>
@@ -83,12 +96,7 @@
             <section class="col col-6">
                 <label class="label">PROFILE</label>
                 <label class="select">
-                    <select name="country" ng-model="itemDetail.profile" ng-init="itemDetail.profile = 'iBeacon' "  ng-if="!id">
-                        <option value="0" selected="" disabled="">SELECT ...</option>
-                        <option value="iBeacon" >iBeacon</option>
-                        <option value="Eddystone" >Eddystone</option>
-                    </select> <i></i>
-                    <select name="country" ng-model="itemDetail.profile" ng-if="id">
+                    <select name="country" ng-model="itemDetail.profile">
                         <option value="0" selected="" disabled="">SELECT ...</option>
                         <option value="iBeacon" >iBeacon</option>
                         <option value="Eddystone" >Eddystone</option>
@@ -115,8 +123,7 @@
         <section class="col col-6">
             <label class="label">FIRMWARE:</label>
             <label class="input">
-                <i class="icon-append fa fa-user"></i>
-                <input type="text" disabled name="name" id="named" value="4.1">
+                <input type="text" readonly="true" name="name" id="named" ng-model="itemDetail.firmware">
             </label>
         </section>
     </div>
@@ -124,12 +131,12 @@
 
     <footer>
         <button class="btn btn-primary" data-ui-sref="app.beacon" >CANCEL</button>
-        <button class="btn btn-primary" ng-click="save(itemDetail)" >SAVE CHANGE</button>
+        <button class="btn btn-primary" type="submit" >SAVE CHANGE</button>
+        <!-- <button class="btn btn-primary" type="submit" ng-if="configurationForm.$valid">SAVE CHANGE</button> -->
     </footer>
 
     <div class="message">
         <i class="fa fa-thumbs-up"></i>
-
         <p>Your message was successfully sent!</p>
     </div>
 </form>
