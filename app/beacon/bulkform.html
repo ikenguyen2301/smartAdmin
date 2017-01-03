@@ -13,7 +13,7 @@
                 <label class="label">PROXIMITY UUID</label>
                 <label class="input " >
                     <input type="text" name="proxiuuid" id="proxiuuid" ng-model="itemDetail.proximityUuid" required="true" >
-                     <span ng-show="configurationForm.proxiuuid.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You proxiuuid is required.</span>
+                     <span ng-show="configurationForm.proxiuuid.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You proximity uuid is required.</span>
                 </label>
             </section>
         </div>
@@ -55,7 +55,7 @@
                         <option value="6" >6 (0dBm)</option>
                         <option value="7" >7 (4dBm)</option>
                     </select> <i></i>
-                    <span ng-show="configurationForm.txpower.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You txpower is required.</span>
+                    <span ng-show="configurationForm.txpower.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You tx power is required.</span>
                 </label>
             </section>
             <section class="col col-6">
@@ -70,15 +70,15 @@
             <section class="col col-6">
                 <label class="label">NAMESPACE</label>
                 <label class="input">
-                    <input type="text" name="namespace" id="named" ng-model="itemDetail.namespace">
-                    <span ng-show="configurationForm.namespace.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You namespace is required.</span>
+                    <input type="text" name="namespace1" id="namespace1" ng-model="itemDetail.namespace" required>
+                    <span ng-show="configurationForm.namespace1.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You namespace is required.</span>
                 </label>
             </section>
             <section class="col col-6">
                 <label class="label">INSTANCE ID</label>
                 <label class="input">
                     <input type="text" name="instanceId" id="instanceId" ng-model="itemDetail.instanceId" required>
-                    <span ng-show="configurationForm.instanceId.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You instanceId is required.</span>
+                    <span ng-show="configurationForm.instanceId.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You instance id is required.</span>
                    
                 </label>
             </section>
