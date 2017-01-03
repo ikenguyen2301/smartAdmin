@@ -6,7 +6,8 @@
             <section class="col col-6">
                 <label class="label">Alias</label>
                 <label class="input">
-                    <input type="text" name="name" id="named" ng-model="itemDetail.alias" >
+                    <input type="text" name="name" readonly id="named" ng-model="itemDetail.alias" ng-init="itemDetail.alias= 'TransX'" ng-if="!id">
+                    <input type="text" name="name" readonly id="named" ng-model="itemDetail.alias" ng-if="id">
                 </label>
             </section>
             <section class="col col-6">
@@ -34,15 +35,15 @@
             <section class="col col-6">
                 <label class="label">TX POWER</label>
                 <label class="select">
-                    <select name="preset" ng-model="itemDetail.txPower">
-                        <option value="0" disabled="">-30dBm</option>
-                        <option value="1" >-20dBm</option>
-                        <option value="2" >-16dBm</option>
-                        <option value="3" >-12dBm</option>
-                        <option value="4" >-8dBm</option>
-                        <option value="5" >-4dBm</option>
-                        <option value="6" >0dBm</option>
-                        <option value="7" >4dBm</option>
+                    <select name="preset" ng-model="itemDetail.txPower" >
+                        <option value="0" >0 (-30dBm)</option>
+                        <option value="1" >1 (-20dBm)</option>
+                        <option value="2" >2 (-16dBm)</option>
+                        <option value="3" >3 (-12dBm)</option>
+                        <option value="4" >4 (-8dBm)</option>
+                        <option value="5" >5 (-4dBm)</option>
+                        <option value="6" >6 (0dBm)</option>
+                        <option value="7" >7 (4dBm)</option>
                     </select> <i></i>
                 </label>
             </section>
@@ -82,14 +83,19 @@
             <section class="col col-6">
                 <label class="label">PROFILE</label>
                 <label class="select">
-                    <select name="country" ng-model="itemDetail.profile">
+                    <select name="country" ng-model="itemDetail.profile" ng-init="itemDetail.profile = 'iBeacon' "  ng-if="!id">
                         <option value="0" selected="" disabled="">SELECT ...</option>
-                        <option value="ibeacon" >iBeacon</option>
-                        <option value="eddystone" >eddystone</option>
+                        <option value="iBeacon" >iBeacon</option>
+                        <option value="Eddystone" >Eddystone</option>
+                    </select> <i></i>
+                    <select name="country" ng-model="itemDetail.profile" ng-if="id">
+                        <option value="0" selected="" disabled="">SELECT ...</option>
+                        <option value="iBeacon" >iBeacon</option>
+                        <option value="Eddystone" >Eddystone</option>
                     </select> <i></i>
                 </label>
             </section>
-            <section class="col col-6">
+            <!-- <section class="col col-6">
                 <label class="label">SELECT A PRESET</label>
                 <label class="select">
                     <select name="preset" ng-model="itemDetail.preset">
@@ -100,7 +106,7 @@
                         <option value="recommendedsettings" >Recommended Settings</option>
                     </select> <i></i>
                 </label>
-            </section>
+            </section> -->
         </div>
     </fieldset>
     <header>Additional information</header>
