@@ -12,7 +12,7 @@ angular.module('app.beacon').controller('BeaconDetailCtrl', function ($scope, $i
     };
 
     if(!$stateParams.id){
-        $scope.itemDetail ={"url":"http://transx.com/eddystonet","firmware":"4.1","profile" : 'iBeacon',"alias": 'TransX'};
+        $scope.itemDetail ={"url":"http://transx.com/eddystone","firmware":"4.1","profile" : 'iBeacon',"alias": 'TransX'};
     }else{
         $scope.getDetail();
     }

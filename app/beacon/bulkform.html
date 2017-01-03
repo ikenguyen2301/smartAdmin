@@ -45,7 +45,7 @@
             <section class="col col-6">
                 <label class="label">TX POWER</label>
                 <label class="select">
-                    <select name="preset" ng-model="itemDetail.txPower" >
+                    <select name="txpower" ng-model="itemDetail.txPower" required >
                         <option value="0" >0 (-30dBm)</option>
                         <option value="1" >1 (-20dBm)</option>
                         <option value="2" >2 (-16dBm)</option>
@@ -55,6 +55,7 @@
                         <option value="6" >6 (0dBm)</option>
                         <option value="7" >7 (4dBm)</option>
                     </select> <i></i>
+                    <span ng-show="configurationForm.txpower.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You txpower is required.</span>
                 </label>
             </section>
             <section class="col col-6">
@@ -69,7 +70,8 @@
             <section class="col col-6">
                 <label class="label">NAMESPACE</label>
                 <label class="input">
-                    <input type="text" name="name" id="named" ng-model="itemDetail.namespace">
+                    <input type="text" name="namespace" id="named" ng-model="itemDetail.namespace">
+                    <span ng-show="configurationForm.namespace.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You namespace is required.</span>
                 </label>
             </section>
             <section class="col col-6">
