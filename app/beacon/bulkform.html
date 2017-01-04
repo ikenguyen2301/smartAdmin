@@ -6,14 +6,15 @@
             <section class="col col-6">
                 <label class="label">Alias</label>
                 <label class="input">
-                    <input type="text" name="name" readonly id="named" ng-model="itemDetail.alias">                    
+                    <input type="text" name="alias" readonly id="alias" ng-model="itemDetail.alias">
                 </label>
             </section>
             <section class="col col-6">
                 <label class="label">PROXIMITY UUID</label>
                 <label class="input " >
-                    <input type="text" name="proxiuuid" id="proxiuuid" ng-model="itemDetail.proximityUuid" required="true" >
-                     <span ng-show="configurationForm.proxiuuid.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You proximity uuid is required.</span>
+                    <input type="text" name="proxiuuid" id="proxiuuid" ng-model="itemDetail.proximityUuid" required ng-pattern="/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i">
+                    <span ng-show="configurationForm.proxiuuid.$invalid && configurationForm.proxiuuid.$error.required &&  configurationForm.$submitted" class="has-errors" style="color: red">Your PROXIMITY UUID is required.</span>
+                    <span ng-show="configurationForm.proxiuuid.$invalid && configurationForm.proxiuuid.$error.pattern && configurationForm.$submitted" class="has-errors" style="color: red">Your PROXIMITY UUID is wrong format.</span>
                 </label>
             </section>
         </div>
@@ -29,15 +30,15 @@
             <section class="col col-6">
                 <label class="label">MAJOR</label>
                 <label class="input">
-                    <input type="text" name="major" id="major" ng-model="itemDetail.major" required="true">
-                    <span ng-show="configurationForm.major.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You major is required.</span>
+                    <input type="number" name="major" id="major" ng-model="itemDetail.major" required="true">
+                    <span ng-show="configurationForm.major.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">Your MAJOR is required.</span>
                 </label>
             </section>
             <section class="col col-6">
                 <label class="label">MINOR</label>
                 <label class="input">
-                    <input type="text" name="minor" id="minor" ng-model="itemDetail.minor" required="true">
-                    <span ng-show="configurationForm.minor.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You minor is required.</span>
+                    <input type="number" name="minor" id="minor" ng-model="itemDetail.minor" required="true">
+                    <span ng-show="configurationForm.minor.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">Your MINOR is required.</span>
                 </label>
             </section>
         </div>
@@ -55,14 +56,14 @@
                         <option value="6" >6 (0dBm)</option>
                         <option value="7" >7 (4dBm)</option>
                     </select> <i></i>
-                    <span ng-show="configurationForm.txpower.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You tx power is required.</span>
+                    <span ng-show="configurationForm.txpower.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">Your TX POWER is required.</span>
                 </label>
             </section>
             <section class="col col-6">
                 <label class="label">INTERVAL (MS)</label>
                 <label class="input">
-                    <input type="text" name="intervalms" id="emaild" ng-model="itemDetail.interval" required>
-                    <span ng-show="configurationForm.intervalms.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You interval is required.</span>
+                    <input type="number" name="intervalms" id="emaild" ng-model="itemDetail.interval" required>
+                    <span ng-show="configurationForm.intervalms.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">Your INTERVAL (MS) is required.</span>
                 </label>
             </section>
         </div>
@@ -71,15 +72,15 @@
                 <label class="label">NAMESPACE</label>
                 <label class="input">
                     <input type="text" name="namespace1" id="namespace1" ng-model="itemDetail.namespace" required>
-                    <span ng-show="configurationForm.namespace1.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You namespace is required.</span>
+                    <span ng-show="configurationForm.namespace1.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">Your NAMESPACE is required.</span>
                 </label>
             </section>
             <section class="col col-6">
                 <label class="label">INSTANCE ID</label>
                 <label class="input">
-                    <input type="text" name="instanceId" id="instanceId" ng-model="itemDetail.instanceId" required>
-                    <span ng-show="configurationForm.instanceId.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">You instance id is required.</span>
-                   
+                    <input type="text" name="instanceId" id="instanceId" ng-model="itemDetail.instanceId" required ng-pattern="/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i">
+                    <span ng-show="configurationForm.instanceId.$invalid && configurationForm.instanceId.$error.required &&  configurationForm.$submitted" class="has-errors" style="color: red">Your INSTANCE ID is required.</span>
+                    <span ng-show="configurationForm.instanceId.$invalid && configurationForm.instanceId.$error.pattern && configurationForm.$submitted" class="has-errors" style="color: red">Your INSTANCE ID is wrong format.</span>
                 </label>
             </section>
         </div>
@@ -87,7 +88,7 @@
             <section class="col col-6">
                 <label class="label">URL</label>
                 <label class="input">
-                    <input type="text" readonly="true" name="name" id="named" ng-model="itemDetail.url" >
+                    <input type="text" readonly="true" name="url" id="url" ng-model="itemDetail.url" >
                 </label>
             </section>
         </div>
@@ -101,7 +102,7 @@
                     <select name="country" ng-model="itemDetail.profile">
                         <option value="0" selected="" disabled="">SELECT ...</option>
                         <option value="iBeacon" >iBeacon</option>
-                        <option value="Eddystone" >Eddystone</option>
+                        <!--<option value="Eddystone" >Eddystone</option>-->
                     </select> <i></i>
                 </label>
             </section>
@@ -125,7 +126,7 @@
         <section class="col col-6">
             <label class="label">FIRMWARE:</label>
             <label class="input">
-                <input type="text" readonly="true" name="name" id="named" ng-model="itemDetail.firmware">
+                <input type="text" readonly="true" name="firmware" id="firmware" ng-model="itemDetail.firmware">
             </label>
         </section>
     </div>

@@ -403,6 +403,15 @@ angular.module('app', [
 
 
 
+(function(){
+    "use strict";
+
+    angular.module('SmartAdmin', [
+        "SmartAdmin.Forms",
+        "SmartAdmin.Layout",
+        "SmartAdmin.UI",
+    ]);
+})();
 "use strict";
 
 
@@ -1724,11 +1733,17 @@ angular.module('app.widgets', ['ui.router'])
 (function(){
     "use strict";
 
-    angular.module('SmartAdmin', [
-        "SmartAdmin.Forms",
-        "SmartAdmin.Layout",
-        "SmartAdmin.UI",
-    ]);
+    angular.module('SmartAdmin.Forms', []);
+})();
+(function(){
+    "use strict";
+
+    angular.module('SmartAdmin.Layout', []);
+})();
+(function(){
+    "use strict";
+
+    angular.module('SmartAdmin.UI', []);
 })();
     "use strict";
 
@@ -1752,21 +1767,6 @@ angular.module('app.chat', ['ngSanitize'])
         return $sce.trustAsHtml(val);
     };
 }]);
-(function(){
-    "use strict";
-
-    angular.module('SmartAdmin.Forms', []);
-})();
-(function(){
-    "use strict";
-
-    angular.module('SmartAdmin.Layout', []);
-})();
-(function(){
-    "use strict";
-
-    angular.module('SmartAdmin.UI', []);
-})();
 'use strict';
 
 angular.module('app.beacon').controller('BeaconCtrl', function ($scope, $interval, CalendarEvent, beaconService,$state) {
@@ -1812,6 +1812,64 @@ angular.module('app.beacon').controller('BeaconCtrl', function ($scope, $interva
         });
     };
 });
+'use strict';
+
+angular.module('app.beacon').controller('BeaconDetailCtrl', function ($scope, $interval, CalendarEvent, beaconService,$stateParams,$state) {
+
+
+    $scope.getDetail = function(){
+        $scope.id = $stateParams.id;
+        beaconService.get($scope.id, function(data){
+            $scope.itemDetail = data.data;
+            console.log("scope.itemDetail",$scope.itemDetail);
+        });
+    };
+
+    if(!$stateParams.id){
+        $scope.itemDetail ={"url":"http://transx.com/eddystone","firmware":"4.1","profile" : 'iBeacon',"alias": 'TransX'};
+    }else{
+        $scope.getDetail();
+    }
+
+    $scope.save = function(data, isValid){
+        if(isValid){
+            if(!data.objectId) {
+                beaconService.post(data, function (data) {
+                    // Implement toaster here when create successful
+                     $.smallBox({
+                                title: "Create Notification ",
+                                content: "Created successful!",
+                                color: "#659265",
+                                iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                                timeout: 4000
+                            });
+                    $state.go("app.beacon");
+                });
+                } else {
+                beaconService.put(data, function (data) {
+                    // Implement toaster here when create successful
+                    $.smallBox({
+                                title: "Update Notification",
+                                content: "Updated successful!",
+                                color: "#659265",
+                                iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                                timeout: 4000
+                            });
+                    $state.go("app.beacon");
+                });
+            }
+        }else{
+            //  $.smallBox({
+            //     title: "Error ",
+            //     content: "Form have error !",
+            //     color: "#659265",
+            //     iconSmall: "fa fa-check fa-2x fadeInRight animated",
+            //     timeout: 4000
+            // });
+        }
+        
+    }
+});
 angular.module("app").run(["$templateCache", function($templateCache) {$templateCache.put("app/dashboard/live-feeds.tpl.html","<div jarvis-widget id=\"live-feeds-widget\" data-widget-togglebutton=\"false\" data-widget-editbutton=\"false\"\r\n     data-widget-fullscreenbutton=\"false\" data-widget-colorbutton=\"false\" data-widget-deletebutton=\"false\">\r\n<!-- widget options:\r\nusage: <div class=\"jarviswidget\" id=\"wid-id-0\" data-widget-editbutton=\"false\">\r\n\r\ndata-widget-colorbutton=\"false\"\r\ndata-widget-editbutton=\"false\"\r\ndata-widget-togglebutton=\"false\"\r\ndata-widget-deletebutton=\"false\"\r\ndata-widget-fullscreenbutton=\"false\"\r\ndata-widget-custombutton=\"false\"\r\ndata-widget-collapsed=\"true\"\r\ndata-widget-sortable=\"false\"\r\n\r\n-->\r\n<header>\r\n    <span class=\"widget-icon\"> <i class=\"glyphicon glyphicon-stats txt-color-darken\"></i> </span>\r\n\r\n    <h2>Live Feeds </h2>\r\n\r\n    <ul class=\"nav nav-tabs pull-right in\" id=\"myTab\">\r\n        <li class=\"active\">\r\n            <a data-toggle=\"tab\" href=\"#s1\"><i class=\"fa fa-clock-o\"></i> <span class=\"hidden-mobile hidden-tablet\">Live Stats</span></a>\r\n        </li>\r\n\r\n        <li>\r\n            <a data-toggle=\"tab\" href=\"#s2\"><i class=\"fa fa-facebook\"></i> <span class=\"hidden-mobile hidden-tablet\">Social Network</span></a>\r\n        </li>\r\n\r\n        <li>\r\n            <a data-toggle=\"tab\" href=\"#s3\"><i class=\"fa fa-dollar\"></i> <span class=\"hidden-mobile hidden-tablet\">Revenue</span></a>\r\n        </li>\r\n    </ul>\r\n\r\n</header>\r\n\r\n<!-- widget div-->\r\n<div class=\"no-padding\">\r\n\r\n    <div class=\"widget-body\">\r\n        <!-- content -->\r\n        <div id=\"myTabContent\" class=\"tab-content\">\r\n            <div class=\"tab-pane fade active in padding-10 no-padding-bottom\" id=\"s1\">\r\n                <div class=\"row no-space\">\r\n                    <div class=\"col-xs-12 col-sm-12 col-md-8 col-lg-8\">\r\n														<span class=\"demo-liveupdate-1\"> <span\r\n                                                                class=\"onoffswitch-title\">Live switch</span> <span\r\n                                                                class=\"onoffswitch\">\r\n																<input type=\"checkbox\" name=\"start_interval\" ng-model=\"autoUpdate\"\r\n                                                                       class=\"onoffswitch-checkbox\" id=\"start_interval\">\r\n																<label class=\"onoffswitch-label\" for=\"start_interval\">\r\n                                                                    <span class=\"onoffswitch-inner\"\r\n                                                                          data-swchon-text=\"ON\"\r\n                                                                          data-swchoff-text=\"OFF\"></span>\r\n                                                                    <span class=\"onoffswitch-switch\"></span>\r\n                                                                </label> </span> </span>\r\n\r\n                        <div id=\"updating-chart\" class=\"chart-large txt-color-blue\" flot-basic flot-data=\"liveStats\" flot-options=\"liveStatsOptions\"></div>\r\n\r\n                    </div>\r\n                    <div class=\"col-xs-12 col-sm-12 col-md-4 col-lg-4 show-stats\">\r\n\r\n                        <div class=\"row\">\r\n                            <div class=\"col-xs-6 col-sm-6 col-md-12 col-lg-12\"><span class=\"text\"> My Tasks <span\r\n                                    class=\"pull-right\">130/200</span> </span>\r\n\r\n                                <div class=\"progress\">\r\n                                    <div class=\"progress-bar bg-color-blueDark\" style=\"width: 65%;\"></div>\r\n                                </div>\r\n                            </div>\r\n                            <div class=\"col-xs-6 col-sm-6 col-md-12 col-lg-12\"><span class=\"text\"> Transfered <span\r\n                                    class=\"pull-right\">440 GB</span> </span>\r\n\r\n                                <div class=\"progress\">\r\n                                    <div class=\"progress-bar bg-color-blue\" style=\"width: 34%;\"></div>\r\n                                </div>\r\n                            </div>\r\n                            <div class=\"col-xs-6 col-sm-6 col-md-12 col-lg-12\"><span class=\"text\"> Bugs Squashed<span\r\n                                    class=\"pull-right\">77%</span> </span>\r\n\r\n                                <div class=\"progress\">\r\n                                    <div class=\"progress-bar bg-color-blue\" style=\"width: 77%;\"></div>\r\n                                </div>\r\n                            </div>\r\n                            <div class=\"col-xs-6 col-sm-6 col-md-12 col-lg-12\"><span class=\"text\"> User Testing <span\r\n                                    class=\"pull-right\">7 Days</span> </span>\r\n\r\n                                <div class=\"progress\">\r\n                                    <div class=\"progress-bar bg-color-greenLight\" style=\"width: 84%;\"></div>\r\n                                </div>\r\n                            </div>\r\n\r\n                            <span class=\"show-stat-buttons\"> <span class=\"col-xs-12 col-sm-6 col-md-6 col-lg-6\"> <a\r\n                                    href-void class=\"btn btn-default btn-block hidden-xs\">Generate PDF</a> </span> <span\r\n                                    class=\"col-xs-12 col-sm-6 col-md-6 col-lg-6\"> <a href-void\r\n                                                                                     class=\"btn btn-default btn-block hidden-xs\">Report\r\n                                a bug</a> </span> </span>\r\n\r\n                        </div>\r\n\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"show-stat-microcharts\" data-sparkline-container data-easy-pie-chart-container>\r\n                    <div class=\"col-xs-12 col-sm-3 col-md-3 col-lg-3\">\r\n\r\n                        <div class=\"easy-pie-chart txt-color-orangeDark\" data-percent=\"33\" data-pie-size=\"50\">\r\n                            <span class=\"percent percent-sign\">35</span>\r\n                        </div>\r\n                        <span class=\"easy-pie-title\"> Server Load <i class=\"fa fa-caret-up icon-color-bad\"></i> </span>\r\n                        <ul class=\"smaller-stat hidden-sm pull-right\">\r\n                            <li>\r\n                                <span class=\"label bg-color-greenLight\"><i class=\"fa fa-caret-up\"></i> 97%</span>\r\n                            </li>\r\n                            <li>\r\n                                <span class=\"label bg-color-blueLight\"><i class=\"fa fa-caret-down\"></i> 44%</span>\r\n                            </li>\r\n                        </ul>\r\n                        <div class=\"sparkline txt-color-greenLight hidden-sm hidden-md pull-right\"\r\n                             data-sparkline-type=\"line\" data-sparkline-height=\"33px\" data-sparkline-width=\"70px\"\r\n                             data-fill-color=\"transparent\">\r\n                            130, 187, 250, 257, 200, 210, 300, 270, 363, 247, 270, 363, 247\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"col-xs-12 col-sm-3 col-md-3 col-lg-3\">\r\n                        <div class=\"easy-pie-chart txt-color-greenLight\" data-percent=\"78.9\" data-pie-size=\"50\">\r\n                            <span class=\"percent percent-sign\">78.9 </span>\r\n                        </div>\r\n                        <span class=\"easy-pie-title\"> Disk Space <i class=\"fa fa-caret-down icon-color-good\"></i></span>\r\n                        <ul class=\"smaller-stat hidden-sm pull-right\">\r\n                            <li>\r\n                                <span class=\"label bg-color-blueDark\"><i class=\"fa fa-caret-up\"></i> 76%</span>\r\n                            </li>\r\n                            <li>\r\n                                <span class=\"label bg-color-blue\"><i class=\"fa fa-caret-down\"></i> 3%</span>\r\n                            </li>\r\n                        </ul>\r\n                        <div class=\"sparkline txt-color-blue hidden-sm hidden-md pull-right\" data-sparkline-type=\"line\"\r\n                             data-sparkline-height=\"33px\" data-sparkline-width=\"70px\" data-fill-color=\"transparent\">\r\n                            257, 200, 210, 300, 270, 363, 130, 187, 250, 247, 270, 363, 247\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"col-xs-12 col-sm-3 col-md-3 col-lg-3\">\r\n                        <div class=\"easy-pie-chart txt-color-blue\" data-percent=\"23\" data-pie-size=\"50\">\r\n                            <span class=\"percent percent-sign\">23 </span>\r\n                        </div>\r\n                        <span class=\"easy-pie-title\"> Transfered <i class=\"fa fa-caret-up icon-color-good\"></i></span>\r\n                        <ul class=\"smaller-stat hidden-sm pull-right\">\r\n                            <li>\r\n                                <span class=\"label bg-color-darken\">10GB</span>\r\n                            </li>\r\n                            <li>\r\n                                <span class=\"label bg-color-blueDark\"><i class=\"fa fa-caret-up\"></i> 10%</span>\r\n                            </li>\r\n                        </ul>\r\n                        <div class=\"sparkline txt-color-darken hidden-sm hidden-md pull-right\"\r\n                             data-sparkline-type=\"line\" data-sparkline-height=\"33px\" data-sparkline-width=\"70px\"\r\n                             data-fill-color=\"transparent\">\r\n                            200, 210, 363, 247, 300, 270, 130, 187, 250, 257, 363, 247, 270\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"col-xs-12 col-sm-3 col-md-3 col-lg-3\">\r\n                        <div class=\"easy-pie-chart txt-color-darken\" data-percent=\"36\" data-pie-size=\"50\">\r\n                            <span class=\"percent degree-sign\">36 <i class=\"fa fa-caret-up\"></i></span>\r\n                        </div>\r\n                        <span class=\"easy-pie-title\"> Temperature <i\r\n                                class=\"fa fa-caret-down icon-color-good\"></i></span>\r\n                        <ul class=\"smaller-stat hidden-sm pull-right\">\r\n                            <li>\r\n                                <span class=\"label bg-color-red\"><i class=\"fa fa-caret-up\"></i> 124</span>\r\n                            </li>\r\n                            <li>\r\n                                <span class=\"label bg-color-blue\"><i class=\"fa fa-caret-down\"></i> 40 F</span>\r\n                            </li>\r\n                        </ul>\r\n                        <div class=\"sparkline txt-color-red hidden-sm hidden-md pull-right\" data-sparkline-type=\"line\"\r\n                             data-sparkline-height=\"33px\" data-sparkline-width=\"70px\" data-fill-color=\"transparent\">\r\n                            2700, 3631, 2471, 2700, 3631, 2471, 1300, 1877, 2500, 2577, 2000, 2100, 3000\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n\r\n            </div>\r\n            <!-- end s1 tab pane -->\r\n\r\n            <div class=\"tab-pane fade\" id=\"s2\">\r\n                <div class=\"widget-body-toolbar bg-color-white\">\r\n\r\n                    <form class=\"form-inline\" role=\"form\">\r\n\r\n                        <div class=\"form-group\">\r\n                            <label class=\"sr-only\" for=\"s123\">Show From</label>\r\n                            <input type=\"email\" class=\"form-control input-sm\" id=\"s123\" placeholder=\"Show From\">\r\n                        </div>\r\n                        <div class=\"form-group\">\r\n                            <input type=\"email\" class=\"form-control input-sm\" id=\"s124\" placeholder=\"To\">\r\n                        </div>\r\n\r\n                        <div class=\"btn-group hidden-phone pull-right\">\r\n                            <a class=\"btn dropdown-toggle btn-xs btn-default\" data-toggle=\"dropdown\"><i\r\n                                    class=\"fa fa-cog\"></i> More <span class=\"caret\"> </span> </a>\r\n                            <ul class=\"dropdown-menu pull-right\">\r\n                                <li>\r\n                                    <a href-void><i class=\"fa fa-file-text-alt\"></i> Export to PDF</a>\r\n                                </li>\r\n                                <li>\r\n                                    <a href-void><i class=\"fa fa-question-sign\"></i> Help</a>\r\n                                </li>\r\n                            </ul>\r\n                        </div>\r\n\r\n                    </form>\r\n\r\n                </div>\r\n                <div class=\"padding-10\">\r\n                    <div id=\"statsChart\" class=\"chart-large has-legend-unique\" flot-basic flot-data=\"statsData\" flot-options=\"statsDisplayOptions\"></div>\r\n                </div>\r\n\r\n            </div>\r\n            <!-- end s2 tab pane -->\r\n\r\n            <div class=\"tab-pane fade\" id=\"s3\">\r\n\r\n                <div class=\"widget-body-toolbar bg-color-white smart-form\" id=\"rev-toggles\">\r\n\r\n                    <div class=\"inline-group\">\r\n\r\n                        <label for=\"gra-0\" class=\"checkbox\">\r\n                            <input type=\"checkbox\" id=\"gra-0\" ng-model=\"targetsShow\">\r\n                            <i></i> Target </label>\r\n                        <label for=\"gra-1\" class=\"checkbox\">\r\n                            <input type=\"checkbox\" id=\"gra-1\" ng-model=\"actualsShow\">\r\n                            <i></i> Actual </label>\r\n                        <label for=\"gra-2\" class=\"checkbox\">\r\n                            <input type=\"checkbox\" id=\"gra-2\" ng-model=\"signupsShow\">\r\n                            <i></i> Signups </label>\r\n                    </div>\r\n\r\n                    <div class=\"btn-group hidden-phone pull-right\">\r\n                        <a class=\"btn dropdown-toggle btn-xs btn-default\" data-toggle=\"dropdown\"><i\r\n                                class=\"fa fa-cog\"></i> More <span class=\"caret\"> </span> </a>\r\n                        <ul class=\"dropdown-menu pull-right\">\r\n                            <li>\r\n                                <a href-void><i class=\"fa fa-file-text-alt\"></i> Export to PDF</a>\r\n                            </li>\r\n                            <li>\r\n                                <a href-void><i class=\"fa fa-question-sign\"></i> Help</a>\r\n                            </li>\r\n                        </ul>\r\n                    </div>\r\n\r\n                </div>\r\n\r\n                <div class=\"padding-10\">\r\n                    <div id=\"flotcontainer\" class=\"chart-large has-legend-unique\" flot-basic flot-data=\"revenewData\" flot-options=\"revenewDisplayOptions\" ></div>\r\n                </div>\r\n            </div>\r\n            <!-- end s3 tab pane -->\r\n        </div>\r\n\r\n        <!-- end content -->\r\n    </div>\r\n\r\n</div>\r\n<!-- end widget div -->\r\n</div>\r\n");
 $templateCache.put("app/layout/layout.tpl.html","<!-- HEADER -->\r\n<div data-smart-include=\"app/layout/partials/header.tpl.html\" class=\"placeholder-header\"></div>\r\n<!-- END HEADER -->\r\n\r\n\r\n<!-- Left panel : Navigation area -->\r\n<!-- Note: This width of the aside area can be adjusted through LESS variables -->\r\n<div data-smart-include=\"app/layout/partials/navigation.tpl.html\" class=\"placeholder-left-panel\"></div>\r\n\r\n<!-- END NAVIGATION -->\r\n\r\n<!-- MAIN PANEL -->\r\n<div id=\"main\" role=\"main\">\r\n    <!--<demo-states></demo-states>-->\r\n\r\n    <!-- RIBBON -->\r\n    <div id=\"ribbon\">\r\n\r\n				<!--<span class=\"ribbon-button-alignment\">-->\r\n					<!--<span id=\"refresh\" class=\"btn btn-ribbon\" reset-widgets-->\r\n                          <!--tooltip-placement=\"bottom\"-->\r\n                          <!--smart-tooltip-html=\"<i class=\'text-warning fa fa-warning\'></i> Warning! This will reset all your widget settings.\">-->\r\n						<!--<i class=\"fa fa-refresh\"></i>-->\r\n					<!--</span>-->\r\n				<!--</span>-->\r\n\r\n        <!-- breadcrumb -->\r\n        <state-breadcrumbs></state-breadcrumbs>\r\n        <!-- end breadcrumb -->\r\n\r\n\r\n    </div>\r\n    <!-- END RIBBON -->\r\n\r\n\r\n    <div data-smart-router-animation-wrap=\"content content@app\" data-wrap-for=\"#content\">\r\n        <div data-ui-view=\"content\" data-autoscroll=\"false\"></div>\r\n    </div>\r\n\r\n</div>\r\n<!-- END MAIN PANEL -->\r\n\r\n<!-- PAGE FOOTER -->\r\n<div data-smart-include=\"app/layout/partials/footer.tpl.html\"></div>\r\n\r\n<div data-smart-include=\"app/layout/shortcut/shortcut.tpl.html\"></div>\r\n\r\n<!-- END PAGE FOOTER -->\r\n\r\n\r\n");
 $templateCache.put("app/auth/directives/login-info.tpl.html","<div class=\"login-info ng-cloak\">\r\n    <span> <!-- User image size is adjusted inside CSS, it should stay as it -->\r\n        <a  href=\"\" disabled-toggle-shortcut>\r\n            <img ng-src=\"{{user.picture}}\" alt=\"me\" class=\"online\">\r\n                <span>{{user.username}}\r\n                </span>\r\n            <!--<i class=\"fa fa-angle-down\"></i>-->\r\n        </a>\r\n     </span>\r\n</div>");
@@ -1838,41 +1896,6 @@ $templateCache.put("app/_common/forms/directives/bootstrap-validation/bootstrap-
 $templateCache.put("app/_common/forms/directives/bootstrap-validation/bootstrap-profile-form.tpl.html","<form id=\"profileForm\">\r\n\r\n    <fieldset>\r\n        <legend>\r\n            Default Form Elements\r\n        </legend>\r\n        <div class=\"form-group\">\r\n            <label>Email address</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"email\" />\r\n        </div>\r\n    </fieldset>\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label>Password</label>\r\n            <input type=\"password\" class=\"form-control\" name=\"password\" />\r\n        </div>\r\n    </fieldset>\r\n\r\n    <div class=\"form-actions\">\r\n        <div class=\"row\">\r\n            <div class=\"col-md-12\">\r\n                <button class=\"btn btn-default\" type=\"submit\">\r\n                    <i class=\"fa fa-eye\"></i>\r\n                    Validate\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</form>\r\n");
 $templateCache.put("app/_common/forms/directives/bootstrap-validation/bootstrap-toggling-form.tpl.html","<form id=\"togglingForm\" method=\"post\" class=\"form-horizontal\">\r\n\r\n    <fieldset>\r\n        <legend>\r\n            Default Form Elements\r\n        </legend>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-lg-3 control-label\">Full name <sup>*</sup></label>\r\n            <div class=\"col-lg-4\">\r\n                <input type=\"text\" class=\"form-control\" name=\"firstName\" placeholder=\"First name\" />\r\n            </div>\r\n            <div class=\"col-lg-4\">\r\n                <input type=\"text\" class=\"form-control\" name=\"lastName\" placeholder=\"Last name\" />\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-lg-3 control-label\">Company <sup>*</sup></label>\r\n            <div class=\"col-lg-5\">\r\n                <input type=\"text\" class=\"form-control\" name=\"company\"\r\n                       required data-bv-notempty-message=\"The company name is required\" />\r\n            </div>\r\n            <div class=\"col-lg-2\">\r\n                <button type=\"button\" class=\"btn btn-info btn-sm\" data-toggle=\"#jobInfo\">\r\n                    Add more info\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <!-- These fields will not be validated as long as they are not visible -->\r\n    <div id=\"jobInfo\" style=\"display: none;\">\r\n        <fieldset>\r\n            <div class=\"form-group\">\r\n                <label class=\"col-lg-3 control-label\">Job title <sup>*</sup></label>\r\n                <div class=\"col-lg-5\">\r\n                    <input type=\"text\" class=\"form-control\" name=\"job\" />\r\n                </div>\r\n            </div>\r\n        </fieldset>\r\n\r\n        <fieldset>\r\n            <div class=\"form-group\">\r\n                <label class=\"col-lg-3 control-label\">Department <sup>*</sup></label>\r\n                <div class=\"col-lg-5\">\r\n                    <input type=\"text\" class=\"form-control\" name=\"department\" />\r\n                </div>\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-lg-3 control-label\">Mobile phone <sup>*</sup></label>\r\n            <div class=\"col-lg-5\">\r\n                <input type=\"text\" class=\"form-control\" name=\"mobilePhone\" />\r\n            </div>\r\n            <div class=\"col-lg-2\">\r\n                <button type=\"button\" class=\"btn btn-info btn-sm\" data-toggle=\"#phoneInfo\">\r\n                    Add more phone numbers\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n    <!-- These fields will not be validated as long as they are not visible -->\r\n    <div id=\"phoneInfo\" style=\"display: none;\">\r\n\r\n        <fieldset>\r\n            <div class=\"form-group\">\r\n                <label class=\"col-lg-3 control-label\">Home phone</label>\r\n                <div class=\"col-lg-5\">\r\n                    <input type=\"text\" class=\"form-control\" name=\"homePhone\" />\r\n                </div>\r\n            </div>\r\n        </fieldset>\r\n        <fieldset>\r\n            <div class=\"form-group\">\r\n                <label class=\"col-lg-3 control-label\">Office phone</label>\r\n                <div class=\"col-lg-5\">\r\n                    <input type=\"text\" class=\"form-control\" name=\"officePhone\" />\r\n                </div>\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n\r\n    <div class=\"form-actions\">\r\n        <div class=\"row\">\r\n            <div class=\"col-md-12\">\r\n                <button class=\"btn btn-default\" type=\"submit\">\r\n                    <i class=\"fa fa-eye\"></i>\r\n                    Validate\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</form>");
 $templateCache.put("app/_common/layout/directives/demo/demo-states.tpl.html","<div class=\"demo\"><span id=\"demo-setting\"><i class=\"fa fa-cog txt-color-blueDark\"></i></span>\r\n\r\n    <form>\r\n        <legend class=\"no-padding margin-bottom-10\">Layout Options</legend>\r\n        <section>\r\n            <label><input type=\"checkbox\" ng-model=\"fixedHeader\"\r\n                          class=\"checkbox style-0\"><span>Fixed Header</span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"fixedNavigation\"\r\n                          class=\"checkbox style-0\"><span>Fixed Navigation</span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"fixedRibbon\"\r\n                          class=\"checkbox style-0\"><span>Fixed Ribbon</span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"fixedPageFooter\"\r\n                          class=\"checkbox style-0\"><span>Fixed Footer</span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"insideContainer\"\r\n                          class=\"checkbox style-0\"><span>Inside <b>.container</b></span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"rtl\"\r\n                          class=\"checkbox style-0\"><span>RTL</span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"menuOnTop\"\r\n                          class=\"checkbox style-0\"><span>Menu on <b>top</b></span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"colorblindFriendly\"\r\n                          class=\"checkbox style-0\"><span>For Colorblind <div\r\n                    class=\"font-xs text-right\">(experimental)\r\n            </div></span>\r\n            </label><span id=\"smart-bgimages\"></span></section>\r\n        <section><h6 class=\"margin-top-10 semi-bold margin-bottom-5\">Clear Localstorage</h6><a\r\n                ng-click=\"factoryReset()\" class=\"btn btn-xs btn-block btn-primary\" id=\"reset-smart-widget\"><i\r\n                class=\"fa fa-refresh\"></i> Factory Reset</a></section>\r\n\r\n        <h6 class=\"margin-top-10 semi-bold margin-bottom-5\">SmartAdmin Skins</h6>\r\n\r\n\r\n        <section id=\"smart-styles\">\r\n            <a ng-repeat=\"skin in skins\" ng-click=\"setSkin(skin)\" class=\"{{skin.class}}\" style=\"{{skin.style}}\"><i ng-if=\"skin.name == $parent.smartSkin\" class=\"fa fa-check fa-fw\"></i> {{skin.label}} <sup ng-if=\"skin.beta\">beta</sup></a>\r\n        </section>\r\n    </form>\r\n</div>");}]);
-'use strict';
-
-angular.module('app.beacon').controller('BeaconDetailCtrl', function ($scope, $interval, CalendarEvent, beaconService,$stateParams,$state) {
-
-
-    $scope.getDetail = function(){
-        $scope.id = $stateParams.id;
-        beaconService.get($scope.id, function(data){
-            $scope.itemDetail = data.data;
-            console.log("scope.itemDetail",$scope.itemDetail);
-        });
-    };
-
-    if(!$stateParams.id){
-        $scope.itemDetail ={};
-    }else{
-        $scope.getDetail();
-    }
-
-    $scope.save = function(data){
-        if(!data.objectId) {
-            beaconService.post(data, function (data) {
-                // Implement toaster here when create successful
-                console.log("success")
-                $state.go("app.beacon");
-            });
-        } else {
-            beaconService.put(data, function (data) {
-                // Implement toaster here when create successful
-                console.log("success")
-                $state.go("app.beacon");
-            });
-        }
-    }
-});
 'use strict';
 
 angular.module('app.dashboard').controller('DashboardCtrl', function ($scope, $interval, CalendarEvent) {
@@ -2483,79 +2506,6 @@ angular.module('app.appViews').controller('ProjectsDemoCtrl', function ($scope, 
 });
 "use strict";
 
-angular.module('app').factory('beaconService', function($http, $log, APP_CONFIG, $rootScope) {
-	function getHttpConfig() {
-		var config = {
-			headers: {
-				'Content-Type': 'application/json',
-				'username': $rootScope.userLogin.username
-			}
-		};
-
-		return config;
-	}
-
-	function getAllBulkconfiguration(callback){
-
-		$http.get(APP_CONFIG.serverUrl + 'bulkconfiguration/all', getHttpConfig()).success(function(data){
-			callback(data);
-		}).error(function(){
-			$log.log('Error');
-			callback([]);
-		});
-	}
-	function getBulkconfigurationById(id,callback){
-		$http.get(APP_CONFIG.serverUrl + 'bulkconfiguration/'+ id, getHttpConfig()).success(function(data){
-			callback(data);
-		}).error(function(){
-			$log.log('Error');
-			callback([]);
-		});
-	}
-	function createNewBulk(data,callback){
-		$http.post(APP_CONFIG.serverUrl + 'bulkconfiguration/', data, getHttpConfig()).success(function(data){
-			callback(data);
-		}).error(function(){
-			$log.log('Error');
-			callback([]);
-		});
-	}
-	function updateBulk(data,callback){
-		$http.put(APP_CONFIG.serverUrl + 'bulkconfiguration/' + data.objectId, data, getHttpConfig()).success(function(data){
-			callback(data);
-		}).error(function(){
-			$log.log('Error');
-			callback([]);
-		});
-	}
-	function deleteBulk(objectId,callback){
-		$http.delete(APP_CONFIG.serverUrl + 'bulkconfiguration/' + objectId, getHttpConfig()).success(function(data){
-			callback(data);
-		}).error(function(){
-			$log.log('Error');
-			callback(false);
-		});
-	}
-	return {
-		getAll:function(callback){
-			getAllBulkconfiguration(callback);
-		},
-		get:function(id,callback){
-			getBulkconfigurationById(id,callback);
-		},
-		post:function(data,callback){
-			createNewBulk(data,callback);
-		},
-		put:function(data,callback){
-			updateBulk(data,callback);
-		},
-		delete:function(data,callback){
-			deleteBulk(data,callback);
-		}
-	}
-});
-"use strict";
-
 angular.module('app.auth').directive('loginInfo', function($rootScope){
 
     return {
@@ -2671,6 +2621,79 @@ angular.module('app.auth').factory('AuthService', function ($http, $window) {
 
     return authService;
 })
+"use strict";
+
+angular.module('app').factory('beaconService', function($http, $log, APP_CONFIG, $rootScope) {
+	function getHttpConfig() {
+		var config = {
+			headers: {
+				'Content-Type': 'application/json',
+				'username': $rootScope.userLogin.username
+			}
+		};
+
+		return config;
+	}
+
+	function getAllBulkconfiguration(callback){
+
+		$http.get(APP_CONFIG.serverUrl + 'bulkconfiguration/all', getHttpConfig()).success(function(data){
+			callback(data);
+		}).error(function(){
+			$log.log('Error');
+			callback([]);
+		});
+	}
+	function getBulkconfigurationById(id,callback){
+		$http.get(APP_CONFIG.serverUrl + 'bulkconfiguration/'+ id, getHttpConfig()).success(function(data){
+			callback(data);
+		}).error(function(){
+			$log.log('Error');
+			callback([]);
+		});
+	}
+	function createNewBulk(data,callback){
+		$http.post(APP_CONFIG.serverUrl + 'bulkconfiguration/', data, getHttpConfig()).success(function(data){
+			callback(data);
+		}).error(function(){
+			$log.log('Error');
+			callback([]);
+		});
+	}
+	function updateBulk(data,callback){
+		$http.put(APP_CONFIG.serverUrl + 'bulkconfiguration/' + data.objectId, data, getHttpConfig()).success(function(data){
+			callback(data);
+		}).error(function(){
+			$log.log('Error');
+			callback([]);
+		});
+	}
+	function deleteBulk(objectId,callback){
+		$http.delete(APP_CONFIG.serverUrl + 'bulkconfiguration/' + objectId, getHttpConfig()).success(function(data){
+			callback(data);
+		}).error(function(){
+			$log.log('Error');
+			callback(false);
+		});
+	}
+	return {
+		getAll:function(callback){
+			getAllBulkconfiguration(callback);
+		},
+		get:function(id,callback){
+			getBulkconfigurationById(id,callback);
+		},
+		post:function(data,callback){
+			createNewBulk(data,callback);
+		},
+		put:function(data,callback){
+			updateBulk(data,callback);
+		},
+		delete:function(data,callback){
+			deleteBulk(data,callback);
+		}
+	}
+});
 'use strict';
 
 angular.module('app.calendar').controller('CalendarCtrl', function ($scope, $log, CalendarEvent) {
@@ -3789,45 +3812,6 @@ angular.module('app.inbox').factory('InboxMessage', function($resource, APP_CONF
 });
 "use strict";
 
-angular.module('app').controller("LanguagesCtrl",  function LanguagesCtrl($scope, $rootScope, $log, Language){
-
-    $rootScope.lang = {};
-    
-    Language.getLanguages(function(data){
-
-        $rootScope.currentLanguage = data[0];
-
-        $rootScope.languages = data;
-
-        Language.getLang(data[0].key,function(data){
-
-            $rootScope.lang = data;
-        });
-
-    });
-
-    $scope.selectLanguage = function(language){
-        $rootScope.currentLanguage = language;
-        
-        Language.getLang(language.key,function(data){
-
-            $rootScope.lang = data;
-            
-        });
-    }
-
-    $rootScope.getWord = function(key){
-        if(angular.isDefined($rootScope.lang[key])){
-            return $rootScope.lang[key];
-        } 
-        else {
-            return key;
-        }
-    }
-
-});
-"use strict";
-
 angular.module('app').factory('Language', function($http, APP_CONFIG){
 
 	function getLanguage(key, callback) {
@@ -3868,6 +3852,45 @@ angular.module('app').factory('Language', function($http, APP_CONFIG){
 			getLanguages(callback);
 		}
 	}
+
+});
+"use strict";
+
+angular.module('app').controller("LanguagesCtrl",  function LanguagesCtrl($scope, $rootScope, $log, Language){
+
+    $rootScope.lang = {};
+    
+    Language.getLanguages(function(data){
+
+        $rootScope.currentLanguage = data[0];
+
+        $rootScope.languages = data;
+
+        Language.getLang(data[0].key,function(data){
+
+            $rootScope.lang = data;
+        });
+
+    });
+
+    $scope.selectLanguage = function(language){
+        $rootScope.currentLanguage = language;
+        
+        Language.getLang(language.key,function(data){
+
+            $rootScope.lang = data;
+            
+        });
+    }
+
+    $rootScope.getWord = function(key){
+        if(angular.isDefined($rootScope.lang[key])){
+            return $rootScope.lang[key];
+        } 
+        else {
+            return key;
+        }
+    }
 
 });
 "use strict";
@@ -5091,6 +5114,1385 @@ angular.module('app.ui').directive('smartTreeview', function ($compile, $sce) {
         }
     };
 });
+"use strict";
+
+angular.module('SmartAdmin.Layout').directive('fullScreen', function(){
+    return {
+        restrict: 'A',
+        link: function(scope, element){
+            var $body = $('body');
+            var toggleFullSceen = function(e){
+                if (!$body.hasClass("full-screen")) {
+                    $body.addClass("full-screen");
+                    if (document.documentElement.requestFullscreen) {
+                        document.documentElement.requestFullscreen();
+                    } else if (document.documentElement.mozRequestFullScreen) {
+                        document.documentElement.mozRequestFullScreen();
+                    } else if (document.documentElement.webkitRequestFullscreen) {
+                        document.documentElement.webkitRequestFullscreen();
+                    } else if (document.documentElement.msRequestFullscreen) {
+                        document.documentElement.msRequestFullscreen();
+                    }
+                } else {
+                    $body.removeClass("full-screen");
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.mozCancelFullScreen) {
+                        document.mozCancelFullScreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    }
+                }
+            };
+
+            element.on('click', toggleFullSceen);
+
+        }
+    }
+});
+"use strict";
+
+angular.module('SmartAdmin.Layout').directive('minifyMenu', function(){
+    return {
+        restrict: 'A',
+        link: function(scope, element){
+                var $body = $('body');
+            var minifyMenu = function() {
+                if (!$body.hasClass("menu-on-top")) {
+                    $body.toggleClass("minified");
+                    $body.removeClass("hidden-menu");
+                    $('html').removeClass("hidden-menu-mobile-lock");
+                }
+            };
+
+            element.on('click', minifyMenu);
+        }
+    }
+})
+'use strict';
+
+angular.module('SmartAdmin.Layout').directive('reloadState', function ($rootScope) {
+    return {
+        restrict: 'A',
+        compile: function (tElement, tAttributes) {
+            tElement.removeAttr('reload-state data-reload-state');
+            tElement.on('click', function (e) {
+                $rootScope.$state.transitionTo($rootScope.$state.current, $rootScope.$stateParams, {
+                    reload: true,
+                    inherit: false,
+                    notify: true
+                });
+                e.preventDefault();
+            })
+        }
+    }
+});
+
+"use strict";
+
+angular.module('SmartAdmin.Layout').directive('resetWidgets', function($state){
+
+    return {
+        restrict: 'A',
+        link: function(scope, element){
+            element.on('click', function(){
+                $.SmartMessageBox({
+                    title : "<i class='fa fa-refresh' style='color:green'></i> Clear Local Storage",
+                    content : "Would you like to RESET all your saved widgets and clear LocalStorage?1",
+                    buttons : '[No][Yes]'
+                }, function(ButtonPressed) {
+                    if (ButtonPressed == "Yes" && localStorage) {
+                        localStorage.clear();
+                        location.reload()
+                    }
+                });
+
+            });
+        }
+    }
+
+});
+
+'use strict';
+
+angular.module('SmartAdmin.Layout').directive('searchMobile', function () {
+    return {
+        restrict: 'A',
+        compile: function (element, attributes) {
+            element.removeAttr('search-mobile data-search-mobile');
+
+            element.on('click', function (e) {
+                $('body').addClass('search-mobile');
+                e.preventDefault();
+            });
+
+            $('#cancel-search-js').on('click', function (e) {
+                $('body').removeClass('search-mobile');
+                e.preventDefault();
+            });
+        }
+    }
+});
+"use strict";
+
+angular.module('SmartAdmin.Layout').directive('toggleMenu', function(){
+    return {
+        restrict: 'A',
+        link: function(scope, element){
+            var $body = $('body');
+
+            var toggleMenu = function(){
+                if (!$body.hasClass("menu-on-top")){
+                    $('html').toggleClass("hidden-menu-mobile-lock");
+                    $body.toggleClass("hidden-menu");
+                    $body.removeClass("minified");
+                } else if ( $body.hasClass("menu-on-top") && $body.hasClass("mobile-view-activated") ) {
+                    $('html').toggleClass("hidden-menu-mobile-lock");
+                    $body.toggleClass("hidden-menu");
+                    $body.removeClass("minified");
+                }
+            };
+
+            element.on('click', toggleMenu);
+
+            scope.$on('requestToggleMenu', function(){
+                toggleMenu();
+            });
+        }
+    }
+});
+'use strict';
+
+angular.module('SmartAdmin.Layout').directive('bigBreadcrumbs', function () {
+    return {
+        restrict: 'EA',
+        replace: true,
+        template: '<div><h1 class="page-title txt-color-blueDark"></h1></div>',
+        scope: {
+            items: '=',
+            icon: '@'
+        },
+        link: function (scope, element) {
+            var first = _.first(scope.items);
+
+            var icon = scope.icon || 'home';
+            element.find('h1').append('<i class="fa-fw fa fa-' + icon + '"></i> ' + first);
+            _.rest(scope.items).forEach(function (item) {
+                element.find('h1').append(' <span>> ' + item + '</span>')
+            })
+        }
+    }
+});
+
+'use strict';
+
+angular.module('SmartAdmin.Layout').directive('dismisser', function () {
+    return {
+        restrict: 'A',
+        compile: function (element) {
+            element.removeAttr('dismisser data-dissmiser')
+            var closer = '<button class="close">&times;</button>';
+            element.prepend(closer);
+            element.on('click', '>button.close', function(){
+                element.fadeOut('fast',function(){ $(this).remove(); });
+
+            })
+        }
+    }
+});
+'use strict';
+
+angular.module('SmartAdmin.Layout').directive('hrefVoid', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attributes) {
+            element.attr('href','#');
+            element.on('click', function(e){
+                e.preventDefault();
+                e.stopPropagation();
+            })
+        }
+    }
+});
+'use strict';
+
+/*
+* Directive for toggling a ng-model with a button
+* Source: https://gist.github.com/aeife/9374784
+*/
+
+angular.module('SmartAdmin.Layout').directive('radioToggle', function ($log) {
+    return {
+        scope: {
+            model: "=ngModel",
+            value: "@value"
+        },
+        link: function(scope, element, attrs) {
+
+            element.parent().on('click', function() {
+                scope.model = scope.value;
+                scope.$apply();
+            });
+        }
+    }
+});
+/**
+ * DETECT MOBILE DEVICES
+ * Description: Detects mobile device - if any of the listed device is
+ *
+ * detected class is inserted to <tElement>.
+ *
+ *  (so far this is covering most hand held devices)
+ */
+'use strict';
+
+angular.module('SmartAdmin.Layout').directive('smartDeviceDetect', function () {
+    return {
+        restrict: 'A',
+        compile: function (tElement, tAttributes) {
+            tElement.removeAttr('smart-device-detect data-smart-device-detect');
+
+            var isMobile = (/iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));
+            
+            tElement.toggleClass('desktop-detected', !isMobile);
+            tElement.toggleClass('mobile-detected', isMobile);
+
+
+        }
+    }
+});
+/**
+ *
+ * Description: Directive utilizes FastClick library.
+ *
+ *
+ * FastClick is a simple, easy-to-use library for eliminating the
+ * 300ms delay between a physical tap and the firing of a click event on mobile browsers.
+ * FastClick doesn't attach any listeners on desktop browsers.
+ * @link: https://github.com/ftlabs/fastclick
+ *
+ * On mobile devices 'needsclick' class is attached to <tElement>
+ *
+ */
+
+
+'use strict';
+
+angular.module('SmartAdmin.Layout').directive('smartFastClick', function () {
+    return {
+        restrict: 'A',
+        compile: function (tElement, tAttributes) {
+            tElement.removeAttr('smart-fast-click data-smart-fast-click');
+
+            FastClick.attach(tElement);
+
+            if(!FastClick.notNeeded())
+                tElement.addClass('needsclick')
+        }
+    }
+});
+
+'use strict';
+
+angular.module('SmartAdmin.Layout').directive('smartFitAppView', function ($rootScope, SmartCss) {
+    return {
+        restrict: 'A',
+        compile: function (element, attributes) {
+            element.removeAttr('smart-fit-app-view data-smart-fit-app-view leading-y data-leading-y');
+
+            var leadingY = attributes.leadingY ? parseInt(attributes.leadingY) : 0;
+
+            var selector = attributes.smartFitAppView;
+
+            if(SmartCss.appViewSize && SmartCss.appViewSize.height){
+                var height =  SmartCss.appViewSize.height - leadingY < 252 ? 252 :  SmartCss.appViewSize.height - leadingY;
+                SmartCss.add(selector, 'height', height+'px');
+            }
+
+            var listenerDestroy = $rootScope.$on('$smartContentResize', function (event, data) {
+                var height = data.height - leadingY < 252 ? 252 : data.height - leadingY;
+                SmartCss.add(selector, 'height', height+'px');
+            });
+
+            element.on('$destroy', function () {
+                listenerDestroy();
+                SmartCss.remove(selector, 'height');
+            });
+
+
+        }
+    }
+});
+
+"use strict";
+
+angular.module('SmartAdmin.Layout').directive('smartInclude', function () {
+        return {
+            replace: true,
+            restrict: 'A',
+            templateUrl: function (element, attr) {
+                return attr.smartInclude;
+            },
+            compile: function(element){
+                element[0].className = element[0].className.replace(/placeholder[^\s]+/g, '');
+            }
+        };
+    }
+);
+
+
+'use strict';
+
+angular.module('SmartAdmin.Layout').directive('smartLayout', function ($rootScope, $timeout, $interval, $q, SmartCss, APP_CONFIG) {
+    
+    var _debug = 0;
+
+    function getDocHeight() {
+        var D = document;
+        return Math.max(
+            D.body.scrollHeight, D.documentElement.scrollHeight,
+            D.body.offsetHeight, D.documentElement.offsetHeight,
+            D.body.clientHeight, D.documentElement.clientHeight
+        );
+    }
+
+    var initialized = false, 
+           initializedResolver = $q.defer();
+    initializedResolver.promise.then(function () {
+        initialized = true;
+    });
+
+    var $window = $(window),
+        $document = $(document),
+        $html = $('html'),
+        $body = $('body'),
+        $navigation ,
+        $menu,
+        $ribbon,
+        $footer,
+        $contentAnimContainer;
+
+
+    (function cacheElements() {
+        $navigation = $('#header');
+        $menu = $('#left-panel');
+        $ribbon = $('#ribbon');
+        $footer = $('.page-footer');
+        if (_.every([$navigation, $menu, $ribbon, $footer], function ($it) {
+            return angular.isNumber($it.height())
+        })) {
+            initializedResolver.resolve();
+        } else {
+            $timeout(cacheElements, 100);
+        }
+    })();
+
+    (function applyConfigSkin(){
+        if(APP_CONFIG.smartSkin){
+            $body.removeClass(_.pluck(APP_CONFIG.skins, 'name').join(' '));
+            $body.addClass(APP_CONFIG.smartSkin);
+        }
+    })();
+
+
+    return {
+        priority: 2014,
+        restrict: 'A',
+        compile: function (tElement, tAttributes) {
+            tElement.removeAttr('smart-layout data-smart-layout');
+
+            var appViewHeight = 0 ,
+                appViewWidth = 0,
+                calcWidth,
+                calcHeight,
+                deltaX,
+                deltaY;
+
+            var forceResizeTrigger = false;
+
+            function resizeListener() {
+
+//                    full window height appHeight = Math.max($menu.outerHeight() - 10, getDocHeight() - 10);
+
+                var menuHeight = $body.hasClass('menu-on-top') && $menu.is(':visible') ? $menu.height() : 0;
+                var menuWidth = !$body.hasClass('menu-on-top') && $menu.is(':visible') ? $menu.width() + $menu.offset().left : 0;
+
+                var $content = $('#content');
+                var contentXPad = $content.outerWidth(true) - $content.width();
+                var contentYPad = $content.outerHeight(true) - $content.height();
+
+
+                calcWidth = $window.width() - menuWidth - contentXPad;
+                calcHeight = $window.height() - menuHeight - contentYPad - $navigation.height() - $ribbon.height() - $footer.height();
+
+                deltaX = appViewWidth - calcWidth;
+                deltaY = appViewHeight - calcHeight;
+                if (Math.abs(deltaX) || Math.abs(deltaY) || forceResizeTrigger) {
+
+                    //console.log('exec', calcWidth, calcHeight);
+                    $rootScope.$broadcast('$smartContentResize', {
+                        width: calcWidth,
+                        height: calcHeight,
+                        deltaX: deltaX,
+                        deltaY: deltaY
+                    });
+                    appViewWidth = calcWidth;
+                    appViewHeight = calcHeight;
+                    forceResizeTrigger = false;
+                }
+            }
+
+
+            var looping = false;
+            $interval(function () {
+                if (looping) loop();
+            }, 300);
+
+            var debouncedRun = _.debounce(function () {
+                run(300)
+            }, 300);
+
+            function run(delay) {
+                initializedResolver.promise.then(function () {
+                    attachOnResize(delay);
+                });
+            }
+
+            run(10);
+
+            function detachOnResize() {
+                looping = false;
+            }
+
+            function attachOnResize(delay) {
+                $timeout(function () {
+                    looping = true;
+                }, delay);
+            }
+
+            function loop() {
+                $body.toggleClass('mobile-view-activated', $window.width() < 979);
+
+                if ($window.width() < 979)
+                    $body.removeClass('minified');
+
+                resizeListener();
+            }
+
+            function handleHtmlId(toState) {
+                if (toState.data && toState.data.htmlId) $html.attr('id', toState.data.htmlId);
+                else $html.removeAttr('id');
+            }
+
+            $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+                //console.log(1, '$stateChangeStart', event, toState, toParams, fromState, fromParams);
+
+                handleHtmlId(toState);
+                detachOnResize();
+            });
+
+            // initialized with 1 cause we came here with one $viewContentLoading request
+            var viewContentLoading = 1;
+            $rootScope.$on('$viewContentLoading', function (event, viewConfig) {
+                //console.log(2, '$viewContentLoading', event, viewConfig);
+                viewContentLoading++;
+            });
+
+            $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+                //console.log(3, '$stateChangeSuccess', event, toState, toParams, fromState, fromParams);
+                forceResizeTrigger = true;
+            });
+
+            $rootScope.$on('$viewContentLoaded', function (event) {
+                //console.log(4, '$viewContentLoaded', event);
+                viewContentLoading--;
+
+                if (viewContentLoading == 0 && initialized) {
+                    debouncedRun();
+                }
+            });
+        }
+    }
+});
+
+
+
+'use strict';
+
+angular.module('SmartAdmin.Layout').directive('smartPageTitle', function ($rootScope, $timeout) {
+    return {
+        restrict: 'A',
+        compile: function (element, attributes) {
+            element.removeAttr('smart-page-title data-smart-page-title');
+
+            var defaultTitle = attributes.smartPageTitle;
+            var listener = function(event, toState, toParams, fromState, fromParams) {
+                var title = defaultTitle;
+                if (toState.data && toState.data.title) title = toState.data.title + ' | ' + title;
+                // Set asynchronously so page changes before title does
+                $timeout(function() {
+                    $('html head title').text(title);
+                });
+            };
+
+            $rootScope.$on('$stateChangeStart', listener);
+
+        }
+    }
+});
+'use strict';
+
+angular.module('SmartAdmin.Layout').directive('smartRouterAnimationWrap', function ($rootScope,$timeout) {
+    return {
+        restrict: 'A',
+        compile: function (element, attributes) {
+            element.removeAttr('smart-router-animation-wrap data-smart-router-animation-wrap wrap-for data-wrap-for');
+
+            element.addClass('router-animation-container');
+
+
+            var $loader = $('<div class="router-animation-loader"><i class="fa fa-gear fa-4x fa-spin"></i></div>')
+                .css({
+                    position: 'absolute',
+                    top: 50,
+                    left: 10
+                }).hide().appendTo(element);
+
+
+            var animateElementSelector = attributes.wrapFor;
+            var viewsToMatch = attributes.smartRouterAnimationWrap.split(/\s/);
+
+            var needRunContentViewAnimEnd = false;
+            function contentViewAnimStart() {
+                needRunContentViewAnimEnd = true;
+                element.css({
+                    height: element.height() + 'px',
+                    overflow: 'hidden'
+                }).addClass('active');
+                $loader.fadeIn();
+
+                $(animateElementSelector).addClass('animated faster fadeOutDown');
+            }
+
+            function contentViewAnimEnd() {
+                if(needRunContentViewAnimEnd){
+                    element.css({
+                        height: 'auto',
+                        overflow: 'visible'
+                    }).removeClass('active');
+                    
+
+                    $(animateElementSelector).addClass('animated faster fadeInUp');
+
+                    needRunContentViewAnimEnd = false;
+
+                    $timeout(function(){
+                        $(animateElementSelector).removeClass('animated');
+                    },10);
+                }
+                $loader.fadeOut();
+            }
+
+
+            var destroyForStart = $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+                var isAnimRequired = _.any(viewsToMatch, function(view){
+                   return _.has(toState.views, view) || _.has(fromState.views, view);
+                });
+                if(isAnimRequired){
+                    contentViewAnimStart()
+                }
+            });
+
+            var destroyForEnd = $rootScope.$on('$viewContentLoaded', function (event) {
+                contentViewAnimEnd();
+            });
+
+            element.on('$destroy', function(){
+                destroyForStart();
+                destroyForEnd();
+
+            });
+
+
+
+        }
+    }
+});
+angular.module('SmartAdmin.Layout').directive('speechRecognition', function ($log) {
+	'use strict';
+
+	$.root_ = $('body');
+	var root, commands;
+
+    root = window;
+    window.appConfig = window.appConfig || {};
+
+	if (appConfig.voice_command) {
+		commands = appConfig.commands;
+	}
+
+
+	/*
+	 * SMART VOICE
+	 * Author: MyOrange | @bootstraphunt
+	 * http://www.myorange.ca
+	 */
+
+	var SpeechRecognition = root.SpeechRecognition || root.webkitSpeechRecognition || root.mozSpeechRecognition || root.msSpeechRecognition || root.oSpeechRecognition;
+
+// ref: http://updates.html5rocks.com/2013/01/Voice-Driven-Web-Apps-Introduction-to-the-Web-Speech-API
+
+
+// function
+	$.speechApp = (function(speech) {
+
+		speech.start = function() {
+
+			// Add our commands to smartSpeechRecognition
+			smartSpeechRecognition.addCommands(commands);
+
+			if (smartSpeechRecognition) {
+				// activate plugin
+				smartSpeechRecognition.start();
+				// add btn class
+				$.root_.addClass("voice-command-active");
+				// play sound
+				$.speechApp.playON();
+				// set localStorage when switch is on manually
+				if (appConfig.voice_localStorage) {
+					localStorage.setItem('sm-setautovoice', 'true');
+				}
+
+			} else {
+				// if plugin not found
+				alert("speech plugin not loaded");
+			}
+
+		};
+		speech.stop = function() {
+
+			if (smartSpeechRecognition) {
+				// deactivate plugin
+				smartSpeechRecognition.abort();
+				// remove btn class
+				$.root_.removeClass("voice-command-active");
+				// sound
+				$.speechApp.playOFF();
+				// del localStorage when switch if off manually
+				if (appConfig.voice_localStorage) {
+					localStorage.setItem('sm-setautovoice', 'false');
+				}
+				// remove popover if visible
+				if ($('#speech-btn .popover').is(':visible')) {
+					$('#speech-btn .popover').fadeOut(250);
+				}
+			}
+
+		};
+
+		// play sound
+		speech.playON = function() {
+
+			var audioElement = document.createElement('audio');
+
+			if (navigator.userAgent.match('Firefox/'))
+				audioElement.setAttribute('src', appConfig.sound_path + 'voice_on' + ".ogg");
+			else
+				audioElement.setAttribute('src', appConfig.sound_path + 'voice_on' + ".mp3");
+
+			//$.get();
+			audioElement.addEventListener("load", function() {
+				audioElement.play();
+			}, true);
+
+			if (appConfig.sound_on) {
+				audioElement.pause();
+				audioElement.play();
+			}
+		};
+
+		speech.playOFF = function() {
+
+			var audioElement = document.createElement('audio');
+
+			if (navigator.userAgent.match('Firefox/'))
+				audioElement.setAttribute('src', appConfig.sound_path + 'voice_off' + ".ogg");
+			else
+				audioElement.setAttribute('src', appConfig.sound_path + 'voice_off' + ".mp3");
+
+			$.get();
+			audioElement.addEventListener("load", function() {
+				audioElement.play();
+			}, true);
+
+			if (appConfig.sound_on) {
+				audioElement.pause();
+				audioElement.play();
+			}
+		};
+
+		speech.playConfirmation = function() {
+
+			var audioElement = document.createElement('audio');
+
+			if (navigator.userAgent.match('Firefox/'))
+				audioElement.setAttribute('src', appConfig.sound_path + 'voice_alert' + ".ogg");
+			else
+				audioElement.setAttribute('src', appConfig.sound_path + 'voice_alert' + ".mp3");
+
+			$.get();
+			audioElement.addEventListener("load", function() {
+				audioElement.play();
+			}, true);
+
+			if (appConfig.sound_on) {
+				audioElement.pause();
+				audioElement.play();
+			}
+		};
+
+		return speech;
+
+	})({});
+
+
+
+	/*
+	 * SPEECH RECOGNITION ENGINE
+	 * Copyright (c) 2013 Tal Ater
+	 * Modified by MyOrange
+	 * All modifications made are hereby copyright (c) 2014 MyOrange
+	 */
+
+	(function(undefined) {"use strict";
+
+		// Check browser support
+		// This is done as early as possible, to make it as fast as possible for unsupported browsers
+		if (!SpeechRecognition) {
+			root.smartSpeechRecognition = null;
+			return undefined;
+		}
+
+		var commandsList = [], recognition, callbacks = {
+				start : [],
+				error : [],
+				end : [],
+				result : [],
+				resultMatch : [],
+				resultNoMatch : [],
+				errorNetwork : [],
+				errorPermissionBlocked : [],
+				errorPermissionDenied : []
+			}, autoRestart, lastStartedAt = 0,
+		//debugState = false, // decleared in app.appConfig.js
+		//appConfig.debugStyle = 'font-weight: bold; color: #00f;', // decleared in app.appConfig.js
+
+		// The command matching code is a modified version of Backbone.Router by Jeremy Ashkenas, under the MIT license.
+			optionalParam = /\s*\((.*?)\)\s*/g, optionalRegex = /(\(\?:[^)]+\))\?/g, namedParam = /(\(\?)?:\w+/g, splatParam = /\*\w+/g, escapeRegExp = /[\-{}\[\]+?.,\\\^$|#]/g, commandToRegExp = function(command) {
+				command = command.replace(escapeRegExp, '\\$&').replace(optionalParam, '(?:$1)?').replace(namedParam, function(match, optional) {
+					return optional ? match : '([^\\s]+)';
+				}).replace(splatParam, '(.*?)').replace(optionalRegex, '\\s*$1?\\s*');
+				return new RegExp('^' + command + '$', 'i');
+			};
+
+		// This method receives an array of callbacks to iterate over, and invokes each of them
+		var invokeCallbacks = function(callbacks) {
+			callbacks.forEach(function(callback) {
+				callback.callback.apply(callback.context);
+			});
+		};
+
+		var initIfNeeded = function() {
+			if (!isInitialized()) {
+				root.smartSpeechRecognition.init({}, false);
+			}
+		};
+
+		var isInitialized = function() {
+			return recognition !== undefined;
+		};
+
+		root.smartSpeechRecognition = {
+			// Initialize smartSpeechRecognition with a list of commands to recognize.
+			// e.g. smartSpeechRecognition.init({'hello :name': helloFunction})
+			// smartSpeechRecognition understands commands with named variables, splats, and optional words.
+			init : function(commands, resetCommands) {
+
+				// resetCommands defaults to true
+				if (resetCommands === undefined) {
+					resetCommands = true;
+				} else {
+					resetCommands = !!resetCommands;
+				}
+
+				// Abort previous instances of recognition already running
+				if (recognition && recognition.abort) {
+					recognition.abort();
+				}
+
+				// initiate SpeechRecognition
+				recognition = new SpeechRecognition();
+
+				// Set the max number of alternative transcripts to try and match with a command
+				recognition.maxAlternatives = 5;
+				recognition.continuous = true;
+				// Sets the language to the default 'en-US'. This can be changed with smartSpeechRecognition.setLanguage()
+				recognition.lang = appConfig.voice_command_lang || 'en-US';
+
+				recognition.onstart = function() {
+					invokeCallbacks(callbacks.start);
+					//debugState
+					if (appConfig.debugState) {
+						root.console.log('%c ✔ SUCCESS: User allowed access the microphone service to start ', appConfig.debugStyle_success);
+						root.console.log('Language setting is set to: ' + recognition.lang, appConfig.debugStyle);
+					}
+					$.root_.removeClass("service-not-allowed");
+					$.root_.addClass("service-allowed");
+				};
+
+				recognition.onerror = function(event) {
+					invokeCallbacks(callbacks.error);
+					switch (event.error) {
+						case 'network':
+							invokeCallbacks(callbacks.errorNetwork);
+							break;
+						case 'not-allowed':
+						case 'service-not-allowed':
+							// if permission to use the mic is denied, turn off auto-restart
+							autoRestart = false;
+							$.root_.removeClass("service-allowed");
+							$.root_.addClass("service-not-allowed");
+							//debugState
+							if (appConfig.debugState) {
+								root.console.log('%c WARNING: Microphone was not detected (either user denied access or it is not installed properly) ', appConfig.debugStyle_warning);
+							}
+							// determine if permission was denied by user or automatically.
+							if (new Date().getTime() - lastStartedAt < 200) {
+								invokeCallbacks(callbacks.errorPermissionBlocked);
+							} else {
+								invokeCallbacks(callbacks.errorPermissionDenied);
+								//console.log("You need your mic to be active")
+							}
+							break;
+					}
+				};
+
+				recognition.onend = function() {
+					invokeCallbacks(callbacks.end);
+					// smartSpeechRecognition will auto restart if it is closed automatically and not by user action.
+					if (autoRestart) {
+						// play nicely with the browser, and never restart smartSpeechRecognition automatically more than once per second
+						var timeSinceLastStart = new Date().getTime() - lastStartedAt;
+						if (timeSinceLastStart < 1000) {
+							setTimeout(root.smartSpeechRecognition.start, 1000 - timeSinceLastStart);
+						} else {
+							root.smartSpeechRecognition.start();
+						}
+					}
+				};
+
+				recognition.onresult = function(event) {
+					invokeCallbacks(callbacks.result);
+
+					var results = event.results[event.resultIndex], commandText;
+
+					// go over each of the 5 results and alternative results received (we've set maxAlternatives to 5 above)
+					for (var i = 0; i < results.length; i++) {
+						// the text recognized
+						commandText = results[i].transcript.trim();
+						if (appConfig.debugState) {
+							root.console.log('Speech recognized: %c' + commandText, appConfig.debugStyle);
+						}
+
+						// try and match recognized text to one of the commands on the list
+						for (var j = 0, l = commandsList.length; j < l; j++) {
+							var result = commandsList[j].command.exec(commandText);
+							if (result) {
+								var parameters = result.slice(1);
+								if (appConfig.debugState) {
+									root.console.log('command matched: %c' + commandsList[j].originalPhrase, appConfig.debugStyle);
+									if (parameters.length) {
+										root.console.log('with parameters', parameters);
+									}
+								}
+								// execute the matched command
+								commandsList[j].callback.apply(this, parameters);
+								invokeCallbacks(callbacks.resultMatch);
+
+								// for commands "sound on", "stop" and "mute" do not play sound or display message
+								//var myMatchedCommand = commandsList[j].originalPhrase;
+
+								var ignoreCallsFor = ["sound on", "mute", "stop"];
+
+								if (ignoreCallsFor.indexOf(commandsList[j].originalPhrase) < 0) {
+									// play sound when match found
+									console.log(2);
+									$.smallBox({
+										title : (commandsList[j].originalPhrase),
+										content : "loading...",
+										color : "#333",
+										sound_file : 'voice_alert',
+										timeout : 2000
+									});
+
+									if ($('#speech-btn .popover').is(':visible')) {
+										$('#speech-btn .popover').fadeOut(250);
+									}
+								}// end if
+
+								return true;
+							}
+						} // end for
+					}// end for
+
+					invokeCallbacks(callbacks.resultNoMatch);
+					//console.log("no match found for: " + commandText)
+					$.smallBox({
+						title : "Error: <strong>" + ' " ' + commandText + ' " ' + "</strong> no match found!",
+						content : "Please speak clearly into the microphone",
+						color : "#a90329",
+						timeout : 5000,
+						icon : "fa fa-microphone"
+					});
+					if ($('#speech-btn .popover').is(':visible')) {
+						$('#speech-btn .popover').fadeOut(250);
+					}
+					return false;
+				};
+
+				// build commands list
+				if (resetCommands) {
+					commandsList = [];
+				}
+				if (commands.length) {
+					this.addCommands(commands);
+				}
+			},
+
+			// Start listening (asking for permission first, if needed).
+			// Call this after you've initialized smartSpeechRecognition with commands.
+			// Receives an optional options object:
+			// { autoRestart: true }
+			start : function(options) {
+				initIfNeeded();
+				options = options || {};
+				if (options.autoRestart !== undefined) {
+					autoRestart = !!options.autoRestart;
+				} else {
+					autoRestart = true;
+				}
+				lastStartedAt = new Date().getTime();
+				recognition.start();
+			},
+
+			// abort the listening session (aka stop)
+			abort : function() {
+				autoRestart = false;
+				if (isInitialized) {
+					recognition.abort();
+				}
+			},
+
+			// Turn on output of debug messages to the console. Ugly, but super-handy!
+			debug : function(newState) {
+				if (arguments.length > 0) {
+					appConfig.debugState = !!newState;
+				} else {
+					appConfig.debugState = true;
+				}
+			},
+
+			// Set the language the user will speak in. If not called, defaults to 'en-US'.
+			// e.g. 'fr-FR' (French-France), 'es-CR' (Español-Costa Rica)
+			setLanguage : function(language) {
+				initIfNeeded();
+				recognition.lang = language;
+			},
+
+			// Add additional commands that smartSpeechRecognition will respond to. Similar in syntax to smartSpeechRecognition.init()
+			addCommands : function(commands) {
+				var cb, command;
+
+				initIfNeeded();
+
+				for (var phrase in commands) {
+					if (commands.hasOwnProperty(phrase)) {
+						cb = root[commands[phrase]] || commands[phrase];
+						if ( typeof cb !== 'function') {
+							continue;
+						}
+						//convert command to regex
+						command = commandToRegExp(phrase);
+
+						commandsList.push({
+							command : command,
+							callback : cb,
+							originalPhrase : phrase
+						});
+					}
+				}
+				if (appConfig.debugState) {
+					root.console.log('Commands successfully loaded: %c' + commandsList.length, appConfig.debugStyle);
+				}
+			},
+
+			// Remove existing commands. Called with a single phrase, array of phrases, or methodically. Pass no params to remove all commands.
+			removeCommands : function(commandsToRemove) {
+				if (commandsToRemove === undefined) {
+					commandsList = [];
+					return;
+				}
+				commandsToRemove = Array.isArray(commandsToRemove) ? commandsToRemove : [commandsToRemove];
+				commandsList = commandsList.filter(function(command) {
+					for (var i = 0; i < commandsToRemove.length; i++) {
+						if (commandsToRemove[i] === command.originalPhrase) {
+							return false;
+						}
+					}
+					return true;
+				});
+			},
+
+			// Lets the user add a callback of one of 9 types:
+			// start, error, end, result, resultMatch, resultNoMatch, errorNetwork, errorPermissionBlocked, errorPermissionDenied
+			// Can also optionally receive a context for the callback function as the third argument
+			addCallback : function(type, callback, context) {
+				if (callbacks[type] === undefined) {
+					return;
+				}
+				var cb = root[callback] || callback;
+				if ( typeof cb !== 'function') {
+					return;
+				}
+				callbacks[type].push({
+					callback : cb,
+					context : context || this
+				});
+			}
+		};
+
+	}).call(this);
+
+	var autoStart = function() {
+
+		smartSpeechRecognition.addCommands(commands);
+
+		if (smartSpeechRecognition) {
+			// activate plugin
+			smartSpeechRecognition.start();
+			// add btn class
+			$.root_.addClass("voice-command-active");
+			// set localStorage when switch is on manually
+			if (appConfig.voice_localStorage) {
+				localStorage.setItem('sm-setautovoice', 'true');
+			}
+
+		} else {
+			// if plugin not found
+			alert("speech plugin not loaded");
+		}
+	}
+// if already running with localstorage
+	if (SpeechRecognition && appConfig.voice_command && localStorage.getItem('sm-setautovoice') == 'true') {
+		autoStart();
+	}
+
+// auto start
+	if (SpeechRecognition && appConfig.voice_command_auto && appConfig.voice_command) {
+		autoStart();
+	}
+
+
+	var link = function(scope, element) {
+
+
+		if (SpeechRecognition && appConfig.voice_command) {
+
+			// create dynamic modal instance
+			var modal = $('<div class="modal fade" id="voiceModal" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"></div></div></div>');
+			// attach to body
+			modal.appendTo("body");
+
+			element.on("click", function(e) {
+
+            	if ($.root_.hasClass("voice-command-active")) {
+					$.speechApp.stop();
+					//$('#speech-btn > span > a > i').removeClass().addClass('fa fa-microphone-slash');
+				} else {
+					$.speechApp.start();
+					//add popover
+					$('#speech-btn .popover').fadeIn(350);
+					//$('#speech-btn > span > a > i').removeClass().addClass('fa fa-microphone')
+
+				}
+
+				e.preventDefault();
+
+            });
+
+			//remove popover
+			$(document).mouseup(function(e) {
+				if (!$('#speech-btn .popover').is(e.target) && $('#speech-btn .popover').has(e.target).length === 0) {
+					$('#speech-btn .popover').fadeOut(250);
+				}
+			});
+
+
+			$("#speech-help-btn").on("click", function() {
+				commands.help();
+			});
+
+		}
+		else {
+			$("#speech-btn").addClass("display-none");
+		}
+
+
+	}
+
+
+
+    return {
+        restrict: 'AE',
+        link: link
+    }
+});
+
+'use strict';
+
+angular.module('SmartAdmin.Layout').directive('stateBreadcrumbs', function ($rootScope, $state) {
+
+
+    return {
+        restrict: 'EA',
+        replace: true,
+        template: '<ol class="breadcrumb"><li>Home</li></ol>',
+        link: function (scope, element) {
+
+            function setBreadcrumbs(breadcrumbs) {
+                var html = '<li>Home</li>';
+                angular.forEach(breadcrumbs, function (crumb) {
+                    html += '<li>' + crumb + '</li>'
+                });
+                element.html(html)
+            }
+
+            function fetchBreadcrumbs(stateName, breadcrunbs) {
+
+                var state = $state.get(stateName);
+
+                if (state && state.data && state.data.title && breadcrunbs.indexOf(state.data.title) == -1) {
+                    breadcrunbs.unshift(state.data.title)
+                }
+
+                var parentName = stateName.replace(/.?\w+$/, '');
+                if (parentName) {
+                    return fetchBreadcrumbs(parentName, breadcrunbs);
+                } else {
+                    return breadcrunbs;
+                }
+            }
+
+            function processState(state) {
+                var breadcrumbs;
+                if (state.data && state.data.breadcrumbs) {
+                    breadcrumbs = state.data.breadcrumbs;
+                } else {
+                    breadcrumbs = fetchBreadcrumbs(state.name, []);
+                }
+                setBreadcrumbs(breadcrumbs);
+            }
+
+            processState($state.current);
+
+            $rootScope.$on('$stateChangeStart', function (event, state) {
+                processState(state);
+            })
+        }
+    }
+});
+'use strict';
+
+angular.module('SmartAdmin.Layout').factory('SmartCss', function ($rootScope, $timeout) {
+
+    var sheet = (function () {
+        // Create the <style> tag
+        var style = document.createElement("style");
+
+        // Add a media (and/or media query) here if you'd like!
+        // style.setAttribute("media", "screen")
+        // style.setAttribute("media", "@media only screen and (max-width : 1024px)")
+
+        // WebKit hack :(
+        style.appendChild(document.createTextNode(""));
+
+        // Add the <style> element to the page
+        document.head.appendChild(style);
+
+        return style.sheet;
+    })();
+
+    var _styles = {};
+
+
+    var SmartCss = {
+        writeRule: function(selector){
+            SmartCss.deleteRuleFor(selector);
+            if(_.has(_styles, selector)){
+                var css = selector + '{ ' + _.map(_styles[selector], function(v, k){
+                    return  k + ':' +  v + ';'
+                }).join(' ') +'}';
+                sheet.insertRule(css, _.size(_styles) - 1);
+            }
+        },
+        add: function (selector, property, value, delay) {
+            if(!_.has(_styles, selector))
+                _styles[selector] = {};
+
+            if(value == undefined || value == null || value == '')
+                delete _styles[selector][property];
+            else
+                _styles[selector][property] = value;
+
+
+            if(_.keys(_styles[selector]).length == 0)
+                delete _styles[selector];
+
+            if(!delay)
+                delay = 0;
+            $timeout(function(){
+                SmartCss.writeRule(selector);
+            }, delay);
+
+        },
+        remove: function(selector, property, delay){
+            SmartCss.add(selector, property, null, delay);
+        },
+        deleteRuleFor: function (selector) {
+            _(sheet.rules).forEach(function (rule, idx) {
+                if (rule.selectorText == selector) {
+                    sheet.deleteRule(idx);
+                }
+            });
+        },
+        appViewSize: null
+    };
+
+    $rootScope.$on('$smartContentResize', function (event, data) {
+        SmartCss.appViewSize = data;
+    });
+
+    return SmartCss;
+
+});
+
+
+
+
+'use strict';
+
+angular.module('SmartAdmin.Layout').factory('lazyScript', function($q, $http){
+
+    var cache = {};
+
+    function isPending(scriptName){
+        return (cache.hasOwnProperty(scriptName) && cache[scriptName].promise && cache[scriptName].promise.$$state.pending)
+    }
+
+    function isRegistered(scriptName){
+        return cache.hasOwnProperty(scriptName)
+    }
+    function loadScript(scriptName){
+        if(!cache[scriptName]){
+            cache[scriptName] = $q.defer();
+            var el = document.createElement( 'script' );
+            el.onload = function(script){
+                console.log('script is lazy loaded:', scriptName)
+                cache[scriptName].resolve(scriptName);
+            };
+            el.src = scriptName;
+            var x = document.getElementsByTagName('script')[0];
+            x.parentNode.insertBefore(el, x);
+            
+        }
+        return cache[scriptName].promise;
+
+    }
+
+    function register(scriptName){
+        if(isPending(scriptName)){
+            return cache[scriptName].promise
+        }
+        if(isRegistered(scriptName)){
+            return $q.resolve(scriptName);
+        } else {
+            var dfd = $q.defer();
+
+            loadScript(scriptName).then(function(){
+                dfd.resolve(scriptName);
+            });
+
+            return dfd.promise; 
+
+        }
+    }
+    return {
+        register: function (scripts) {
+            
+            var dfd = $q.defer();
+            var promises = [];
+            if (angular.isString(scripts))
+                scripts = [scripts];
+
+            angular.forEach(scripts, function(script){
+                promises.push(register(script));
+            })
+
+            $q.all(promises).then(function(resolves){
+                dfd.resolve(resolves);
+            })
+            return dfd.promise;
+
+        }
+    };
+});
+
+"use strict";
+
+angular.module('SmartAdmin.UI').directive('smartPopoverHtml', function () {
+    return {
+        restrict: "A",
+        link: function(scope, element, attributes){
+            var options = {};
+            options.content = attributes.smartPopoverHtml;
+            options.placement = attributes.popoverPlacement || 'top';
+            options.html = true;
+            options.trigger =  attributes.popoverTrigger || 'click';
+            options.title =  attributes.popoverTitle || attributes.title;
+            element.popover(options)
+
+        }
+
+    };
+});
+
+
+"use strict";
+
+angular.module('SmartAdmin.UI').directive('smartTooltipHtml', function () {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attributes){
+                element.tooltip({
+                    placement: attributes.tooltipPlacement || 'top',
+                    html: true,
+                    title: attributes.smartTooltipHtml
+                })
+            }
+        };
+    }
+);
+
 "use strict";
 
 angular.module('app.auth').directive('facebookSignin', function ($rootScope, ezfb) {
@@ -6362,6 +7764,21 @@ angular.module('app.graphs').directive('dygraphsNoRollTimestamp', function (Dygr
 });
 "use strict";
 
+
+angular.module('app.graphs').value('FlotConfig', {
+    "chartBorderColor": "#efefef",
+    "chartGridColor": "#DDD",
+    "charMain": "#E24913",
+    "chartSecond": "#6595b4",
+    "chartThird": "#FF9F01",
+    "chartFourth": "#7e9d3a",
+    "chartFifth": "#BD362F",
+    "chartMono": "#000"
+
+});
+
+"use strict";
+
 angular.module('app.graphs').directive('flotAutoUpdatingChart', function($timeout, FlotConfig){
     return {
         restrict: 'E',
@@ -6506,21 +7923,6 @@ angular.module('app.graphs').directive('flotBasic', function () {
         }
     }
 });
-"use strict";
-
-
-angular.module('app.graphs').value('FlotConfig', {
-    "chartBorderColor": "#efefef",
-    "chartGridColor": "#DDD",
-    "charMain": "#E24913",
-    "chartSecond": "#6595b4",
-    "chartThird": "#FF9F01",
-    "chartFourth": "#7e9d3a",
-    "chartFifth": "#BD362F",
-    "chartMono": "#000"
-
-});
-
 "use strict";
 
 angular.module('app.graphs').directive('flotFillChart', function(){
@@ -8468,1385 +9870,6 @@ angular.module('app.tables').directive('jqGrid', function ($compile) {
         }
     }
 });
-"use strict";
-
-angular.module('SmartAdmin.Layout').directive('fullScreen', function(){
-    return {
-        restrict: 'A',
-        link: function(scope, element){
-            var $body = $('body');
-            var toggleFullSceen = function(e){
-                if (!$body.hasClass("full-screen")) {
-                    $body.addClass("full-screen");
-                    if (document.documentElement.requestFullscreen) {
-                        document.documentElement.requestFullscreen();
-                    } else if (document.documentElement.mozRequestFullScreen) {
-                        document.documentElement.mozRequestFullScreen();
-                    } else if (document.documentElement.webkitRequestFullscreen) {
-                        document.documentElement.webkitRequestFullscreen();
-                    } else if (document.documentElement.msRequestFullscreen) {
-                        document.documentElement.msRequestFullscreen();
-                    }
-                } else {
-                    $body.removeClass("full-screen");
-                    if (document.exitFullscreen) {
-                        document.exitFullscreen();
-                    } else if (document.mozCancelFullScreen) {
-                        document.mozCancelFullScreen();
-                    } else if (document.webkitExitFullscreen) {
-                        document.webkitExitFullscreen();
-                    }
-                }
-            };
-
-            element.on('click', toggleFullSceen);
-
-        }
-    }
-});
-"use strict";
-
-angular.module('SmartAdmin.Layout').directive('minifyMenu', function(){
-    return {
-        restrict: 'A',
-        link: function(scope, element){
-                var $body = $('body');
-            var minifyMenu = function() {
-                if (!$body.hasClass("menu-on-top")) {
-                    $body.toggleClass("minified");
-                    $body.removeClass("hidden-menu");
-                    $('html').removeClass("hidden-menu-mobile-lock");
-                }
-            };
-
-            element.on('click', minifyMenu);
-        }
-    }
-})
-'use strict';
-
-angular.module('SmartAdmin.Layout').directive('reloadState', function ($rootScope) {
-    return {
-        restrict: 'A',
-        compile: function (tElement, tAttributes) {
-            tElement.removeAttr('reload-state data-reload-state');
-            tElement.on('click', function (e) {
-                $rootScope.$state.transitionTo($rootScope.$state.current, $rootScope.$stateParams, {
-                    reload: true,
-                    inherit: false,
-                    notify: true
-                });
-                e.preventDefault();
-            })
-        }
-    }
-});
-
-"use strict";
-
-angular.module('SmartAdmin.Layout').directive('resetWidgets', function($state){
-
-    return {
-        restrict: 'A',
-        link: function(scope, element){
-            element.on('click', function(){
-                $.SmartMessageBox({
-                    title : "<i class='fa fa-refresh' style='color:green'></i> Clear Local Storage",
-                    content : "Would you like to RESET all your saved widgets and clear LocalStorage?1",
-                    buttons : '[No][Yes]'
-                }, function(ButtonPressed) {
-                    if (ButtonPressed == "Yes" && localStorage) {
-                        localStorage.clear();
-                        location.reload()
-                    }
-                });
-
-            });
-        }
-    }
-
-});
-
-'use strict';
-
-angular.module('SmartAdmin.Layout').directive('searchMobile', function () {
-    return {
-        restrict: 'A',
-        compile: function (element, attributes) {
-            element.removeAttr('search-mobile data-search-mobile');
-
-            element.on('click', function (e) {
-                $('body').addClass('search-mobile');
-                e.preventDefault();
-            });
-
-            $('#cancel-search-js').on('click', function (e) {
-                $('body').removeClass('search-mobile');
-                e.preventDefault();
-            });
-        }
-    }
-});
-"use strict";
-
-angular.module('SmartAdmin.Layout').directive('toggleMenu', function(){
-    return {
-        restrict: 'A',
-        link: function(scope, element){
-            var $body = $('body');
-
-            var toggleMenu = function(){
-                if (!$body.hasClass("menu-on-top")){
-                    $('html').toggleClass("hidden-menu-mobile-lock");
-                    $body.toggleClass("hidden-menu");
-                    $body.removeClass("minified");
-                } else if ( $body.hasClass("menu-on-top") && $body.hasClass("mobile-view-activated") ) {
-                    $('html').toggleClass("hidden-menu-mobile-lock");
-                    $body.toggleClass("hidden-menu");
-                    $body.removeClass("minified");
-                }
-            };
-
-            element.on('click', toggleMenu);
-
-            scope.$on('requestToggleMenu', function(){
-                toggleMenu();
-            });
-        }
-    }
-});
-'use strict';
-
-angular.module('SmartAdmin.Layout').directive('bigBreadcrumbs', function () {
-    return {
-        restrict: 'EA',
-        replace: true,
-        template: '<div><h1 class="page-title txt-color-blueDark"></h1></div>',
-        scope: {
-            items: '=',
-            icon: '@'
-        },
-        link: function (scope, element) {
-            var first = _.first(scope.items);
-
-            var icon = scope.icon || 'home';
-            element.find('h1').append('<i class="fa-fw fa fa-' + icon + '"></i> ' + first);
-            _.rest(scope.items).forEach(function (item) {
-                element.find('h1').append(' <span>> ' + item + '</span>')
-            })
-        }
-    }
-});
-
-'use strict';
-
-angular.module('SmartAdmin.Layout').directive('dismisser', function () {
-    return {
-        restrict: 'A',
-        compile: function (element) {
-            element.removeAttr('dismisser data-dissmiser')
-            var closer = '<button class="close">&times;</button>';
-            element.prepend(closer);
-            element.on('click', '>button.close', function(){
-                element.fadeOut('fast',function(){ $(this).remove(); });
-
-            })
-        }
-    }
-});
-'use strict';
-
-angular.module('SmartAdmin.Layout').directive('hrefVoid', function () {
-    return {
-        restrict: 'A',
-        link: function (scope, element, attributes) {
-            element.attr('href','#');
-            element.on('click', function(e){
-                e.preventDefault();
-                e.stopPropagation();
-            })
-        }
-    }
-});
-'use strict';
-
-/*
-* Directive for toggling a ng-model with a button
-* Source: https://gist.github.com/aeife/9374784
-*/
-
-angular.module('SmartAdmin.Layout').directive('radioToggle', function ($log) {
-    return {
-        scope: {
-            model: "=ngModel",
-            value: "@value"
-        },
-        link: function(scope, element, attrs) {
-
-            element.parent().on('click', function() {
-                scope.model = scope.value;
-                scope.$apply();
-            });
-        }
-    }
-});
-/**
- * DETECT MOBILE DEVICES
- * Description: Detects mobile device - if any of the listed device is
- *
- * detected class is inserted to <tElement>.
- *
- *  (so far this is covering most hand held devices)
- */
-'use strict';
-
-angular.module('SmartAdmin.Layout').directive('smartDeviceDetect', function () {
-    return {
-        restrict: 'A',
-        compile: function (tElement, tAttributes) {
-            tElement.removeAttr('smart-device-detect data-smart-device-detect');
-
-            var isMobile = (/iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));
-            
-            tElement.toggleClass('desktop-detected', !isMobile);
-            tElement.toggleClass('mobile-detected', isMobile);
-
-
-        }
-    }
-});
-/**
- *
- * Description: Directive utilizes FastClick library.
- *
- *
- * FastClick is a simple, easy-to-use library for eliminating the
- * 300ms delay between a physical tap and the firing of a click event on mobile browsers.
- * FastClick doesn't attach any listeners on desktop browsers.
- * @link: https://github.com/ftlabs/fastclick
- *
- * On mobile devices 'needsclick' class is attached to <tElement>
- *
- */
-
-
-'use strict';
-
-angular.module('SmartAdmin.Layout').directive('smartFastClick', function () {
-    return {
-        restrict: 'A',
-        compile: function (tElement, tAttributes) {
-            tElement.removeAttr('smart-fast-click data-smart-fast-click');
-
-            FastClick.attach(tElement);
-
-            if(!FastClick.notNeeded())
-                tElement.addClass('needsclick')
-        }
-    }
-});
-
-'use strict';
-
-angular.module('SmartAdmin.Layout').directive('smartFitAppView', function ($rootScope, SmartCss) {
-    return {
-        restrict: 'A',
-        compile: function (element, attributes) {
-            element.removeAttr('smart-fit-app-view data-smart-fit-app-view leading-y data-leading-y');
-
-            var leadingY = attributes.leadingY ? parseInt(attributes.leadingY) : 0;
-
-            var selector = attributes.smartFitAppView;
-
-            if(SmartCss.appViewSize && SmartCss.appViewSize.height){
-                var height =  SmartCss.appViewSize.height - leadingY < 252 ? 252 :  SmartCss.appViewSize.height - leadingY;
-                SmartCss.add(selector, 'height', height+'px');
-            }
-
-            var listenerDestroy = $rootScope.$on('$smartContentResize', function (event, data) {
-                var height = data.height - leadingY < 252 ? 252 : data.height - leadingY;
-                SmartCss.add(selector, 'height', height+'px');
-            });
-
-            element.on('$destroy', function () {
-                listenerDestroy();
-                SmartCss.remove(selector, 'height');
-            });
-
-
-        }
-    }
-});
-
-"use strict";
-
-angular.module('SmartAdmin.Layout').directive('smartInclude', function () {
-        return {
-            replace: true,
-            restrict: 'A',
-            templateUrl: function (element, attr) {
-                return attr.smartInclude;
-            },
-            compile: function(element){
-                element[0].className = element[0].className.replace(/placeholder[^\s]+/g, '');
-            }
-        };
-    }
-);
-
-
-'use strict';
-
-angular.module('SmartAdmin.Layout').directive('smartLayout', function ($rootScope, $timeout, $interval, $q, SmartCss, APP_CONFIG) {
-    
-    var _debug = 0;
-
-    function getDocHeight() {
-        var D = document;
-        return Math.max(
-            D.body.scrollHeight, D.documentElement.scrollHeight,
-            D.body.offsetHeight, D.documentElement.offsetHeight,
-            D.body.clientHeight, D.documentElement.clientHeight
-        );
-    }
-
-    var initialized = false, 
-           initializedResolver = $q.defer();
-    initializedResolver.promise.then(function () {
-        initialized = true;
-    });
-
-    var $window = $(window),
-        $document = $(document),
-        $html = $('html'),
-        $body = $('body'),
-        $navigation ,
-        $menu,
-        $ribbon,
-        $footer,
-        $contentAnimContainer;
-
-
-    (function cacheElements() {
-        $navigation = $('#header');
-        $menu = $('#left-panel');
-        $ribbon = $('#ribbon');
-        $footer = $('.page-footer');
-        if (_.every([$navigation, $menu, $ribbon, $footer], function ($it) {
-            return angular.isNumber($it.height())
-        })) {
-            initializedResolver.resolve();
-        } else {
-            $timeout(cacheElements, 100);
-        }
-    })();
-
-    (function applyConfigSkin(){
-        if(APP_CONFIG.smartSkin){
-            $body.removeClass(_.pluck(APP_CONFIG.skins, 'name').join(' '));
-            $body.addClass(APP_CONFIG.smartSkin);
-        }
-    })();
-
-
-    return {
-        priority: 2014,
-        restrict: 'A',
-        compile: function (tElement, tAttributes) {
-            tElement.removeAttr('smart-layout data-smart-layout');
-
-            var appViewHeight = 0 ,
-                appViewWidth = 0,
-                calcWidth,
-                calcHeight,
-                deltaX,
-                deltaY;
-
-            var forceResizeTrigger = false;
-
-            function resizeListener() {
-
-//                    full window height appHeight = Math.max($menu.outerHeight() - 10, getDocHeight() - 10);
-
-                var menuHeight = $body.hasClass('menu-on-top') && $menu.is(':visible') ? $menu.height() : 0;
-                var menuWidth = !$body.hasClass('menu-on-top') && $menu.is(':visible') ? $menu.width() + $menu.offset().left : 0;
-
-                var $content = $('#content');
-                var contentXPad = $content.outerWidth(true) - $content.width();
-                var contentYPad = $content.outerHeight(true) - $content.height();
-
-
-                calcWidth = $window.width() - menuWidth - contentXPad;
-                calcHeight = $window.height() - menuHeight - contentYPad - $navigation.height() - $ribbon.height() - $footer.height();
-
-                deltaX = appViewWidth - calcWidth;
-                deltaY = appViewHeight - calcHeight;
-                if (Math.abs(deltaX) || Math.abs(deltaY) || forceResizeTrigger) {
-
-                    //console.log('exec', calcWidth, calcHeight);
-                    $rootScope.$broadcast('$smartContentResize', {
-                        width: calcWidth,
-                        height: calcHeight,
-                        deltaX: deltaX,
-                        deltaY: deltaY
-                    });
-                    appViewWidth = calcWidth;
-                    appViewHeight = calcHeight;
-                    forceResizeTrigger = false;
-                }
-            }
-
-
-            var looping = false;
-            $interval(function () {
-                if (looping) loop();
-            }, 300);
-
-            var debouncedRun = _.debounce(function () {
-                run(300)
-            }, 300);
-
-            function run(delay) {
-                initializedResolver.promise.then(function () {
-                    attachOnResize(delay);
-                });
-            }
-
-            run(10);
-
-            function detachOnResize() {
-                looping = false;
-            }
-
-            function attachOnResize(delay) {
-                $timeout(function () {
-                    looping = true;
-                }, delay);
-            }
-
-            function loop() {
-                $body.toggleClass('mobile-view-activated', $window.width() < 979);
-
-                if ($window.width() < 979)
-                    $body.removeClass('minified');
-
-                resizeListener();
-            }
-
-            function handleHtmlId(toState) {
-                if (toState.data && toState.data.htmlId) $html.attr('id', toState.data.htmlId);
-                else $html.removeAttr('id');
-            }
-
-            $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-                //console.log(1, '$stateChangeStart', event, toState, toParams, fromState, fromParams);
-
-                handleHtmlId(toState);
-                detachOnResize();
-            });
-
-            // initialized with 1 cause we came here with one $viewContentLoading request
-            var viewContentLoading = 1;
-            $rootScope.$on('$viewContentLoading', function (event, viewConfig) {
-                //console.log(2, '$viewContentLoading', event, viewConfig);
-                viewContentLoading++;
-            });
-
-            $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-                //console.log(3, '$stateChangeSuccess', event, toState, toParams, fromState, fromParams);
-                forceResizeTrigger = true;
-            });
-
-            $rootScope.$on('$viewContentLoaded', function (event) {
-                //console.log(4, '$viewContentLoaded', event);
-                viewContentLoading--;
-
-                if (viewContentLoading == 0 && initialized) {
-                    debouncedRun();
-                }
-            });
-        }
-    }
-});
-
-
-
-'use strict';
-
-angular.module('SmartAdmin.Layout').directive('smartPageTitle', function ($rootScope, $timeout) {
-    return {
-        restrict: 'A',
-        compile: function (element, attributes) {
-            element.removeAttr('smart-page-title data-smart-page-title');
-
-            var defaultTitle = attributes.smartPageTitle;
-            var listener = function(event, toState, toParams, fromState, fromParams) {
-                var title = defaultTitle;
-                if (toState.data && toState.data.title) title = toState.data.title + ' | ' + title;
-                // Set asynchronously so page changes before title does
-                $timeout(function() {
-                    $('html head title').text(title);
-                });
-            };
-
-            $rootScope.$on('$stateChangeStart', listener);
-
-        }
-    }
-});
-'use strict';
-
-angular.module('SmartAdmin.Layout').directive('smartRouterAnimationWrap', function ($rootScope,$timeout) {
-    return {
-        restrict: 'A',
-        compile: function (element, attributes) {
-            element.removeAttr('smart-router-animation-wrap data-smart-router-animation-wrap wrap-for data-wrap-for');
-
-            element.addClass('router-animation-container');
-
-
-            var $loader = $('<div class="router-animation-loader"><i class="fa fa-gear fa-4x fa-spin"></i></div>')
-                .css({
-                    position: 'absolute',
-                    top: 50,
-                    left: 10
-                }).hide().appendTo(element);
-
-
-            var animateElementSelector = attributes.wrapFor;
-            var viewsToMatch = attributes.smartRouterAnimationWrap.split(/\s/);
-
-            var needRunContentViewAnimEnd = false;
-            function contentViewAnimStart() {
-                needRunContentViewAnimEnd = true;
-                element.css({
-                    height: element.height() + 'px',
-                    overflow: 'hidden'
-                }).addClass('active');
-                $loader.fadeIn();
-
-                $(animateElementSelector).addClass('animated faster fadeOutDown');
-            }
-
-            function contentViewAnimEnd() {
-                if(needRunContentViewAnimEnd){
-                    element.css({
-                        height: 'auto',
-                        overflow: 'visible'
-                    }).removeClass('active');
-                    
-
-                    $(animateElementSelector).addClass('animated faster fadeInUp');
-
-                    needRunContentViewAnimEnd = false;
-
-                    $timeout(function(){
-                        $(animateElementSelector).removeClass('animated');
-                    },10);
-                }
-                $loader.fadeOut();
-            }
-
-
-            var destroyForStart = $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-                var isAnimRequired = _.any(viewsToMatch, function(view){
-                   return _.has(toState.views, view) || _.has(fromState.views, view);
-                });
-                if(isAnimRequired){
-                    contentViewAnimStart()
-                }
-            });
-
-            var destroyForEnd = $rootScope.$on('$viewContentLoaded', function (event) {
-                contentViewAnimEnd();
-            });
-
-            element.on('$destroy', function(){
-                destroyForStart();
-                destroyForEnd();
-
-            });
-
-
-
-        }
-    }
-});
-angular.module('SmartAdmin.Layout').directive('speechRecognition', function ($log) {
-	'use strict';
-
-	$.root_ = $('body');
-	var root, commands;
-
-    root = window;
-    window.appConfig = window.appConfig || {};
-
-	if (appConfig.voice_command) {
-		commands = appConfig.commands;
-	}
-
-
-	/*
-	 * SMART VOICE
-	 * Author: MyOrange | @bootstraphunt
-	 * http://www.myorange.ca
-	 */
-
-	var SpeechRecognition = root.SpeechRecognition || root.webkitSpeechRecognition || root.mozSpeechRecognition || root.msSpeechRecognition || root.oSpeechRecognition;
-
-// ref: http://updates.html5rocks.com/2013/01/Voice-Driven-Web-Apps-Introduction-to-the-Web-Speech-API
-
-
-// function
-	$.speechApp = (function(speech) {
-
-		speech.start = function() {
-
-			// Add our commands to smartSpeechRecognition
-			smartSpeechRecognition.addCommands(commands);
-
-			if (smartSpeechRecognition) {
-				// activate plugin
-				smartSpeechRecognition.start();
-				// add btn class
-				$.root_.addClass("voice-command-active");
-				// play sound
-				$.speechApp.playON();
-				// set localStorage when switch is on manually
-				if (appConfig.voice_localStorage) {
-					localStorage.setItem('sm-setautovoice', 'true');
-				}
-
-			} else {
-				// if plugin not found
-				alert("speech plugin not loaded");
-			}
-
-		};
-		speech.stop = function() {
-
-			if (smartSpeechRecognition) {
-				// deactivate plugin
-				smartSpeechRecognition.abort();
-				// remove btn class
-				$.root_.removeClass("voice-command-active");
-				// sound
-				$.speechApp.playOFF();
-				// del localStorage when switch if off manually
-				if (appConfig.voice_localStorage) {
-					localStorage.setItem('sm-setautovoice', 'false');
-				}
-				// remove popover if visible
-				if ($('#speech-btn .popover').is(':visible')) {
-					$('#speech-btn .popover').fadeOut(250);
-				}
-			}
-
-		};
-
-		// play sound
-		speech.playON = function() {
-
-			var audioElement = document.createElement('audio');
-
-			if (navigator.userAgent.match('Firefox/'))
-				audioElement.setAttribute('src', appConfig.sound_path + 'voice_on' + ".ogg");
-			else
-				audioElement.setAttribute('src', appConfig.sound_path + 'voice_on' + ".mp3");
-
-			//$.get();
-			audioElement.addEventListener("load", function() {
-				audioElement.play();
-			}, true);
-
-			if (appConfig.sound_on) {
-				audioElement.pause();
-				audioElement.play();
-			}
-		};
-
-		speech.playOFF = function() {
-
-			var audioElement = document.createElement('audio');
-
-			if (navigator.userAgent.match('Firefox/'))
-				audioElement.setAttribute('src', appConfig.sound_path + 'voice_off' + ".ogg");
-			else
-				audioElement.setAttribute('src', appConfig.sound_path + 'voice_off' + ".mp3");
-
-			$.get();
-			audioElement.addEventListener("load", function() {
-				audioElement.play();
-			}, true);
-
-			if (appConfig.sound_on) {
-				audioElement.pause();
-				audioElement.play();
-			}
-		};
-
-		speech.playConfirmation = function() {
-
-			var audioElement = document.createElement('audio');
-
-			if (navigator.userAgent.match('Firefox/'))
-				audioElement.setAttribute('src', appConfig.sound_path + 'voice_alert' + ".ogg");
-			else
-				audioElement.setAttribute('src', appConfig.sound_path + 'voice_alert' + ".mp3");
-
-			$.get();
-			audioElement.addEventListener("load", function() {
-				audioElement.play();
-			}, true);
-
-			if (appConfig.sound_on) {
-				audioElement.pause();
-				audioElement.play();
-			}
-		};
-
-		return speech;
-
-	})({});
-
-
-
-	/*
-	 * SPEECH RECOGNITION ENGINE
-	 * Copyright (c) 2013 Tal Ater
-	 * Modified by MyOrange
-	 * All modifications made are hereby copyright (c) 2014 MyOrange
-	 */
-
-	(function(undefined) {"use strict";
-
-		// Check browser support
-		// This is done as early as possible, to make it as fast as possible for unsupported browsers
-		if (!SpeechRecognition) {
-			root.smartSpeechRecognition = null;
-			return undefined;
-		}
-
-		var commandsList = [], recognition, callbacks = {
-				start : [],
-				error : [],
-				end : [],
-				result : [],
-				resultMatch : [],
-				resultNoMatch : [],
-				errorNetwork : [],
-				errorPermissionBlocked : [],
-				errorPermissionDenied : []
-			}, autoRestart, lastStartedAt = 0,
-		//debugState = false, // decleared in app.appConfig.js
-		//appConfig.debugStyle = 'font-weight: bold; color: #00f;', // decleared in app.appConfig.js
-
-		// The command matching code is a modified version of Backbone.Router by Jeremy Ashkenas, under the MIT license.
-			optionalParam = /\s*\((.*?)\)\s*/g, optionalRegex = /(\(\?:[^)]+\))\?/g, namedParam = /(\(\?)?:\w+/g, splatParam = /\*\w+/g, escapeRegExp = /[\-{}\[\]+?.,\\\^$|#]/g, commandToRegExp = function(command) {
-				command = command.replace(escapeRegExp, '\\$&').replace(optionalParam, '(?:$1)?').replace(namedParam, function(match, optional) {
-					return optional ? match : '([^\\s]+)';
-				}).replace(splatParam, '(.*?)').replace(optionalRegex, '\\s*$1?\\s*');
-				return new RegExp('^' + command + '$', 'i');
-			};
-
-		// This method receives an array of callbacks to iterate over, and invokes each of them
-		var invokeCallbacks = function(callbacks) {
-			callbacks.forEach(function(callback) {
-				callback.callback.apply(callback.context);
-			});
-		};
-
-		var initIfNeeded = function() {
-			if (!isInitialized()) {
-				root.smartSpeechRecognition.init({}, false);
-			}
-		};
-
-		var isInitialized = function() {
-			return recognition !== undefined;
-		};
-
-		root.smartSpeechRecognition = {
-			// Initialize smartSpeechRecognition with a list of commands to recognize.
-			// e.g. smartSpeechRecognition.init({'hello :name': helloFunction})
-			// smartSpeechRecognition understands commands with named variables, splats, and optional words.
-			init : function(commands, resetCommands) {
-
-				// resetCommands defaults to true
-				if (resetCommands === undefined) {
-					resetCommands = true;
-				} else {
-					resetCommands = !!resetCommands;
-				}
-
-				// Abort previous instances of recognition already running
-				if (recognition && recognition.abort) {
-					recognition.abort();
-				}
-
-				// initiate SpeechRecognition
-				recognition = new SpeechRecognition();
-
-				// Set the max number of alternative transcripts to try and match with a command
-				recognition.maxAlternatives = 5;
-				recognition.continuous = true;
-				// Sets the language to the default 'en-US'. This can be changed with smartSpeechRecognition.setLanguage()
-				recognition.lang = appConfig.voice_command_lang || 'en-US';
-
-				recognition.onstart = function() {
-					invokeCallbacks(callbacks.start);
-					//debugState
-					if (appConfig.debugState) {
-						root.console.log('%c ✔ SUCCESS: User allowed access the microphone service to start ', appConfig.debugStyle_success);
-						root.console.log('Language setting is set to: ' + recognition.lang, appConfig.debugStyle);
-					}
-					$.root_.removeClass("service-not-allowed");
-					$.root_.addClass("service-allowed");
-				};
-
-				recognition.onerror = function(event) {
-					invokeCallbacks(callbacks.error);
-					switch (event.error) {
-						case 'network':
-							invokeCallbacks(callbacks.errorNetwork);
-							break;
-						case 'not-allowed':
-						case 'service-not-allowed':
-							// if permission to use the mic is denied, turn off auto-restart
-							autoRestart = false;
-							$.root_.removeClass("service-allowed");
-							$.root_.addClass("service-not-allowed");
-							//debugState
-							if (appConfig.debugState) {
-								root.console.log('%c WARNING: Microphone was not detected (either user denied access or it is not installed properly) ', appConfig.debugStyle_warning);
-							}
-							// determine if permission was denied by user or automatically.
-							if (new Date().getTime() - lastStartedAt < 200) {
-								invokeCallbacks(callbacks.errorPermissionBlocked);
-							} else {
-								invokeCallbacks(callbacks.errorPermissionDenied);
-								//console.log("You need your mic to be active")
-							}
-							break;
-					}
-				};
-
-				recognition.onend = function() {
-					invokeCallbacks(callbacks.end);
-					// smartSpeechRecognition will auto restart if it is closed automatically and not by user action.
-					if (autoRestart) {
-						// play nicely with the browser, and never restart smartSpeechRecognition automatically more than once per second
-						var timeSinceLastStart = new Date().getTime() - lastStartedAt;
-						if (timeSinceLastStart < 1000) {
-							setTimeout(root.smartSpeechRecognition.start, 1000 - timeSinceLastStart);
-						} else {
-							root.smartSpeechRecognition.start();
-						}
-					}
-				};
-
-				recognition.onresult = function(event) {
-					invokeCallbacks(callbacks.result);
-
-					var results = event.results[event.resultIndex], commandText;
-
-					// go over each of the 5 results and alternative results received (we've set maxAlternatives to 5 above)
-					for (var i = 0; i < results.length; i++) {
-						// the text recognized
-						commandText = results[i].transcript.trim();
-						if (appConfig.debugState) {
-							root.console.log('Speech recognized: %c' + commandText, appConfig.debugStyle);
-						}
-
-						// try and match recognized text to one of the commands on the list
-						for (var j = 0, l = commandsList.length; j < l; j++) {
-							var result = commandsList[j].command.exec(commandText);
-							if (result) {
-								var parameters = result.slice(1);
-								if (appConfig.debugState) {
-									root.console.log('command matched: %c' + commandsList[j].originalPhrase, appConfig.debugStyle);
-									if (parameters.length) {
-										root.console.log('with parameters', parameters);
-									}
-								}
-								// execute the matched command
-								commandsList[j].callback.apply(this, parameters);
-								invokeCallbacks(callbacks.resultMatch);
-
-								// for commands "sound on", "stop" and "mute" do not play sound or display message
-								//var myMatchedCommand = commandsList[j].originalPhrase;
-
-								var ignoreCallsFor = ["sound on", "mute", "stop"];
-
-								if (ignoreCallsFor.indexOf(commandsList[j].originalPhrase) < 0) {
-									// play sound when match found
-									console.log(2);
-									$.smallBox({
-										title : (commandsList[j].originalPhrase),
-										content : "loading...",
-										color : "#333",
-										sound_file : 'voice_alert',
-										timeout : 2000
-									});
-
-									if ($('#speech-btn .popover').is(':visible')) {
-										$('#speech-btn .popover').fadeOut(250);
-									}
-								}// end if
-
-								return true;
-							}
-						} // end for
-					}// end for
-
-					invokeCallbacks(callbacks.resultNoMatch);
-					//console.log("no match found for: " + commandText)
-					$.smallBox({
-						title : "Error: <strong>" + ' " ' + commandText + ' " ' + "</strong> no match found!",
-						content : "Please speak clearly into the microphone",
-						color : "#a90329",
-						timeout : 5000,
-						icon : "fa fa-microphone"
-					});
-					if ($('#speech-btn .popover').is(':visible')) {
-						$('#speech-btn .popover').fadeOut(250);
-					}
-					return false;
-				};
-
-				// build commands list
-				if (resetCommands) {
-					commandsList = [];
-				}
-				if (commands.length) {
-					this.addCommands(commands);
-				}
-			},
-
-			// Start listening (asking for permission first, if needed).
-			// Call this after you've initialized smartSpeechRecognition with commands.
-			// Receives an optional options object:
-			// { autoRestart: true }
-			start : function(options) {
-				initIfNeeded();
-				options = options || {};
-				if (options.autoRestart !== undefined) {
-					autoRestart = !!options.autoRestart;
-				} else {
-					autoRestart = true;
-				}
-				lastStartedAt = new Date().getTime();
-				recognition.start();
-			},
-
-			// abort the listening session (aka stop)
-			abort : function() {
-				autoRestart = false;
-				if (isInitialized) {
-					recognition.abort();
-				}
-			},
-
-			// Turn on output of debug messages to the console. Ugly, but super-handy!
-			debug : function(newState) {
-				if (arguments.length > 0) {
-					appConfig.debugState = !!newState;
-				} else {
-					appConfig.debugState = true;
-				}
-			},
-
-			// Set the language the user will speak in. If not called, defaults to 'en-US'.
-			// e.g. 'fr-FR' (French-France), 'es-CR' (Español-Costa Rica)
-			setLanguage : function(language) {
-				initIfNeeded();
-				recognition.lang = language;
-			},
-
-			// Add additional commands that smartSpeechRecognition will respond to. Similar in syntax to smartSpeechRecognition.init()
-			addCommands : function(commands) {
-				var cb, command;
-
-				initIfNeeded();
-
-				for (var phrase in commands) {
-					if (commands.hasOwnProperty(phrase)) {
-						cb = root[commands[phrase]] || commands[phrase];
-						if ( typeof cb !== 'function') {
-							continue;
-						}
-						//convert command to regex
-						command = commandToRegExp(phrase);
-
-						commandsList.push({
-							command : command,
-							callback : cb,
-							originalPhrase : phrase
-						});
-					}
-				}
-				if (appConfig.debugState) {
-					root.console.log('Commands successfully loaded: %c' + commandsList.length, appConfig.debugStyle);
-				}
-			},
-
-			// Remove existing commands. Called with a single phrase, array of phrases, or methodically. Pass no params to remove all commands.
-			removeCommands : function(commandsToRemove) {
-				if (commandsToRemove === undefined) {
-					commandsList = [];
-					return;
-				}
-				commandsToRemove = Array.isArray(commandsToRemove) ? commandsToRemove : [commandsToRemove];
-				commandsList = commandsList.filter(function(command) {
-					for (var i = 0; i < commandsToRemove.length; i++) {
-						if (commandsToRemove[i] === command.originalPhrase) {
-							return false;
-						}
-					}
-					return true;
-				});
-			},
-
-			// Lets the user add a callback of one of 9 types:
-			// start, error, end, result, resultMatch, resultNoMatch, errorNetwork, errorPermissionBlocked, errorPermissionDenied
-			// Can also optionally receive a context for the callback function as the third argument
-			addCallback : function(type, callback, context) {
-				if (callbacks[type] === undefined) {
-					return;
-				}
-				var cb = root[callback] || callback;
-				if ( typeof cb !== 'function') {
-					return;
-				}
-				callbacks[type].push({
-					callback : cb,
-					context : context || this
-				});
-			}
-		};
-
-	}).call(this);
-
-	var autoStart = function() {
-
-		smartSpeechRecognition.addCommands(commands);
-
-		if (smartSpeechRecognition) {
-			// activate plugin
-			smartSpeechRecognition.start();
-			// add btn class
-			$.root_.addClass("voice-command-active");
-			// set localStorage when switch is on manually
-			if (appConfig.voice_localStorage) {
-				localStorage.setItem('sm-setautovoice', 'true');
-			}
-
-		} else {
-			// if plugin not found
-			alert("speech plugin not loaded");
-		}
-	}
-// if already running with localstorage
-	if (SpeechRecognition && appConfig.voice_command && localStorage.getItem('sm-setautovoice') == 'true') {
-		autoStart();
-	}
-
-// auto start
-	if (SpeechRecognition && appConfig.voice_command_auto && appConfig.voice_command) {
-		autoStart();
-	}
-
-
-	var link = function(scope, element) {
-
-
-		if (SpeechRecognition && appConfig.voice_command) {
-
-			// create dynamic modal instance
-			var modal = $('<div class="modal fade" id="voiceModal" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"></div></div></div>');
-			// attach to body
-			modal.appendTo("body");
-
-			element.on("click", function(e) {
-
-            	if ($.root_.hasClass("voice-command-active")) {
-					$.speechApp.stop();
-					//$('#speech-btn > span > a > i').removeClass().addClass('fa fa-microphone-slash');
-				} else {
-					$.speechApp.start();
-					//add popover
-					$('#speech-btn .popover').fadeIn(350);
-					//$('#speech-btn > span > a > i').removeClass().addClass('fa fa-microphone')
-
-				}
-
-				e.preventDefault();
-
-            });
-
-			//remove popover
-			$(document).mouseup(function(e) {
-				if (!$('#speech-btn .popover').is(e.target) && $('#speech-btn .popover').has(e.target).length === 0) {
-					$('#speech-btn .popover').fadeOut(250);
-				}
-			});
-
-
-			$("#speech-help-btn").on("click", function() {
-				commands.help();
-			});
-
-		}
-		else {
-			$("#speech-btn").addClass("display-none");
-		}
-
-
-	}
-
-
-
-    return {
-        restrict: 'AE',
-        link: link
-    }
-});
-
-'use strict';
-
-angular.module('SmartAdmin.Layout').directive('stateBreadcrumbs', function ($rootScope, $state) {
-
-
-    return {
-        restrict: 'EA',
-        replace: true,
-        template: '<ol class="breadcrumb"><li>Home</li></ol>',
-        link: function (scope, element) {
-
-            function setBreadcrumbs(breadcrumbs) {
-                var html = '<li>Home</li>';
-                angular.forEach(breadcrumbs, function (crumb) {
-                    html += '<li>' + crumb + '</li>'
-                });
-                element.html(html)
-            }
-
-            function fetchBreadcrumbs(stateName, breadcrunbs) {
-
-                var state = $state.get(stateName);
-
-                if (state && state.data && state.data.title && breadcrunbs.indexOf(state.data.title) == -1) {
-                    breadcrunbs.unshift(state.data.title)
-                }
-
-                var parentName = stateName.replace(/.?\w+$/, '');
-                if (parentName) {
-                    return fetchBreadcrumbs(parentName, breadcrunbs);
-                } else {
-                    return breadcrunbs;
-                }
-            }
-
-            function processState(state) {
-                var breadcrumbs;
-                if (state.data && state.data.breadcrumbs) {
-                    breadcrumbs = state.data.breadcrumbs;
-                } else {
-                    breadcrumbs = fetchBreadcrumbs(state.name, []);
-                }
-                setBreadcrumbs(breadcrumbs);
-            }
-
-            processState($state.current);
-
-            $rootScope.$on('$stateChangeStart', function (event, state) {
-                processState(state);
-            })
-        }
-    }
-});
-'use strict';
-
-angular.module('SmartAdmin.Layout').factory('lazyScript', function($q, $http){
-
-    var cache = {};
-
-    function isPending(scriptName){
-        return (cache.hasOwnProperty(scriptName) && cache[scriptName].promise && cache[scriptName].promise.$$state.pending)
-    }
-
-    function isRegistered(scriptName){
-        return cache.hasOwnProperty(scriptName)
-    }
-    function loadScript(scriptName){
-        if(!cache[scriptName]){
-            cache[scriptName] = $q.defer();
-            var el = document.createElement( 'script' );
-            el.onload = function(script){
-                console.log('script is lazy loaded:', scriptName)
-                cache[scriptName].resolve(scriptName);
-            };
-            el.src = scriptName;
-            var x = document.getElementsByTagName('script')[0];
-            x.parentNode.insertBefore(el, x);
-            
-        }
-        return cache[scriptName].promise;
-
-    }
-
-    function register(scriptName){
-        if(isPending(scriptName)){
-            return cache[scriptName].promise
-        }
-        if(isRegistered(scriptName)){
-            return $q.resolve(scriptName);
-        } else {
-            var dfd = $q.defer();
-
-            loadScript(scriptName).then(function(){
-                dfd.resolve(scriptName);
-            });
-
-            return dfd.promise; 
-
-        }
-    }
-    return {
-        register: function (scripts) {
-            
-            var dfd = $q.defer();
-            var promises = [];
-            if (angular.isString(scripts))
-                scripts = [scripts];
-
-            angular.forEach(scripts, function(script){
-                promises.push(register(script));
-            })
-
-            $q.all(promises).then(function(resolves){
-                dfd.resolve(resolves);
-            })
-            return dfd.promise;
-
-        }
-    };
-});
-'use strict';
-
-angular.module('SmartAdmin.Layout').factory('SmartCss', function ($rootScope, $timeout) {
-
-    var sheet = (function () {
-        // Create the <style> tag
-        var style = document.createElement("style");
-
-        // Add a media (and/or media query) here if you'd like!
-        // style.setAttribute("media", "screen")
-        // style.setAttribute("media", "@media only screen and (max-width : 1024px)")
-
-        // WebKit hack :(
-        style.appendChild(document.createTextNode(""));
-
-        // Add the <style> element to the page
-        document.head.appendChild(style);
-
-        return style.sheet;
-    })();
-
-    var _styles = {};
-
-
-    var SmartCss = {
-        writeRule: function(selector){
-            SmartCss.deleteRuleFor(selector);
-            if(_.has(_styles, selector)){
-                var css = selector + '{ ' + _.map(_styles[selector], function(v, k){
-                    return  k + ':' +  v + ';'
-                }).join(' ') +'}';
-                sheet.insertRule(css, _.size(_styles) - 1);
-            }
-        },
-        add: function (selector, property, value, delay) {
-            if(!_.has(_styles, selector))
-                _styles[selector] = {};
-
-            if(value == undefined || value == null || value == '')
-                delete _styles[selector][property];
-            else
-                _styles[selector][property] = value;
-
-
-            if(_.keys(_styles[selector]).length == 0)
-                delete _styles[selector];
-
-            if(!delay)
-                delay = 0;
-            $timeout(function(){
-                SmartCss.writeRule(selector);
-            }, delay);
-
-        },
-        remove: function(selector, property, delay){
-            SmartCss.add(selector, property, null, delay);
-        },
-        deleteRuleFor: function (selector) {
-            _(sheet.rules).forEach(function (rule, idx) {
-                if (rule.selectorText == selector) {
-                    sheet.deleteRule(idx);
-                }
-            });
-        },
-        appViewSize: null
-    };
-
-    $rootScope.$on('$smartContentResize', function (event, data) {
-        SmartCss.appViewSize = data;
-    });
-
-    return SmartCss;
-
-});
-
-
-
-
-
-"use strict";
-
-angular.module('SmartAdmin.UI').directive('smartPopoverHtml', function () {
-    return {
-        restrict: "A",
-        link: function(scope, element, attributes){
-            var options = {};
-            options.content = attributes.smartPopoverHtml;
-            options.placement = attributes.popoverPlacement || 'top';
-            options.html = true;
-            options.trigger =  attributes.popoverTrigger || 'click';
-            options.title =  attributes.popoverTitle || attributes.title;
-            element.popover(options)
-
-        }
-
-    };
-});
-
-
-"use strict";
-
-angular.module('SmartAdmin.UI').directive('smartTooltipHtml', function () {
-        return {
-            restrict: 'A',
-            link: function(scope, element, attributes){
-                element.tooltip({
-                    placement: attributes.tooltipPlacement || 'top',
-                    html: true,
-                    title: attributes.smartTooltipHtml
-                })
-            }
-        };
-    }
-);
-
 "use strict";
 
 
