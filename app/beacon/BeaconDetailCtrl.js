@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app.beacon').controller('BeaconDetailCtrl', function ($scope, $interval, CalendarEvent, beaconService,$stateParams,$state) {
-    var url = 'http://transxsystems.com/eddystone';
+    var url = 'http://transx.com/eddystone';
 
     $scope.getDetail = function(){
         $scope.id = $stateParams.id;
