@@ -81,7 +81,7 @@
             <section class="col col-6">
                 <label class="label">INSTANCE ID</label>
                 <label class="input">
-                    <input type="text" name="instanceId" id="instanceId" ng-model="itemDetail.instanceId" required ng-pattern="/^[0-9A-Fa-f]{9,16}$/g">
+                    <input type="text" name="instanceId" id="instanceId" ng-model="itemDetail.instanceId" required ng-pattern="/^[0-9a-fA-F]{9,16}$/">
                     <span ng-show="configurationForm.instanceId.$invalid && configurationForm.instanceId.$error.required &&  configurationForm.$submitted" class="has-errors" style="color: red">Your INSTANCE ID is required.</span>
                     <span ng-show="configurationForm.instanceId.$invalid && configurationForm.instanceId.$error.pattern && configurationForm.$submitted" class="has-errors" style="color: red">Your INSTANCE ID is wrong format.</span>
                 </label>
