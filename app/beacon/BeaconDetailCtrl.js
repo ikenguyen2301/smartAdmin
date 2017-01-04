@@ -1,18 +1,21 @@
 'use strict';
 
 angular.module('app.beacon').controller('BeaconDetailCtrl', function ($scope, $interval, CalendarEvent, beaconService,$stateParams,$state) {
-
+    var url = 'http://transx.com/eddystone';
 
     $scope.getDetail = function(){
         $scope.id = $stateParams.id;
         beaconService.get($scope.id, function(data){
             $scope.itemDetail = data.data;
+            if(!$scope.itemDetail.url){
+              $scope.itemDetail.url = url;
+            }
             console.log("scope.itemDetail",$scope.itemDetail);
         });
     };
 
     if(!$stateParams.id){
-        $scope.itemDetail ={"url":"http://transx.com/eddystone","firmware":"4.1","profile" : 'iBeacon',"alias": 'TransX'};
+        $scope.itemDetail ={"url":url,"firmware":"4.1","profile" : 'iBeacon',"alias": 'TransX'};
     }else{
         $scope.getDetail();
     }
