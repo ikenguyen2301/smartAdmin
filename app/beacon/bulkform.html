@@ -30,15 +30,17 @@
             <section class="col col-6">
                 <label class="label">MAJOR</label>
                 <label class="input">
-                    <input type="number" name="major" id="major" ng-model="itemDetail.major" required="true">
-                    <span ng-show="configurationForm.major.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">Your MAJOR is required.</span>
+                    <input type="text" name="major" id="major" ng-model="itemDetail.major" required ng-pattern="/^[0-9]+$/">
+                    <span ng-show="configurationForm.major.$invalid && configurationForm.major.$error.required && configurationForm.$submitted" class="has-errors" style="color: red">Your MAJOR is required.</span>
+                    <span ng-show="configurationForm.major.$invalid && configurationForm.major.$error.pattern && configurationForm.$submitted" class="has-errors" style="color: red">Your MAJOR is wrong format.</span>
                 </label>
             </section>
             <section class="col col-6">
                 <label class="label">MINOR</label>
                 <label class="input">
-                    <input type="number" name="minor" id="minor" ng-model="itemDetail.minor" required="true">
-                    <span ng-show="configurationForm.minor.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">Your MINOR is required.</span>
+                    <input type="text" name="minor" id="minor" ng-model="itemDetail.minor" required ng-pattern="/^[0-9]+$/">
+                    <span ng-show="configurationForm.minor.$invalid && configurationForm.minor.$error.required && configurationForm.$submitted" class="has-errors" style="color: red">Your MINOR is required.</span>
+                    <span ng-show="configurationForm.minor.$invalid && configurationForm.minor.$error.pattern && configurationForm.$submitted" class="has-errors" style="color: red">Your MINOR is wrong format.</span>
                 </label>
             </section>
         </div>
@@ -62,8 +64,9 @@
             <section class="col col-6">
                 <label class="label">INTERVAL (MS)</label>
                 <label class="input">
-                    <input type="number" name="intervalms" id="emaild" ng-model="itemDetail.interval" required>
-                    <span ng-show="configurationForm.intervalms.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">Your INTERVAL (MS) is required.</span>
+                    <input type="text" name="intervalms" id="emaild" ng-model="itemDetail.interval" required ng-pattern="/^[0-9]+$/">
+                    <span ng-show="configurationForm.intervalms.$invalid && configurationForm.intervalms.$error.required && configurationForm.$submitted" class="has-errors" style="color: red">Your INTERVAL (MS) is required.</span>
+                    <span ng-show="configurationForm.intervalms.$invalid && configurationForm.intervalms.$error.pattern && configurationForm.$submitted" class="has-errors" style="color: red">Your INTERVAL (MS) is wrong format.</span>
                 </label>
             </section>
         </div>
@@ -78,7 +81,7 @@
             <section class="col col-6">
                 <label class="label">INSTANCE ID</label>
                 <label class="input">
-                    <input type="text" name="instanceId" id="instanceId" ng-model="itemDetail.instanceId" required ng-pattern="/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i">
+                    <input type="text" name="instanceId" id="instanceId" ng-model="itemDetail.instanceId" required ng-pattern="/^[0-9A-Fa-f]{9,16}$/g">
                     <span ng-show="configurationForm.instanceId.$invalid && configurationForm.instanceId.$error.required &&  configurationForm.$submitted" class="has-errors" style="color: red">Your INSTANCE ID is required.</span>
                     <span ng-show="configurationForm.instanceId.$invalid && configurationForm.instanceId.$error.pattern && configurationForm.$submitted" class="has-errors" style="color: red">Your INSTANCE ID is wrong format.</span>
                 </label>
