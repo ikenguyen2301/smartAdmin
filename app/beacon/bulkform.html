@@ -32,7 +32,7 @@
                 <label class="input">
                     <input type="text" name="major" id="major" ng-model="itemDetail.major" required ng-pattern="/^[0-9]+$/">
                     <span ng-show="configurationForm.major.$invalid && configurationForm.major.$error.required && configurationForm.$submitted" class="has-errors" style="color: red">Your MAJOR is required.</span>
-                    <span ng-show="configurationForm.major.$invalid && configurationForm.major.$error.pattern && configurationForm.$submitted" class="has-errors" style="color: red">Your MAJOR is wrong format.</span>
+                    <span ng-show="configurationForm.major.$invalid && configurationForm.major.$error.pattern && configurationForm.$submitted" class="has-errors" style="color: red">Your MAJOR must be an integer.</span>
                 </label>
             </section>
             <section class="col col-6">
@@ -40,7 +40,7 @@
                 <label class="input">
                     <input type="text" name="minor" id="minor" ng-model="itemDetail.minor" required ng-pattern="/^[0-9]+$/">
                     <span ng-show="configurationForm.minor.$invalid && configurationForm.minor.$error.required && configurationForm.$submitted" class="has-errors" style="color: red">Your MINOR is required.</span>
-                    <span ng-show="configurationForm.minor.$invalid && configurationForm.minor.$error.pattern && configurationForm.$submitted" class="has-errors" style="color: red">Your MINOR is wrong format.</span>
+                    <span ng-show="configurationForm.minor.$invalid && configurationForm.minor.$error.pattern && configurationForm.$submitted" class="has-errors" style="color: red">Your MINOR must be an integer.</span>
                 </label>
             </section>
         </div>
@@ -66,7 +66,7 @@
                 <label class="input">
                     <input type="text" name="intervalms" id="emaild" ng-model="itemDetail.interval" required ng-pattern="/^[0-9]+$/">
                     <span ng-show="configurationForm.intervalms.$invalid && configurationForm.intervalms.$error.required && configurationForm.$submitted" class="has-errors" style="color: red">Your INTERVAL (MS) is required.</span>
-                    <span ng-show="configurationForm.intervalms.$invalid && configurationForm.intervalms.$error.pattern && configurationForm.$submitted" class="has-errors" style="color: red">Your INTERVAL (MS) is wrong format.</span>
+                    <span ng-show="configurationForm.intervalms.$invalid && configurationForm.intervalms.$error.pattern && configurationForm.$submitted" class="has-errors" style="color: red">Your INTERVAL (MS) must be an integer.</span>
                 </label>
             </section>
         </div>
