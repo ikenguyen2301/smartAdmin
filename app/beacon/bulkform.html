@@ -75,7 +75,7 @@
                 <label class="label">NAMESPACE</label>
                 <label class="input">
                     <input type="text" name="namespace1" id="namespace1" ng-model="itemDetail.namespace" required ng-pattern="/^[0-9a-fA-F]{20}$/">
-                    <span ng-show="configurationForm.namespace1.$invalid &&  configurationForm.$submitted" class="has-errors" style="color: red">Your NAMESPACE is required.</span>
+                    <span ng-show="configurationForm.namespace1.$invalid && configurationForm.namespace1.$error.required && configurationForm.$submitted" class="has-errors" style="color: red">Your NAMESPACE is required.</span>
                     <span ng-show="configurationForm.namespace1.$invalid && configurationForm.namespace1.$error.pattern && configurationForm.$submitted" class="has-errors" style="color: red">Your NAMESPACE is wrong format. Length is 20</span>
                 </label>
             </section>
