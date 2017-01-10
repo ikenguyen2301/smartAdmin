@@ -15,15 +15,56 @@ angular.module('app.bulkconfig').controller('BulkConfigDetailCtrl', function ($s
     };
 
     if(!$stateParams.id){
-        $scope.itemDetail ={"url":url,"firmware":"4.1","profile" : 'iBeacon',"alias": 'TransX'};
+        $scope.itemDetail = {
+          alias: 'TransX',
+          details: []
+        };
     }else{
         $scope.getDetail();
     }
 
-    $scope.save = function(data, isValid){
-        if(isValid){
-            if(!data.objectId) {
-                bulkConfigService.post(data, function (data) {
+    $scope.handleRead = function (workbook) {
+
+        $scope.workbook = workbook;
+        if($scope.workbook && $scope.workbook.length){
+          $scope.itemDetail.details = [];
+
+          angular.forEach($scope.workbook, function(value, key) {
+            var item = {
+              beaconId : value['Beacon ID'],
+              preset: '',
+              profile: value['Profile'],
+              major: value['Major'],
+              minor: value['Minor'],
+              interval: value['Interval'],
+              txPower: value['TX Power'],
+              proximityUuid: value['Proximity UUID'],
+              namespace: value['Namspace ID'],
+              instanceId: value['Instance ID'],
+              url: value['URL'],
+              alias: value['Custom Name']
+            };
+            if(value['Profile'] == 'iBeacon' && value['Beacon ID'] && value['Proximity UUID'] && value['Major'] &&  value['Minor'] &&  value['Interval'] &&  value['TX Power'] &&  value['Custom Name']){
+              $scope.itemDetail.details.push(item);
+            } else if(value['Profile'] == 'Eddystone' && value['Beacon ID'] && value['Namspace ID'] && value['Instance ID'] && value['URL'] && value['Interval'] &&  value['TX Power'] &&  value['Custom Name']){
+              $scope.itemDetail.details.push(item);
+            }
+          });
+        } else {
+           $.smallBox({
+              title: "Warning",
+              content: "File data have error!",
+              color: "#F90",
+              iconSmall: "fa fa-check fa-2x fadeInRight animated",
+              timeout: 4000
+          });
+        }
+    };
+
+    $scope.save = function(isValid){
+        if(isValid && $scope.itemDetail.details.length){
+            if(!$scope.itemDetail.objectId) {
+                bulkConfigService.post($scope.itemDetail, function (data) {
                     // Implement toaster here when create successful
                      $.smallBox({
                                 title: "Create Notification ",
@@ -32,10 +73,10 @@ angular.module('app.bulkconfig').controller('BulkConfigDetailCtrl', function ($s
                                 iconSmall: "fa fa-check fa-2x fadeInRight animated",
                                 timeout: 4000
                             });
-                    $state.go("app.beacon");
+                    $state.go("app.bulkconfig");
                 });
                 } else {
-                bulkConfigService.put(data, function (data) {
+                bulkConfigService.put($scope.itemDetail, function (data) {
                     // Implement toaster here when create successful
                     $.smallBox({
                                 title: "Update Notification",
@@ -44,18 +85,17 @@ angular.module('app.bulkconfig').controller('BulkConfigDetailCtrl', function ($s
                                 iconSmall: "fa fa-check fa-2x fadeInRight animated",
                                 timeout: 4000
                             });
-                    $state.go("app.beacon");
+                    $state.go("app.bulkconfig");
                 });
             }
-        }else{
-            //  $.smallBox({
-            //     title: "Error ",
-            //     content: "Form have error !",
-            //     color: "#659265",
-            //     iconSmall: "fa fa-check fa-2x fadeInRight animated",
-            //     timeout: 4000
-            // });
+        } else if(isValid && !$scope.itemDetail.details.length){
+          $.smallBox({
+            title: "Error",
+            content: "Select file upload",
+            color: "#a90329",
+            iconSmall: "fa fa-check fa-2x fadeInRight animated",
+            timeout: 4000
+          });
         }
-        
     }
 });

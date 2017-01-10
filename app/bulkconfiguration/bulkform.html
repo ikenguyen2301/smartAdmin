@@ -1,4 +1,4 @@
-<form id="configuration-form" name="configurationForm" class="smart-form" ng-submit="save(itemDetail,configurationForm.$valid)" novalidate >
+<form id="configuration-form" name="configurationForm" class="smart-form" ng-submit="save(configurationForm.$valid)" novalidate >
     <header>Basic properties</header>
 
     <fieldset>
@@ -6,15 +6,23 @@
             <section class="col col-6">
                 <label class="label">Alias</label>
                 <label class="input">
-                    <input type="text" name="alias" readonly id="alias" ng-model="itemDetail.alias">
+                    <input type="text" name="alias" id="alias" ng-model="itemDetail.alias" required>
                 </label>
             </section>
             <section class="col col-6">
                 <label class="label">File Upload</label>
                 <div class="input input-file">
-                    <span class="button"><input type="file" id="file" name="file"
-                                                onchange="this.parentNode.nextSibling.value = this.value">Browse</span><input
-                        type="text" placeholder="Include some files" readonly="">
+                    <span class="button">
+                        <js-xls onread="handleRead"
+                                onerror="error"
+                                id="file" name="file"
+                                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        </js-xls>
+                        <!--<input type="file" id="file" name="file"-->
+                                                <!---->
+                                                <!--onchange="this.parentNode.nextSibling.value = this.value">-->
+                        Browse</span>
+                        <input type="text" placeholder="Include some files" readonly="">
                 </div>
             </section>
         </div>
@@ -22,7 +30,7 @@
 
     <footer>
         <button class="btn btn-primary" data-ui-sref="app.bulkconfig" >CANCEL</button>
-        <button class="btn btn-primary" type="submit" >SAVE CHANGE</button>
+        <button class="btn btn-primary" type="submit" ng-disabled="!itemDetail.alias || !itemDetail.details.length">SAVE CHANGE</button>
     </footer>
 
     <div class="message">
