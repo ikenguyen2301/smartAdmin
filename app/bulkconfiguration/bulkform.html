@@ -1,0 +1,32 @@
+<form id="configuration-form" name="configurationForm" class="smart-form" ng-submit="save(itemDetail,configurationForm.$valid)" novalidate >
+    <header>Basic properties</header>
+
+    <fieldset>
+        <div class="row">
+            <section class="col col-6">
+                <label class="label">Alias</label>
+                <label class="input">
+                    <input type="text" name="alias" readonly id="alias" ng-model="itemDetail.alias">
+                </label>
+            </section>
+            <section class="col col-6">
+                <label class="label">File Upload</label>
+                <div class="input input-file">
+                    <span class="button"><input type="file" id="file" name="file"
+                                                onchange="this.parentNode.nextSibling.value = this.value">Browse</span><input
+                        type="text" placeholder="Include some files" readonly="">
+                </div>
+            </section>
+        </div>
+    </fieldset>
+
+    <footer>
+        <button class="btn btn-primary" data-ui-sref="app.bulkconfig" >CANCEL</button>
+        <button class="btn btn-primary" type="submit" >SAVE CHANGE</button>
+    </footer>
+
+    <div class="message">
+        <i class="fa fa-thumbs-up"></i>
+        <p>Your message was successfully sent!</p>
+    </div>
+</form>
