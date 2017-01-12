@@ -28,6 +28,7 @@ angular.module('app.bulkconfig').controller('BulkConfigFormCtrl', function ($sco
         $scope.workbook = workbook;
         if($scope.workbook && $scope.workbook.length){
           $scope.itemDetail.details = [];
+            var beaconIds = [];
 
           angular.forEach($scope.workbook, function(value, key) {
             var item = {
@@ -44,11 +45,14 @@ angular.module('app.bulkconfig').controller('BulkConfigFormCtrl', function ($sco
               url: value['URL'],
               alias: value['Custom Name']
             };
-            if(value['Profile'] == 'iBeacon' && value['Beacon ID'] && value['Proximity UUID'] && value['Major'] &&  value['Minor'] &&  value['Interval'] &&  value['TX Power'] &&  value['Custom Name']){
-              $scope.itemDetail.details.push(item);
-            } else if(value['Profile'] == 'Eddystone' && value['Beacon ID'] && value['Namspace ID'] && value['Instance ID'] && value['URL'] && value['Interval'] &&  value['TX Power'] &&  value['Custom Name']){
-              $scope.itemDetail.details.push(item);
-            }
+              if(beaconIds.indexOf(item.beaconId) == -1) {
+                  beaconIds.push(item.beaconId);
+                  if (value['Profile'] == 'iBeacon' && value['Beacon ID'] && value['Proximity UUID'] && value['Major'] && value['Minor'] && value['Interval'] && value['TX Power'] && value['Custom Name']) {
+                      $scope.itemDetail.details.push(item);
+                  } else if (value['Profile'] == 'Eddystone' && value['Beacon ID'] && value['Namspace ID'] && value['Instance ID'] && value['URL'] && value['Interval'] && value['TX Power'] && value['Custom Name']) {
+                      $scope.itemDetail.details.push(item);
+                  }
+              }
           });
         } else {
            $.smallBox({

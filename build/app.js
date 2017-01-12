@@ -1960,14 +1960,14 @@ $templateCache.put("app/dashboard/chat/directives/aside-chat-widget.tpl.html","<
 $templateCache.put("app/dashboard/chat/directives/chat-users.tpl.html","<div id=\"chat-container\" ng-class=\"{open: open}\">\r\n    <span class=\"chat-list-open-close\" ng-click=\"openToggle()\"><i class=\"fa fa-user\"></i><b>!</b></span>\r\n\r\n    <div class=\"chat-list-body custom-scroll\">\r\n        <ul id=\"chat-users\">\r\n            <li ng-repeat=\"chatUser in chatUsers | filter: chatUserFilter\">\r\n                <a ng-click=\"messageTo(chatUser)\"><img ng-src=\"{{chatUser.picture}}\">{{chatUser.username}} <span\r\n                        class=\"badge badge-inverse\">{{chatUser.username.length}}</span><span class=\"state\"><i\r\n                        class=\"fa fa-circle txt-color-green pull-right\"></i></span></a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n    <div class=\"chat-list-footer\">\r\n        <div class=\"control-group\">\r\n            <form class=\"smart-form\">\r\n                <section>\r\n                    <label class=\"input\" >\r\n                        <input type=\"text\" ng-model=\"chatUserFilter\" id=\"filter-chat-list\" placeholder=\"Filter\">\r\n                    </label>\r\n                </section>\r\n            </form>\r\n        </div>\r\n    </div>\r\n</div>");
 $templateCache.put("app/dashboard/chat/directives/chat-widget.tpl.html","<div id=\"chat-widget\" jarvis-widget data-widget-color=\"blueDark\" data-widget-editbutton=\"false\"\r\n     data-widget-fullscreenbutton=\"false\">\r\n\r\n\r\n    <header>\r\n        <span class=\"widget-icon\"> <i class=\"fa fa-comments txt-color-white\"></i> </span>\r\n\r\n        <h2> SmartMessage </h2>\r\n\r\n        <div class=\"widget-toolbar\">\r\n            <!-- add: non-hidden - to disable auto hide -->\r\n\r\n            <div class=\"btn-group\" data-dropdown>\r\n                <button class=\"btn dropdown-toggle btn-xs btn-success\" data-toggle=\"dropdown\">\r\n                    Status <i class=\"fa fa-caret-down\"></i>\r\n                </button>\r\n                <ul class=\"dropdown-menu pull-right js-status-update\">\r\n                    <li>\r\n                        <a href-void><i class=\"fa fa-circle txt-color-green\"></i> Online</a>\r\n                    </li>\r\n                    <li>\r\n                        <a href-void><i class=\"fa fa-circle txt-color-red\"></i> Busy</a>\r\n                    </li>\r\n                    <li>\r\n                        <a href-void><i class=\"fa fa-circle txt-color-orange\"></i> Away</a>\r\n                    </li>\r\n                    <li class=\"divider\"></li>\r\n                    <li>\r\n                        <a href-void><i class=\"fa fa-power-off\"></i> Log Off</a>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n        </div>\r\n    </header>\r\n\r\n    <!-- widget div-->\r\n    <div>\r\n        <div class=\"widget-body widget-hide-overflow no-padding\">\r\n            <!-- content goes here -->\r\n\r\n            <chat-users></chat-users>\r\n\r\n            <!-- CHAT BODY -->\r\n            <div id=\"chat-body\" class=\"chat-body custom-scroll\">\r\n                <ul>\r\n                    <li class=\"message\" ng-repeat=\"message in chatMessages\">\r\n                        <img class=\"message-picture online\" ng-src=\"{{message.user.picture}}\">\r\n\r\n                        <div class=\"message-text\">\r\n                            <time>\r\n                                {{message.date | date }}\r\n                            </time>\r\n                            <a ng-click=\"messageTo(message.user)\" class=\"username\">{{message.user.username}}</a>\r\n                            <div ng-bind-html=\"message.body\"></div>\r\n\r\n                        </div>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n\r\n            <!-- CHAT FOOTER -->\r\n            <div class=\"chat-footer\">\r\n\r\n                <!-- CHAT TEXTAREA -->\r\n                <div class=\"textarea-div\">\r\n\r\n                    <div class=\"typearea\">\r\n                        <textarea placeholder=\"Write a reply...\" id=\"textarea-expand\"\r\n                                  class=\"custom-scroll\" ng-model=\"newMessage\"></textarea>\r\n                    </div>\r\n\r\n                </div>\r\n\r\n                <!-- CHAT REPLY/SEND -->\r\n											<span class=\"textarea-controls\">\r\n												<button class=\"btn btn-sm btn-primary pull-right\" ng-click=\"sendMessage()\">\r\n                                                    Reply\r\n                                                </button> <span class=\"pull-right smart-form\"\r\n                                                                style=\"margin-top: 3px; margin-right: 10px;\"> <label\r\n                                                    class=\"checkbox pull-right\">\r\n                                                <input type=\"checkbox\" name=\"subscription\" id=\"subscription\">\r\n                                                <i></i>Press <strong> ENTER </strong> to send </label> </span> <a\r\n                                                    href-void class=\"pull-left\"><i\r\n                                                    class=\"fa fa-camera fa-fw fa-lg\"></i></a> </span>\r\n\r\n            </div>\r\n\r\n            <!-- end content -->\r\n        </div>\r\n\r\n    </div>\r\n    <!-- end widget div -->\r\n</div>");
 $templateCache.put("app/dashboard/todo/directives/todo-list.tpl.html","<div>\r\n    <h5 class=\"todo-group-title\"><i class=\"fa fa-{{icon}}\"></i> {{title}} (\r\n        <small class=\"num-of-tasks\">{{scopeItems.length}}</small>\r\n        )\r\n    </h5>\r\n    <ul class=\"todo\">\r\n        <li ng-class=\"{complete: todo.completedAt}\" ng-repeat=\"todo in todos | orderBy: todo._id | filter: filter  track by todo._id\" >\r\n    	<span class=\"handle\"> <label class=\"checkbox\">\r\n            <input type=\"checkbox\" ng-click=\"todo.toggle()\" ng-checked=\"todo.completedAt\"\r\n                   name=\"checkbox-inline\">\r\n            <i></i> </label> </span>\r\n\r\n            <p>\r\n                <strong>Ticket #{{$index + 1}}</strong> - {{todo.title}}\r\n                <span class=\"text-muted\" ng-if=\"todo.description\">{{todo.description}}</span>\r\n                <span class=\"date\">{{todo.createdAt | date}} &dash; <a ng-click=\"deleteTodo(todo)\" class=\"text-muted\"><i\r\n                        class=\"fa fa-trash\"></i></a></span>\r\n\r\n            </p>\r\n        </li>\r\n    </ul>\r\n</div>");
+$templateCache.put("app/_common/layout/directives/demo/demo-states.tpl.html","<div class=\"demo\"><span id=\"demo-setting\"><i class=\"fa fa-cog txt-color-blueDark\"></i></span>\r\n\r\n    <form>\r\n        <legend class=\"no-padding margin-bottom-10\">Layout Options</legend>\r\n        <section>\r\n            <label><input type=\"checkbox\" ng-model=\"fixedHeader\"\r\n                          class=\"checkbox style-0\"><span>Fixed Header</span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"fixedNavigation\"\r\n                          class=\"checkbox style-0\"><span>Fixed Navigation</span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"fixedRibbon\"\r\n                          class=\"checkbox style-0\"><span>Fixed Ribbon</span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"fixedPageFooter\"\r\n                          class=\"checkbox style-0\"><span>Fixed Footer</span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"insideContainer\"\r\n                          class=\"checkbox style-0\"><span>Inside <b>.container</b></span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"rtl\"\r\n                          class=\"checkbox style-0\"><span>RTL</span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"menuOnTop\"\r\n                          class=\"checkbox style-0\"><span>Menu on <b>top</b></span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"colorblindFriendly\"\r\n                          class=\"checkbox style-0\"><span>For Colorblind <div\r\n                    class=\"font-xs text-right\">(experimental)\r\n            </div></span>\r\n            </label><span id=\"smart-bgimages\"></span></section>\r\n        <section><h6 class=\"margin-top-10 semi-bold margin-bottom-5\">Clear Localstorage</h6><a\r\n                ng-click=\"factoryReset()\" class=\"btn btn-xs btn-block btn-primary\" id=\"reset-smart-widget\"><i\r\n                class=\"fa fa-refresh\"></i> Factory Reset</a></section>\r\n\r\n        <h6 class=\"margin-top-10 semi-bold margin-bottom-5\">SmartAdmin Skins</h6>\r\n\r\n\r\n        <section id=\"smart-styles\">\r\n            <a ng-repeat=\"skin in skins\" ng-click=\"setSkin(skin)\" class=\"{{skin.class}}\" style=\"{{skin.style}}\"><i ng-if=\"skin.name == $parent.smartSkin\" class=\"fa fa-check fa-fw\"></i> {{skin.label}} <sup ng-if=\"skin.beta\">beta</sup></a>\r\n        </section>\r\n    </form>\r\n</div>");
 $templateCache.put("app/_common/forms/directives/bootstrap-validation/bootstrap-attribute-form.tpl.html","<form id=\"attributeForm\" class=\"form-horizontal\"\r\n      data-bv-message=\"This value is not valid\"\r\n      data-bv-feedbackicons-valid=\"glyphicon glyphicon-ok\"\r\n      data-bv-feedbackicons-invalid=\"glyphicon glyphicon-remove\"\r\n      data-bv-feedbackicons-validating=\"glyphicon glyphicon-refresh\">\r\n\r\n    <fieldset>\r\n        <legend>\r\n            Set validator options via HTML attributes\r\n        </legend>\r\n\r\n        <div class=\"alert alert-warning\">\r\n            <code>&lt; input\r\n                data-bv-validatorname\r\n                data-bv-validatorname-validatoroption=\"...\" / &gt;</code>\r\n\r\n            <br>\r\n            <br>\r\n            More validator options can be found here:\r\n            <a href=\"http://bootstrapvalidator.com/validators/\" target=\"_blank\">http://bootstrapvalidator.com/validators/</a>\r\n        </div>\r\n\r\n        <div class=\"form-group\">\r\n            <label class=\"col-lg-3 control-label\">Full name</label>\r\n            <div class=\"col-lg-4\">\r\n                <input type=\"text\" class=\"form-control\" name=\"firstName\" placeholder=\"First name\"\r\n                       data-bv-notempty=\"true\"\r\n                       data-bv-notempty-message=\"The first name is required and cannot be empty\" />\r\n            </div>\r\n            <div class=\"col-lg-4\">\r\n                <input type=\"text\" class=\"form-control\" name=\"lastName\" placeholder=\"Last name\"\r\n                       data-bv-notempty=\"true\"\r\n                       data-bv-notempty-message=\"The last name is required and cannot be empty\" />\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-lg-3 control-label\">Username</label>\r\n            <div class=\"col-lg-5\">\r\n                <input type=\"text\" class=\"form-control\" name=\"username\"\r\n                       data-bv-message=\"The username is not valid\"\r\n\r\n                       data-bv-notempty=\"true\"\r\n                       data-bv-notempty-message=\"The username is required and cannot be empty\"\r\n\r\n                       data-bv-regexp=\"true\"\r\n                       data-bv-regexp-regexp=\"^[a-zA-Z0-9_\\.]+$\"\r\n                       data-bv-regexp-message=\"The username can only consist of alphabetical, number, dot and underscore\"\r\n\r\n                       data-bv-stringlength=\"true\"\r\n                       data-bv-stringlength-min=\"6\"\r\n                       data-bv-stringlength-max=\"30\"\r\n                       data-bv-stringlength-message=\"The username must be more than 6 and less than 30 characters long\"\r\n\r\n                       data-bv-different=\"true\"\r\n                       data-bv-different-field=\"password\"\r\n                       data-bv-different-message=\"The username and password cannot be the same as each other\" />\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-lg-3 control-label\">Email address</label>\r\n            <div class=\"col-lg-5\">\r\n                <input class=\"form-control\" name=\"email\" type=\"email\"\r\n                       data-bv-emailaddress=\"true\"\r\n                       data-bv-emailaddress-message=\"The input is not a valid email address\" />\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-lg-3 control-label\">Password</label>\r\n            <div class=\"col-lg-5\">\r\n                <input type=\"password\" class=\"form-control\" name=\"password\"\r\n                       data-bv-notempty=\"true\"\r\n                       data-bv-notempty-message=\"The password is required and cannot be empty\"\r\n\r\n                       data-bv-identical=\"true\"\r\n                       data-bv-identical-field=\"confirmPassword\"\r\n                       data-bv-identical-message=\"The password and its confirm are not the same\"\r\n\r\n                       data-bv-different=\"true\"\r\n                       data-bv-different-field=\"username\"\r\n                       data-bv-different-message=\"The password cannot be the same as username\" />\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-lg-3 control-label\">Retype password</label>\r\n            <div class=\"col-lg-5\">\r\n                <input type=\"password\" class=\"form-control\" name=\"confirmPassword\"\r\n                       data-bv-notempty=\"true\"\r\n                       data-bv-notempty-message=\"The confirm password is required and cannot be empty\"\r\n\r\n                       data-bv-identical=\"true\"\r\n                       data-bv-identical-field=\"password\"\r\n                       data-bv-identical-message=\"The password and its confirm are not the same\"\r\n\r\n                       data-bv-different=\"true\"\r\n                       data-bv-different-field=\"username\"\r\n                       data-bv-different-message=\"The password cannot be the same as username\" />\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-lg-3 control-label\">Languages</label>\r\n            <div class=\"col-lg-5\">\r\n                <div class=\"checkbox\">\r\n                    <label>\r\n                        <input type=\"checkbox\" name=\"languages[]\" value=\"english\"\r\n                               data-bv-message=\"Please specify at least one language you can speak\"\r\n                               data-bv-notempty=\"true\" />\r\n                        English </label>\r\n                </div>\r\n                <div class=\"checkbox\">\r\n                    <label>\r\n                        <input type=\"checkbox\" name=\"languages[]\" value=\"french\" />\r\n                        French </label>\r\n                </div>\r\n                <div class=\"checkbox\">\r\n                    <label>\r\n                        <input type=\"checkbox\" name=\"languages[]\" value=\"german\" />\r\n                        German </label>\r\n                </div>\r\n                <div class=\"checkbox\">\r\n                    <label>\r\n                        <input type=\"checkbox\" name=\"languages[]\" value=\"russian\" />\r\n                        Russian </label>\r\n                </div>\r\n                <div class=\"checkbox\">\r\n                    <label>\r\n                        <input type=\"checkbox\" name=\"languages[]\" value=\"other\" />\r\n                        Other </label>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <div class=\"form-actions\">\r\n        <div class=\"row\">\r\n            <div class=\"col-md-12\">\r\n                <button class=\"btn btn-default\" type=\"submit\">\r\n                    <i class=\"fa fa-eye\"></i>\r\n                    Validate\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n</form>\r\n     ");
 $templateCache.put("app/_common/forms/directives/bootstrap-validation/bootstrap-button-group-form.tpl.html","<form id=\"buttonGroupForm\" method=\"post\" class=\"form-horizontal\">\r\n\r\n    <fieldset>\r\n        <legend>\r\n            Default Form Elements\r\n        </legend>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-lg-3 control-label\">Gender</label>\r\n            <div class=\"col-lg-9\">\r\n                <div class=\"btn-group\" data-toggle=\"buttons\">\r\n                    <label class=\"btn btn-default\">\r\n                        <input type=\"radio\" name=\"gender\" value=\"male\" />\r\n                        Male </label>\r\n                    <label class=\"btn btn-default\">\r\n                        <input type=\"radio\" name=\"gender\" value=\"female\" />\r\n                        Female </label>\r\n                    <label class=\"btn btn-default\">\r\n                        <input type=\"radio\" name=\"gender\" value=\"other\" />\r\n                        Other </label>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-lg-3 control-label\">Languages</label>\r\n            <div class=\"col-lg-9\">\r\n                <div class=\"btn-group\" data-toggle=\"buttons\">\r\n                    <label class=\"btn btn-default\">\r\n                        <input type=\"checkbox\" name=\"languages[]\" value=\"english\" />\r\n                        English </label>\r\n                    <label class=\"btn btn-default\">\r\n                        <input type=\"checkbox\" name=\"languages[]\" value=\"german\" />\r\n                        German </label>\r\n                    <label class=\"btn btn-default\">\r\n                        <input type=\"checkbox\" name=\"languages[]\" value=\"french\" />\r\n                        French </label>\r\n                    <label class=\"btn btn-default\">\r\n                        <input type=\"checkbox\" name=\"languages[]\" value=\"russian\" />\r\n                        Russian </label>\r\n                    <label class=\"btn btn-default\">\r\n                        <input type=\"checkbox\" name=\"languages[]\" value=\"italian\">\r\n                        Italian </label>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <div class=\"form-actions\">\r\n        <div class=\"row\">\r\n            <div class=\"col-md-12\">\r\n                <button class=\"btn btn-default\" type=\"submit\">\r\n                    <i class=\"fa fa-eye\"></i>\r\n                    Validate\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n</form>\r\n");
 $templateCache.put("app/_common/forms/directives/bootstrap-validation/bootstrap-contact-form.tpl.html","<form id=\"contactForm\" method=\"post\" class=\"form-horizontal\">\r\n\r\n    <fieldset>\r\n        <legend>Showing messages in custom area</legend>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-md-3 control-label\">Full name</label>\r\n            <div class=\"col-md-6\">\r\n                <input type=\"text\" class=\"form-control\" name=\"fullName\" />\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-md-3 control-label\">Email</label>\r\n            <div class=\"col-md-6\">\r\n                <input type=\"text\" class=\"form-control\" name=\"email\" />\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-md-3 control-label\">Title</label>\r\n            <div class=\"col-md-6\">\r\n                <input type=\"text\" class=\"form-control\" name=\"title\" />\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-md-3 control-label\">Content</label>\r\n            <div class=\"col-md-6\">\r\n                <textarea class=\"form-control\" name=\"content\" rows=\"5\"></textarea>\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <fieldset>\r\n        <!-- #messages is where the messages are placed inside -->\r\n        <div class=\"form-group\">\r\n            <div class=\"col-md-9 col-md-offset-3\">\r\n                <div id=\"messages\"></div>\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <div class=\"form-actions\">\r\n        <div class=\"row\">\r\n            <div class=\"col-md-12\">\r\n                <button class=\"btn btn-default\" type=\"submit\">\r\n                    <i class=\"fa fa-eye\"></i>\r\n                    Validate\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n</form>\r\n");
 $templateCache.put("app/_common/forms/directives/bootstrap-validation/bootstrap-movie-form.tpl.html","\r\n<form id=\"movieForm\" method=\"post\">\r\n\r\n    <fieldset>\r\n        <legend>\r\n            Default Form Elements\r\n        </legend>\r\n        <div class=\"form-group\">\r\n            <div class=\"row\">\r\n                <div class=\"col-md-8\">\r\n                    <label class=\"control-label\">Movie title</label>\r\n                    <input type=\"text\" class=\"form-control\" name=\"title\" />\r\n                </div>\r\n\r\n                <div class=\"col-md-4 selectContainer\">\r\n                    <label class=\"control-label\">Genre</label>\r\n                    <select class=\"form-control\" name=\"genre\">\r\n                        <option value=\"\">Choose a genre</option>\r\n                        <option value=\"action\">Action</option>\r\n                        <option value=\"comedy\">Comedy</option>\r\n                        <option value=\"horror\">Horror</option>\r\n                        <option value=\"romance\">Romance</option>\r\n                    </select>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <div class=\"row\">\r\n                <div class=\"col-sm-12 col-md-4\">\r\n                    <label class=\"control-label\">Director</label>\r\n                    <input type=\"text\" class=\"form-control\" name=\"director\" />\r\n                </div>\r\n\r\n                <div class=\"col-sm-12 col-md-4\">\r\n                    <label class=\"control-label\">Writer</label>\r\n                    <input type=\"text\" class=\"form-control\" name=\"writer\" />\r\n                </div>\r\n\r\n                <div class=\"col-sm-12 col-md-4\">\r\n                    <label class=\"control-label\">Producer</label>\r\n                    <input type=\"text\" class=\"form-control\" name=\"producer\" />\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <div class=\"row\">\r\n                <div class=\"col-sm-12 col-md-6\">\r\n                    <label class=\"control-label\">Website</label>\r\n                    <input type=\"text\" class=\"form-control\" name=\"website\" />\r\n                </div>\r\n\r\n                <div class=\"col-sm-12 col-md-6\">\r\n                    <label class=\"control-label\">Youtube trailer</label>\r\n                    <input type=\"text\" class=\"form-control\" name=\"trailer\" />\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label class=\"control-label\">Review</label>\r\n            <textarea class=\"form-control\" name=\"review\" rows=\"8\"></textarea>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n\r\n            <div class=\"row\">\r\n                <div class=\"col-sm-12 col-md-12\">\r\n                    <label class=\"control-label\">Rating</label>\r\n                </div>\r\n\r\n                <div class=\"col-sm-12 col-md-10\">\r\n\r\n                    <label class=\"radio radio-inline no-margin\">\r\n                        <input type=\"radio\" name=\"rating\" value=\"terrible\" class=\"radiobox style-2\" />\r\n                        <span>Terrible</span> </label>\r\n\r\n                    <label class=\"radio radio-inline\">\r\n                        <input type=\"radio\" name=\"rating\" value=\"watchable\" class=\"radiobox style-2\" />\r\n                        <span>Watchable</span> </label>\r\n                    <label class=\"radio radio-inline\">\r\n                        <input type=\"radio\" name=\"rating\" value=\"best\" class=\"radiobox style-2\" />\r\n                        <span>Best ever</span> </label>\r\n\r\n                </div>\r\n\r\n            </div>\r\n\r\n        </div>\r\n    </fieldset>\r\n\r\n    <div class=\"form-actions\">\r\n        <div class=\"row\">\r\n            <div class=\"col-md-12\">\r\n                <button class=\"btn btn-default\" type=\"submit\">\r\n                    <i class=\"fa fa-eye\"></i>\r\n                    Validate\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n</form>\r\n\r\n ");
 $templateCache.put("app/_common/forms/directives/bootstrap-validation/bootstrap-product-form.tpl.html","<form id=\"productForm\" class=\"form-horizontal\">\r\n\r\n    <fieldset>\r\n        <legend>\r\n            Default Form Elements\r\n        </legend>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-xs-2 col-lg-3 control-label\">Price</label>\r\n            <div class=\"col-xs-9 col-lg-6 inputGroupContainer\">\r\n                <div class=\"input-group\">\r\n                    <input type=\"text\" class=\"form-control\" name=\"price\" />\r\n                    <span class=\"input-group-addon\">$</span>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-xs-2 col-lg-3 control-label\">Amount</label>\r\n            <div class=\"col-xs-9 col-lg-6 inputGroupContainer\">\r\n                <div class=\"input-group\">\r\n                    <span class=\"input-group-addon\">&#8364;</span>\r\n                    <input type=\"text\" class=\"form-control\" name=\"amount\" />\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-xs-2 col-lg-3 control-label\">Color</label>\r\n            <div class=\"col-xs-9 col-lg-6 selectContainer\">\r\n                <select class=\"form-control\" name=\"color\">\r\n                    <option value=\"\">Choose a color</option>\r\n                    <option value=\"blue\">Blue</option>\r\n                    <option value=\"green\">Green</option>\r\n                    <option value=\"red\">Red</option>\r\n                    <option value=\"yellow\">Yellow</option>\r\n                    <option value=\"white\">White</option>\r\n                </select>\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-xs-2 col-lg-3 control-label\">Size</label>\r\n            <div class=\"col-xs-9 col-lg-6 selectContainer\">\r\n                <select class=\"form-control\" name=\"size\">\r\n                    <option value=\"\">Choose a size</option>\r\n                    <option value=\"S\">S</option>\r\n                    <option value=\"M\">M</option>\r\n                    <option value=\"L\">L</option>\r\n                    <option value=\"XL\">XL</option>\r\n                </select>\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <div class=\"form-actions\">\r\n        <div class=\"row\">\r\n            <div class=\"col-md-12\">\r\n                <button class=\"btn btn-default\" type=\"submit\">\r\n                    <i class=\"fa fa-eye\"></i>\r\n                    Validate\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</form>\r\n\r\n");
 $templateCache.put("app/_common/forms/directives/bootstrap-validation/bootstrap-profile-form.tpl.html","<form id=\"profileForm\">\r\n\r\n    <fieldset>\r\n        <legend>\r\n            Default Form Elements\r\n        </legend>\r\n        <div class=\"form-group\">\r\n            <label>Email address</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"email\" />\r\n        </div>\r\n    </fieldset>\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label>Password</label>\r\n            <input type=\"password\" class=\"form-control\" name=\"password\" />\r\n        </div>\r\n    </fieldset>\r\n\r\n    <div class=\"form-actions\">\r\n        <div class=\"row\">\r\n            <div class=\"col-md-12\">\r\n                <button class=\"btn btn-default\" type=\"submit\">\r\n                    <i class=\"fa fa-eye\"></i>\r\n                    Validate\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</form>\r\n");
-$templateCache.put("app/_common/forms/directives/bootstrap-validation/bootstrap-toggling-form.tpl.html","<form id=\"togglingForm\" method=\"post\" class=\"form-horizontal\">\r\n\r\n    <fieldset>\r\n        <legend>\r\n            Default Form Elements\r\n        </legend>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-lg-3 control-label\">Full name <sup>*</sup></label>\r\n            <div class=\"col-lg-4\">\r\n                <input type=\"text\" class=\"form-control\" name=\"firstName\" placeholder=\"First name\" />\r\n            </div>\r\n            <div class=\"col-lg-4\">\r\n                <input type=\"text\" class=\"form-control\" name=\"lastName\" placeholder=\"Last name\" />\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-lg-3 control-label\">Company <sup>*</sup></label>\r\n            <div class=\"col-lg-5\">\r\n                <input type=\"text\" class=\"form-control\" name=\"company\"\r\n                       required data-bv-notempty-message=\"The company name is required\" />\r\n            </div>\r\n            <div class=\"col-lg-2\">\r\n                <button type=\"button\" class=\"btn btn-info btn-sm\" data-toggle=\"#jobInfo\">\r\n                    Add more info\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <!-- These fields will not be validated as long as they are not visible -->\r\n    <div id=\"jobInfo\" style=\"display: none;\">\r\n        <fieldset>\r\n            <div class=\"form-group\">\r\n                <label class=\"col-lg-3 control-label\">Job title <sup>*</sup></label>\r\n                <div class=\"col-lg-5\">\r\n                    <input type=\"text\" class=\"form-control\" name=\"job\" />\r\n                </div>\r\n            </div>\r\n        </fieldset>\r\n\r\n        <fieldset>\r\n            <div class=\"form-group\">\r\n                <label class=\"col-lg-3 control-label\">Department <sup>*</sup></label>\r\n                <div class=\"col-lg-5\">\r\n                    <input type=\"text\" class=\"form-control\" name=\"department\" />\r\n                </div>\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-lg-3 control-label\">Mobile phone <sup>*</sup></label>\r\n            <div class=\"col-lg-5\">\r\n                <input type=\"text\" class=\"form-control\" name=\"mobilePhone\" />\r\n            </div>\r\n            <div class=\"col-lg-2\">\r\n                <button type=\"button\" class=\"btn btn-info btn-sm\" data-toggle=\"#phoneInfo\">\r\n                    Add more phone numbers\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n    <!-- These fields will not be validated as long as they are not visible -->\r\n    <div id=\"phoneInfo\" style=\"display: none;\">\r\n\r\n        <fieldset>\r\n            <div class=\"form-group\">\r\n                <label class=\"col-lg-3 control-label\">Home phone</label>\r\n                <div class=\"col-lg-5\">\r\n                    <input type=\"text\" class=\"form-control\" name=\"homePhone\" />\r\n                </div>\r\n            </div>\r\n        </fieldset>\r\n        <fieldset>\r\n            <div class=\"form-group\">\r\n                <label class=\"col-lg-3 control-label\">Office phone</label>\r\n                <div class=\"col-lg-5\">\r\n                    <input type=\"text\" class=\"form-control\" name=\"officePhone\" />\r\n                </div>\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n\r\n    <div class=\"form-actions\">\r\n        <div class=\"row\">\r\n            <div class=\"col-md-12\">\r\n                <button class=\"btn btn-default\" type=\"submit\">\r\n                    <i class=\"fa fa-eye\"></i>\r\n                    Validate\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</form>");
-$templateCache.put("app/_common/layout/directives/demo/demo-states.tpl.html","<div class=\"demo\"><span id=\"demo-setting\"><i class=\"fa fa-cog txt-color-blueDark\"></i></span>\r\n\r\n    <form>\r\n        <legend class=\"no-padding margin-bottom-10\">Layout Options</legend>\r\n        <section>\r\n            <label><input type=\"checkbox\" ng-model=\"fixedHeader\"\r\n                          class=\"checkbox style-0\"><span>Fixed Header</span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"fixedNavigation\"\r\n                          class=\"checkbox style-0\"><span>Fixed Navigation</span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"fixedRibbon\"\r\n                          class=\"checkbox style-0\"><span>Fixed Ribbon</span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"fixedPageFooter\"\r\n                          class=\"checkbox style-0\"><span>Fixed Footer</span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"insideContainer\"\r\n                          class=\"checkbox style-0\"><span>Inside <b>.container</b></span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"rtl\"\r\n                          class=\"checkbox style-0\"><span>RTL</span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"menuOnTop\"\r\n                          class=\"checkbox style-0\"><span>Menu on <b>top</b></span></label>\r\n            <label><input type=\"checkbox\"\r\n                          ng-model=\"colorblindFriendly\"\r\n                          class=\"checkbox style-0\"><span>For Colorblind <div\r\n                    class=\"font-xs text-right\">(experimental)\r\n            </div></span>\r\n            </label><span id=\"smart-bgimages\"></span></section>\r\n        <section><h6 class=\"margin-top-10 semi-bold margin-bottom-5\">Clear Localstorage</h6><a\r\n                ng-click=\"factoryReset()\" class=\"btn btn-xs btn-block btn-primary\" id=\"reset-smart-widget\"><i\r\n                class=\"fa fa-refresh\"></i> Factory Reset</a></section>\r\n\r\n        <h6 class=\"margin-top-10 semi-bold margin-bottom-5\">SmartAdmin Skins</h6>\r\n\r\n\r\n        <section id=\"smart-styles\">\r\n            <a ng-repeat=\"skin in skins\" ng-click=\"setSkin(skin)\" class=\"{{skin.class}}\" style=\"{{skin.style}}\"><i ng-if=\"skin.name == $parent.smartSkin\" class=\"fa fa-check fa-fw\"></i> {{skin.label}} <sup ng-if=\"skin.beta\">beta</sup></a>\r\n        </section>\r\n    </form>\r\n</div>");}]);
+$templateCache.put("app/_common/forms/directives/bootstrap-validation/bootstrap-toggling-form.tpl.html","<form id=\"togglingForm\" method=\"post\" class=\"form-horizontal\">\r\n\r\n    <fieldset>\r\n        <legend>\r\n            Default Form Elements\r\n        </legend>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-lg-3 control-label\">Full name <sup>*</sup></label>\r\n            <div class=\"col-lg-4\">\r\n                <input type=\"text\" class=\"form-control\" name=\"firstName\" placeholder=\"First name\" />\r\n            </div>\r\n            <div class=\"col-lg-4\">\r\n                <input type=\"text\" class=\"form-control\" name=\"lastName\" placeholder=\"Last name\" />\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-lg-3 control-label\">Company <sup>*</sup></label>\r\n            <div class=\"col-lg-5\">\r\n                <input type=\"text\" class=\"form-control\" name=\"company\"\r\n                       required data-bv-notempty-message=\"The company name is required\" />\r\n            </div>\r\n            <div class=\"col-lg-2\">\r\n                <button type=\"button\" class=\"btn btn-info btn-sm\" data-toggle=\"#jobInfo\">\r\n                    Add more info\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n\r\n    <!-- These fields will not be validated as long as they are not visible -->\r\n    <div id=\"jobInfo\" style=\"display: none;\">\r\n        <fieldset>\r\n            <div class=\"form-group\">\r\n                <label class=\"col-lg-3 control-label\">Job title <sup>*</sup></label>\r\n                <div class=\"col-lg-5\">\r\n                    <input type=\"text\" class=\"form-control\" name=\"job\" />\r\n                </div>\r\n            </div>\r\n        </fieldset>\r\n\r\n        <fieldset>\r\n            <div class=\"form-group\">\r\n                <label class=\"col-lg-3 control-label\">Department <sup>*</sup></label>\r\n                <div class=\"col-lg-5\">\r\n                    <input type=\"text\" class=\"form-control\" name=\"department\" />\r\n                </div>\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n\r\n    <fieldset>\r\n        <div class=\"form-group\">\r\n            <label class=\"col-lg-3 control-label\">Mobile phone <sup>*</sup></label>\r\n            <div class=\"col-lg-5\">\r\n                <input type=\"text\" class=\"form-control\" name=\"mobilePhone\" />\r\n            </div>\r\n            <div class=\"col-lg-2\">\r\n                <button type=\"button\" class=\"btn btn-info btn-sm\" data-toggle=\"#phoneInfo\">\r\n                    Add more phone numbers\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n    <!-- These fields will not be validated as long as they are not visible -->\r\n    <div id=\"phoneInfo\" style=\"display: none;\">\r\n\r\n        <fieldset>\r\n            <div class=\"form-group\">\r\n                <label class=\"col-lg-3 control-label\">Home phone</label>\r\n                <div class=\"col-lg-5\">\r\n                    <input type=\"text\" class=\"form-control\" name=\"homePhone\" />\r\n                </div>\r\n            </div>\r\n        </fieldset>\r\n        <fieldset>\r\n            <div class=\"form-group\">\r\n                <label class=\"col-lg-3 control-label\">Office phone</label>\r\n                <div class=\"col-lg-5\">\r\n                    <input type=\"text\" class=\"form-control\" name=\"officePhone\" />\r\n                </div>\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n\r\n    <div class=\"form-actions\">\r\n        <div class=\"row\">\r\n            <div class=\"col-md-12\">\r\n                <button class=\"btn btn-default\" type=\"submit\">\r\n                    <i class=\"fa fa-eye\"></i>\r\n                    Validate\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</form>");}]);
 'use strict';
 
 angular.module('app.bulkconfig').controller('BulkConfigCtrl', function ($scope, $interval, CalendarEvent, bulkConfigService,$state) {
@@ -2088,6 +2088,7 @@ angular.module('app.bulkconfig').controller('BulkConfigFormCtrl', function ($sco
         $scope.workbook = workbook;
         if($scope.workbook && $scope.workbook.length){
           $scope.itemDetail.details = [];
+            var beaconIds = [];
 
           angular.forEach($scope.workbook, function(value, key) {
             var item = {
@@ -2104,11 +2105,14 @@ angular.module('app.bulkconfig').controller('BulkConfigFormCtrl', function ($sco
               url: value['URL'],
               alias: value['Custom Name']
             };
-            if(value['Profile'] == 'iBeacon' && value['Beacon ID'] && value['Proximity UUID'] && value['Major'] &&  value['Minor'] &&  value['Interval'] &&  value['TX Power'] &&  value['Custom Name']){
-              $scope.itemDetail.details.push(item);
-            } else if(value['Profile'] == 'Eddystone' && value['Beacon ID'] && value['Namspace ID'] && value['Instance ID'] && value['URL'] && value['Interval'] &&  value['TX Power'] &&  value['Custom Name']){
-              $scope.itemDetail.details.push(item);
-            }
+              if(beaconIds.indexOf(item.beaconId) == -1) {
+                  beaconIds.push(item.beaconId);
+                  if (value['Profile'] == 'iBeacon' && value['Beacon ID'] && value['Proximity UUID'] && value['Major'] && value['Minor'] && value['Interval'] && value['TX Power'] && value['Custom Name']) {
+                      $scope.itemDetail.details.push(item);
+                  } else if (value['Profile'] == 'Eddystone' && value['Beacon ID'] && value['Namspace ID'] && value['Instance ID'] && value['URL'] && value['Interval'] && value['TX Power'] && value['Custom Name']) {
+                      $scope.itemDetail.details.push(item);
+                  }
+              }
           });
         } else {
            $.smallBox({
@@ -2768,27 +2772,6 @@ angular.module('app.appViews').controller('ProjectsDemoCtrl', function ($scope, 
         "order": [[1, 'asc']]
     }
 });
-
-
-'use strict';
-
-angular.module('app.auth').factory('User', function ($http, $q, APP_CONFIG) {
-    var dfd = $q.defer();
-
-    var UserModel = {
-        initialized: dfd.promise,
-        username: undefined,
-        picture: undefined
-    };
-     $http.get(APP_CONFIG.apiRootUrl + '/user.json').then(function(response){
-         UserModel.username = response.data.username;
-         UserModel.picture= response.data.picture;
-         dfd.resolve(UserModel)
-     });
-
-    return UserModel;
-});
-
 "use strict";
 
 angular.module('app.auth').directive('loginInfo', function($rootScope){
@@ -2841,6 +2824,27 @@ angular.module('app.auth').controller('LoginCtrl', function ($scope, $rootScope,
 
 'use strict';
 
+angular.module('app.auth').factory('User', function ($http, $q, APP_CONFIG) {
+    var dfd = $q.defer();
+
+    var UserModel = {
+        initialized: dfd.promise,
+        username: undefined,
+        picture: undefined
+    };
+     $http.get(APP_CONFIG.apiRootUrl + '/user.json').then(function(response){
+         UserModel.username = response.data.username;
+         UserModel.picture= response.data.picture;
+         dfd.resolve(UserModel)
+     });
+
+    return UserModel;
+});
+
+
+
+'use strict';
+
 angular.module('app.auth').factory('AuthService', function ($http, $window) {
     var authService = {};
 
@@ -2885,6 +2889,79 @@ angular.module('app.auth').factory('AuthService', function ($http, $window) {
 
     return authService;
 })
+"use strict";
+
+angular.module('app').factory('beaconService', function($http, $log, APP_CONFIG, $rootScope) {
+	function getHttpConfig() {
+		var config = {
+			headers: {
+				'Content-Type': 'application/json',
+				'username': $rootScope.userLogin.username
+			}
+		};
+
+		return config;
+	}
+
+	function getAllBulkconfiguration(callback){
+
+		$http.get(APP_CONFIG.serverUrl + 'bulkconfiguration/all', getHttpConfig()).success(function(data){
+			callback(data);
+		}).error(function(){
+			$log.log('Error');
+			callback([]);
+		});
+	}
+	function getBulkconfigurationById(id,callback){
+		$http.get(APP_CONFIG.serverUrl + 'bulkconfiguration/'+ id, getHttpConfig()).success(function(data){
+			callback(data);
+		}).error(function(){
+			$log.log('Error');
+			callback([]);
+		});
+	}
+	function createNewBulk(data,callback){
+		$http.post(APP_CONFIG.serverUrl + 'bulkconfiguration/', data, getHttpConfig()).success(function(data){
+			callback(data);
+		}).error(function(){
+			$log.log('Error');
+			callback([]);
+		});
+	}
+	function updateBulk(data,callback){
+		$http.put(APP_CONFIG.serverUrl + 'bulkconfiguration/' + data.objectId, data, getHttpConfig()).success(function(data){
+			callback(data);
+		}).error(function(){
+			$log.log('Error');
+			callback([]);
+		});
+	}
+	function deleteBulk(objectId,callback){
+		$http.delete(APP_CONFIG.serverUrl + 'bulkconfiguration/' + objectId, getHttpConfig()).success(function(data){
+			callback(data);
+		}).error(function(){
+			$log.log('Error');
+			callback(false);
+		});
+	}
+	return {
+		getAll:function(callback){
+			getAllBulkconfiguration(callback);
+		},
+		get:function(id,callback){
+			getBulkconfigurationById(id,callback);
+		},
+		post:function(data,callback){
+			createNewBulk(data,callback);
+		},
+		put:function(data,callback){
+			updateBulk(data,callback);
+		},
+		delete:function(data,callback){
+			deleteBulk(data,callback);
+		}
+	}
+});
 'use strict';
 angular.module('app.bulkconfig')
   .directive('jsXls', function () {
@@ -3050,79 +3127,6 @@ angular.module('app').factory('bulkConfigService', function($http, $log, APP_CON
 		}
 	}
 });
-"use strict";
-
-angular.module('app').factory('beaconService', function($http, $log, APP_CONFIG, $rootScope) {
-	function getHttpConfig() {
-		var config = {
-			headers: {
-				'Content-Type': 'application/json',
-				'username': $rootScope.userLogin.username
-			}
-		};
-
-		return config;
-	}
-
-	function getAllBulkconfiguration(callback){
-
-		$http.get(APP_CONFIG.serverUrl + 'bulkconfiguration/all', getHttpConfig()).success(function(data){
-			callback(data);
-		}).error(function(){
-			$log.log('Error');
-			callback([]);
-		});
-	}
-	function getBulkconfigurationById(id,callback){
-		$http.get(APP_CONFIG.serverUrl + 'bulkconfiguration/'+ id, getHttpConfig()).success(function(data){
-			callback(data);
-		}).error(function(){
-			$log.log('Error');
-			callback([]);
-		});
-	}
-	function createNewBulk(data,callback){
-		$http.post(APP_CONFIG.serverUrl + 'bulkconfiguration/', data, getHttpConfig()).success(function(data){
-			callback(data);
-		}).error(function(){
-			$log.log('Error');
-			callback([]);
-		});
-	}
-	function updateBulk(data,callback){
-		$http.put(APP_CONFIG.serverUrl + 'bulkconfiguration/' + data.objectId, data, getHttpConfig()).success(function(data){
-			callback(data);
-		}).error(function(){
-			$log.log('Error');
-			callback([]);
-		});
-	}
-	function deleteBulk(objectId,callback){
-		$http.delete(APP_CONFIG.serverUrl + 'bulkconfiguration/' + objectId, getHttpConfig()).success(function(data){
-			callback(data);
-		}).error(function(){
-			$log.log('Error');
-			callback(false);
-		});
-	}
-	return {
-		getAll:function(callback){
-			getAllBulkconfiguration(callback);
-		},
-		get:function(id,callback){
-			getBulkconfigurationById(id,callback);
-		},
-		post:function(data,callback){
-			createNewBulk(data,callback);
-		},
-		put:function(data,callback){
-			updateBulk(data,callback);
-		},
-		delete:function(data,callback){
-			deleteBulk(data,callback);
-		}
-	}
-});
 'use strict';
 
 angular.module('app.calendar').controller('CalendarCtrl', function ($scope, $log, CalendarEvent) {
@@ -3188,12 +3192,6 @@ angular.module('app.calendar').controller('CalendarCtrl', function ($scope, $log
 
 });
 
-
-"use strict";
-
-angular.module('app.calendar').factory('CalendarEvent', function($resource, APP_CONFIG){
-    return $resource( APP_CONFIG.apiRootUrl + '/events.json', {_id:'@id'})
-});
 "use strict";
 
 angular.module('app.calendar').directive('dragableEvent', function ($log) {
@@ -3351,6 +3349,12 @@ angular.module('app.calendar').directive('fullCalendar', function (CalendarEvent
             };
         }
     }
+});
+
+"use strict";
+
+angular.module('app.calendar').factory('CalendarEvent', function($resource, APP_CONFIG){
+    return $resource( APP_CONFIG.apiRootUrl + '/events.json', {_id:'@id'})
 });
 "use strict";	
 
@@ -10299,6 +10303,508 @@ angular.module('SmartAdmin.UI').directive('smartTooltipHtml', function () {
     }
 );
 
+'use strict';
+
+angular.module('SmartAdmin.Layout').directive('demoStates', function ($rootScope) {
+    return {
+        restrict: 'EA',
+        replace: true,
+        templateUrl: 'app/_common/layout/directives/demo/demo-states.tpl.html',
+        scope: true,
+        link: function (scope, element, attributes) {
+            element.parent().css({
+                position: 'relative'
+            });
+
+            element.on('click', '#demo-setting', function () {
+                element.toggleClass('activate')
+            })
+        },
+        controller: function ($scope) {
+            var $root = $('body');
+
+            $scope.$watch('fixedHeader', function (fixedHeader) {
+                localStorage.setItem('sm-fixed-header', fixedHeader);
+                $root.toggleClass('fixed-header', fixedHeader);
+                if (fixedHeader == false) {
+                    $scope.fixedRibbon = false;
+                    $scope.fixedNavigation = false;
+                }
+            });
+
+
+            $scope.$watch('fixedNavigation', function (fixedNavigation) {
+                localStorage.setItem('sm-fixed-navigation', fixedNavigation);
+                $root.toggleClass('fixed-navigation', fixedNavigation);
+                if (fixedNavigation) {
+                    $scope.insideContainer = false;
+                    $scope.fixedHeader = true;
+                } else {
+                    $scope.fixedRibbon = false;
+                }
+            });
+
+
+            $scope.$watch('fixedRibbon', function (fixedRibbon) {
+                localStorage.setItem('sm-fixed-ribbon', fixedRibbon);
+                $root.toggleClass('fixed-ribbon', fixedRibbon);
+                if (fixedRibbon) {
+                    $scope.fixedHeader = true;
+                    $scope.fixedNavigation = true;
+                    $scope.insideContainer = false;
+                }
+            });
+
+            $scope.$watch('fixedPageFooter', function (fixedPageFooter) {
+                localStorage.setItem('sm-fixed-page-footer', fixedPageFooter);
+                $root.toggleClass('fixed-page-footer', fixedPageFooter);
+            });
+
+            $scope.$watch('insideContainer', function (insideContainer) {
+                localStorage.setItem('sm-inside-container', insideContainer);
+                $root.toggleClass('container', insideContainer);
+                if (insideContainer) {
+                    $scope.fixedRibbon = false;
+                    $scope.fixedNavigation = false;
+                }
+            });
+
+            $scope.$watch('rtl', function (rtl) {
+                localStorage.setItem('sm-rtl', rtl);
+                $root.toggleClass('smart-rtl', rtl);
+            });
+
+            $scope.$watch('menuOnTop', function (menuOnTop) {
+                $rootScope.$broadcast('$smartLayoutMenuOnTop', menuOnTop);
+                localStorage.setItem('sm-menu-on-top', menuOnTop);
+                $root.toggleClass('menu-on-top', menuOnTop);
+
+                if(menuOnTop)$root.removeClass('minified');
+            });
+
+            $scope.$watch('colorblindFriendly', function (colorblindFriendly) {
+                localStorage.setItem('sm-colorblind-friendly', colorblindFriendly);
+                $root.toggleClass('colorblind-friendly', colorblindFriendly);
+            });
+
+
+            $scope.fixedHeader = localStorage.getItem('sm-fixed-header') == 'true';
+            $scope.fixedNavigation = localStorage.getItem('sm-fixed-navigation') == 'true';
+            $scope.fixedRibbon = localStorage.getItem('sm-fixed-ribbon') == 'true';
+            $scope.fixedPageFooter = localStorage.getItem('sm-fixed-page-footer') == 'true';
+            $scope.insideContainer = localStorage.getItem('sm-inside-container') == 'true';
+            $scope.rtl = localStorage.getItem('sm-rtl') == 'true';
+            $scope.menuOnTop = localStorage.getItem('sm-menu-on-top') == 'true' || $root.hasClass('menu-on-top');
+            $scope.colorblindFriendly = localStorage.getItem('sm-colorblind-friendly') == 'true';
+
+
+            $scope.skins = appConfig.skins;
+
+
+            $scope.smartSkin = localStorage.getItem('sm-skin') ? localStorage.getItem('sm-skin') : appConfig.smartSkin;
+
+            $scope.setSkin = function (skin) {
+                $scope.smartSkin = skin.name;
+                $root.removeClass(_.pluck($scope.skins, 'name').join(' '));
+                $root.addClass(skin.name);
+                localStorage.setItem('sm-skin', skin.name);
+                $("#logo img").attr('src', skin.logo);
+            };
+
+
+            if($scope.smartSkin != "smart-style-0"){
+                $scope.setSkin(_.find($scope.skins, {name: $scope.smartSkin}))
+            }
+
+
+            $scope.factoryReset = function () {
+                $.SmartMessageBox({
+                    title: "<i class='fa fa-refresh' style='color:green'></i> Clear Local Storage",
+                    content: "Would you like to RESET all your saved widgets and clear LocalStorage?1",
+                    buttons: '[No][Yes]'
+                }, function (ButtonPressed) {
+                    if (ButtonPressed == "Yes" && localStorage) {
+                        localStorage.clear();
+                        location.reload()
+                    }
+                });
+            }
+        }
+    }
+});
+"use strict";
+
+(function ($) {
+
+    $.fn.smartCollapseToggle = function () {
+
+        return this.each(function () {
+
+            var $body = $('body');
+            var $this = $(this);
+
+            // only if not  'menu-on-top'
+            if ($body.hasClass('menu-on-top')) {
+
+
+            } else {
+
+                $body.hasClass('mobile-view-activated')
+
+                // toggle open
+                $this.toggleClass('open');
+
+                // for minified menu collapse only second level
+                if ($body.hasClass('minified')) {
+                    if ($this.closest('nav ul ul').length) {
+                        $this.find('>a .collapse-sign .fa').toggleClass('fa-minus-square-o fa-plus-square-o');
+                        $this.find('ul:first').slideToggle(appConfig.menu_speed || 200);
+                    }
+                } else {
+                    // toggle expand item
+                    $this.find('>a .collapse-sign .fa').toggleClass('fa-minus-square-o fa-plus-square-o');
+                    $this.find('ul:first').slideToggle(appConfig.menu_speed || 200);
+                }
+            }
+        });
+    };
+})(jQuery);
+
+angular.module('SmartAdmin.Layout').directive('smartMenu', function ($state, $rootScope) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var $body = $('body');
+
+            var $collapsible = element.find('li[data-menu-collapse]');
+
+            var bindEvents = function(){
+                $collapsible.each(function (idx, li) {
+                    var $li = $(li);
+                    $li
+                        .on('click', '>a', function (e) {
+
+                            // collapse all open siblings
+                            $li.siblings('.open').smartCollapseToggle();
+
+                            // toggle element
+                            $li.smartCollapseToggle();
+
+                            // add active marker to collapsed element if it has active childs
+                            if (!$li.hasClass('open') && $li.find('li.active').length > 0) {
+                                $li.addClass('active')
+                            }
+
+                            e.preventDefault();
+                        })
+                        .find('>a').append('<b class="collapse-sign"><em class="fa fa-plus-square-o"></em></b>');
+
+                    // initialization toggle
+                    if ($li.find('li.active').length) {
+                        $li.smartCollapseToggle();
+                        $li.find('li.active').parents('li').addClass('active');
+                    }
+                });
+            }
+            bindEvents();
+
+
+            // click on route link
+            element.on('click', 'a[data-ui-sref]', function (e) {
+                // collapse all siblings to element parents and remove active markers
+                $(this)
+                    .parents('li').addClass('active')
+                    .each(function () {
+                        $(this).siblings('li.open').smartCollapseToggle();
+                        $(this).siblings('li').removeClass('active')
+                    });
+
+                if ($body.hasClass('mobile-view-activated')) {
+                    $rootScope.$broadcast('requestToggleMenu');
+                }
+            });
+
+
+            scope.$on('$smartLayoutMenuOnTop', function (event, menuOnTop) {
+                if (menuOnTop) {
+                    $collapsible.filter('.open').smartCollapseToggle();
+                }
+            });
+        }
+    }
+});
+(function(){
+    "use strict";
+
+    angular.module('SmartAdmin.Layout').directive('smartMenuItems', function ($http, $rootScope, $compile) {
+    return {
+        restrict: 'A',
+        compile: function (element, attrs) {
+            
+
+            function createItem(item, parent, level){
+                var li = $('<li />' ,{'ui-sref-active': "active"})
+                var a = $('<a />');
+                var i = $('<i />');
+
+                li.append(a);
+
+                if(item.sref)
+                    a.attr('ui-sref', item.sref);
+                if(item.href)
+                    a.attr('href', item.href);
+                if(item.icon){
+                    i.attr('class', 'fa fa-lg fa-fw fa-'+item.icon);
+                    a.append(i);
+                }
+                if(item.title){
+                    a.attr('title', item.title);
+                    if(level == 1){ 
+                        a.append(' <span class="menu-item-parent">' + item.title + '</span>');
+                    } else {
+                        a.append(' ' + item.title);
+
+                    }
+                }
+
+                if(item.items){
+                    var ul = $('<ul />');
+                    li.append(ul);
+                    li.attr('data-menu-collapse', '');
+                    _.forEach(item.items, function(child) {
+                        createItem(child, ul, level+1);
+                    })
+                } 
+
+                parent.append(li); 
+            }
+
+
+            $http.get(attrs.smartMenuItems).then(function(res){
+                var ul = $('<ul />', {
+                    'smart-menu': ''
+                })
+                _.forEach(res.data.items, function(item) {
+                    createItem(item, ul, 1);
+                })
+                
+                var $scope = $rootScope.$new();
+                var html = $('<div>').append(ul).html(); 
+                var linkingFunction = $compile(html);
+                
+                var _element = linkingFunction($scope);
+
+                element.replaceWith(_element);                
+            })
+        }
+    }
+});
+})();
+/**
+ * Jarvis Widget Directive
+ *
+ *    colorbutton="false"
+ *    editbutton="false"
+      togglebutton="false"
+       deletebutton="false"
+        fullscreenbutton="false"
+        custombutton="false"
+        collapsed="true"
+          sortable="false"
+ *
+ *
+ */
+"use strict";
+
+angular.module('SmartAdmin.Layout').directive('jarvisWidget', function($rootScope){
+    return {
+        restrict: "A",
+        compile: function(element, attributes){
+            if(element.data('widget-color'))
+                element.addClass('jarviswidget-color-' + element.data('widget-color'));
+
+
+            element.find('.widget-body').prepend('<div class="jarviswidget-editbox"><input class="form-control" type="text"></div>');
+
+            element.addClass('jarviswidget');
+            $rootScope.$emit('jarvisWidgetAdded', element )
+
+        }
+    }
+});
+ "use strict";
+ 
+ angular.module('SmartAdmin.Layout').directive('widgetGrid', function ($rootScope, $compile, $q, $state, $timeout) {
+
+    var jarvisWidgetsDefaults = {
+        grid: 'article',
+        widgets: '.jarviswidget',
+        localStorage: true,
+        deleteSettingsKey: '#deletesettingskey-options',
+        settingsKeyLabel: 'Reset settings?',
+        deletePositionKey: '#deletepositionkey-options',
+        positionKeyLabel: 'Reset position?',
+        sortable: true,
+        buttonsHidden: false,
+        // toggle button
+        toggleButton: true,
+        toggleClass: 'fa fa-minus | fa fa-plus',
+        toggleSpeed: 200,
+        onToggle: function () {
+        },
+        // delete btn
+        deleteButton: true,
+        deleteMsg: 'Warning: This action cannot be undone!',
+        deleteClass: 'fa fa-times',
+        deleteSpeed: 200,
+        onDelete: function () {
+        },
+        // edit btn
+        editButton: true,
+        editPlaceholder: '.jarviswidget-editbox',
+        editClass: 'fa fa-cog | fa fa-save',
+        editSpeed: 200,
+        onEdit: function () {
+        },
+        // color button
+        colorButton: true,
+        // full screen
+        fullscreenButton: true,
+        fullscreenClass: 'fa fa-expand | fa fa-compress',
+        fullscreenDiff: 3,
+        onFullscreen: function () {
+        },
+        // custom btn
+        customButton: false,
+        customClass: 'folder-10 | next-10',
+        customStart: function () {
+            alert('Hello you, this is a custom button...');
+        },
+        customEnd: function () {
+            alert('bye, till next time...');
+        },
+        // order
+        buttonOrder: '%refresh% %custom% %edit% %toggle% %fullscreen% %delete%',
+        opacity: 1.0,
+        dragHandle: '> header',
+        placeholderClass: 'jarviswidget-placeholder',
+        indicator: true,
+        indicatorTime: 600,
+        ajax: true,
+        timestampPlaceholder: '.jarviswidget-timestamp',
+        timestampFormat: 'Last update: %m%/%d%/%y% %h%:%i%:%s%',
+        refreshButton: true,
+        refreshButtonClass: 'fa fa-refresh',
+        labelError: 'Sorry but there was a error:',
+        labelUpdated: 'Last Update:',
+        labelRefresh: 'Refresh',
+        labelDelete: 'Delete widget:',
+        afterLoad: function () {
+        },
+        rtl: false, // best not to toggle this!
+        onChange: function () {
+
+        },
+        onSave: function () {
+
+        },
+        ajaxnav: true
+
+    }
+
+    var dispatchedWidgetIds = [];
+    var setupWaiting = false;
+
+    var debug = 1;
+
+    var setupWidgets = function (element, widgetIds) {
+
+        if (!setupWaiting) {
+
+            if(_.intersection(widgetIds, dispatchedWidgetIds).length != widgetIds.length){
+
+                dispatchedWidgetIds = _.union(widgetIds, dispatchedWidgetIds);
+
+//                    console.log('setupWidgets', debug++);
+
+                element.data('jarvisWidgets') && element.data('jarvisWidgets').destroy();
+                element.jarvisWidgets(jarvisWidgetsDefaults);
+                initDropdowns(widgetIds);
+            }
+
+        } else {
+            if (!setupWaiting) {
+                setupWaiting = true;
+                $timeout(function () {
+                    setupWaiting = false;
+                    setupWidgets(element, widgetIds)
+                }, 200);
+            }
+        }
+
+    };
+
+    var destroyWidgets = function(element, widgetIds){
+        element.data('jarvisWidgets') && element.data('jarvisWidgets').destroy();
+        dispatchedWidgetIds = _.xor(dispatchedWidgetIds, widgetIds);
+    };
+
+    var initDropdowns = function (widgetIds) {
+        angular.forEach(widgetIds, function (wid) {
+            $('#' + wid + ' [data-toggle="dropdown"]').each(function () {
+                var $parent = $(this).parent();
+                // $(this).removeAttr('data-toggle');
+                if (!$parent.attr('dropdown')) {
+                    $(this).removeAttr('href');
+                    $parent.attr('dropdown', '');
+                    var compiled = $compile($parent)($parent.scope())
+                    $parent.replaceWith(compiled);
+                }
+            })
+        });
+    };
+
+    var jarvisWidgetAddedOff,
+        $viewContentLoadedOff,
+        $stateChangeStartOff;
+
+    return {
+        restrict: 'A',
+        compile: function(element){
+
+            element.removeAttr('widget-grid data-widget-grid');
+
+            var widgetIds = [];
+
+            $viewContentLoadedOff = $rootScope.$on('$viewContentLoaded', function (event, data) {
+                $timeout(function () {
+                    setupWidgets(element, widgetIds)
+                }, 100);
+            });
+
+
+            $stateChangeStartOff = $rootScope.$on('$stateChangeStart',
+                function(event, toState, toParams, fromState, fromParams){
+                    jarvisWidgetAddedOff();
+                    $viewContentLoadedOff();
+                    $stateChangeStartOff();
+                    destroyWidgets(element, widgetIds)
+                });
+
+            jarvisWidgetAddedOff = $rootScope.$on('jarvisWidgetAdded', function (event, widget) {
+                if (widgetIds.indexOf(widget.attr('id')) == -1) {
+                    widgetIds.push(widget.attr('id'));
+                    $timeout(function () {
+                        setupWidgets(element, widgetIds)
+                    }, 100);
+                }
+//                    console.log('jarvisWidgetAdded', widget.attr('id'));
+            });
+
+        }
+    }
+});
+
 "use strict";
 
 
@@ -11959,507 +12465,6 @@ angular.module('SmartAdmin.Forms').directive('smartWizard', function () {
 
 
             setStep(currentStep);
-
-        }
-    }
-});
-'use strict';
-
-angular.module('SmartAdmin.Layout').directive('demoStates', function ($rootScope) {
-    return {
-        restrict: 'EA',
-        replace: true,
-        templateUrl: 'app/_common/layout/directives/demo/demo-states.tpl.html',
-        scope: true,
-        link: function (scope, element, attributes) {
-            element.parent().css({
-                position: 'relative'
-            });
-
-            element.on('click', '#demo-setting', function () {
-                element.toggleClass('activate')
-            })
-        },
-        controller: function ($scope) {
-            var $root = $('body');
-
-            $scope.$watch('fixedHeader', function (fixedHeader) {
-                localStorage.setItem('sm-fixed-header', fixedHeader);
-                $root.toggleClass('fixed-header', fixedHeader);
-                if (fixedHeader == false) {
-                    $scope.fixedRibbon = false;
-                    $scope.fixedNavigation = false;
-                }
-            });
-
-
-            $scope.$watch('fixedNavigation', function (fixedNavigation) {
-                localStorage.setItem('sm-fixed-navigation', fixedNavigation);
-                $root.toggleClass('fixed-navigation', fixedNavigation);
-                if (fixedNavigation) {
-                    $scope.insideContainer = false;
-                    $scope.fixedHeader = true;
-                } else {
-                    $scope.fixedRibbon = false;
-                }
-            });
-
-
-            $scope.$watch('fixedRibbon', function (fixedRibbon) {
-                localStorage.setItem('sm-fixed-ribbon', fixedRibbon);
-                $root.toggleClass('fixed-ribbon', fixedRibbon);
-                if (fixedRibbon) {
-                    $scope.fixedHeader = true;
-                    $scope.fixedNavigation = true;
-                    $scope.insideContainer = false;
-                }
-            });
-
-            $scope.$watch('fixedPageFooter', function (fixedPageFooter) {
-                localStorage.setItem('sm-fixed-page-footer', fixedPageFooter);
-                $root.toggleClass('fixed-page-footer', fixedPageFooter);
-            });
-
-            $scope.$watch('insideContainer', function (insideContainer) {
-                localStorage.setItem('sm-inside-container', insideContainer);
-                $root.toggleClass('container', insideContainer);
-                if (insideContainer) {
-                    $scope.fixedRibbon = false;
-                    $scope.fixedNavigation = false;
-                }
-            });
-
-            $scope.$watch('rtl', function (rtl) {
-                localStorage.setItem('sm-rtl', rtl);
-                $root.toggleClass('smart-rtl', rtl);
-            });
-
-            $scope.$watch('menuOnTop', function (menuOnTop) {
-                $rootScope.$broadcast('$smartLayoutMenuOnTop', menuOnTop);
-                localStorage.setItem('sm-menu-on-top', menuOnTop);
-                $root.toggleClass('menu-on-top', menuOnTop);
-
-                if(menuOnTop)$root.removeClass('minified');
-            });
-
-            $scope.$watch('colorblindFriendly', function (colorblindFriendly) {
-                localStorage.setItem('sm-colorblind-friendly', colorblindFriendly);
-                $root.toggleClass('colorblind-friendly', colorblindFriendly);
-            });
-
-
-            $scope.fixedHeader = localStorage.getItem('sm-fixed-header') == 'true';
-            $scope.fixedNavigation = localStorage.getItem('sm-fixed-navigation') == 'true';
-            $scope.fixedRibbon = localStorage.getItem('sm-fixed-ribbon') == 'true';
-            $scope.fixedPageFooter = localStorage.getItem('sm-fixed-page-footer') == 'true';
-            $scope.insideContainer = localStorage.getItem('sm-inside-container') == 'true';
-            $scope.rtl = localStorage.getItem('sm-rtl') == 'true';
-            $scope.menuOnTop = localStorage.getItem('sm-menu-on-top') == 'true' || $root.hasClass('menu-on-top');
-            $scope.colorblindFriendly = localStorage.getItem('sm-colorblind-friendly') == 'true';
-
-
-            $scope.skins = appConfig.skins;
-
-
-            $scope.smartSkin = localStorage.getItem('sm-skin') ? localStorage.getItem('sm-skin') : appConfig.smartSkin;
-
-            $scope.setSkin = function (skin) {
-                $scope.smartSkin = skin.name;
-                $root.removeClass(_.pluck($scope.skins, 'name').join(' '));
-                $root.addClass(skin.name);
-                localStorage.setItem('sm-skin', skin.name);
-                $("#logo img").attr('src', skin.logo);
-            };
-
-
-            if($scope.smartSkin != "smart-style-0"){
-                $scope.setSkin(_.find($scope.skins, {name: $scope.smartSkin}))
-            }
-
-
-            $scope.factoryReset = function () {
-                $.SmartMessageBox({
-                    title: "<i class='fa fa-refresh' style='color:green'></i> Clear Local Storage",
-                    content: "Would you like to RESET all your saved widgets and clear LocalStorage?1",
-                    buttons: '[No][Yes]'
-                }, function (ButtonPressed) {
-                    if (ButtonPressed == "Yes" && localStorage) {
-                        localStorage.clear();
-                        location.reload()
-                    }
-                });
-            }
-        }
-    }
-});
-"use strict";
-
-(function ($) {
-
-    $.fn.smartCollapseToggle = function () {
-
-        return this.each(function () {
-
-            var $body = $('body');
-            var $this = $(this);
-
-            // only if not  'menu-on-top'
-            if ($body.hasClass('menu-on-top')) {
-
-
-            } else {
-
-                $body.hasClass('mobile-view-activated')
-
-                // toggle open
-                $this.toggleClass('open');
-
-                // for minified menu collapse only second level
-                if ($body.hasClass('minified')) {
-                    if ($this.closest('nav ul ul').length) {
-                        $this.find('>a .collapse-sign .fa').toggleClass('fa-minus-square-o fa-plus-square-o');
-                        $this.find('ul:first').slideToggle(appConfig.menu_speed || 200);
-                    }
-                } else {
-                    // toggle expand item
-                    $this.find('>a .collapse-sign .fa').toggleClass('fa-minus-square-o fa-plus-square-o');
-                    $this.find('ul:first').slideToggle(appConfig.menu_speed || 200);
-                }
-            }
-        });
-    };
-})(jQuery);
-
-angular.module('SmartAdmin.Layout').directive('smartMenu', function ($state, $rootScope) {
-    return {
-        restrict: 'A',
-        link: function (scope, element, attrs) {
-            var $body = $('body');
-
-            var $collapsible = element.find('li[data-menu-collapse]');
-
-            var bindEvents = function(){
-                $collapsible.each(function (idx, li) {
-                    var $li = $(li);
-                    $li
-                        .on('click', '>a', function (e) {
-
-                            // collapse all open siblings
-                            $li.siblings('.open').smartCollapseToggle();
-
-                            // toggle element
-                            $li.smartCollapseToggle();
-
-                            // add active marker to collapsed element if it has active childs
-                            if (!$li.hasClass('open') && $li.find('li.active').length > 0) {
-                                $li.addClass('active')
-                            }
-
-                            e.preventDefault();
-                        })
-                        .find('>a').append('<b class="collapse-sign"><em class="fa fa-plus-square-o"></em></b>');
-
-                    // initialization toggle
-                    if ($li.find('li.active').length) {
-                        $li.smartCollapseToggle();
-                        $li.find('li.active').parents('li').addClass('active');
-                    }
-                });
-            }
-            bindEvents();
-
-
-            // click on route link
-            element.on('click', 'a[data-ui-sref]', function (e) {
-                // collapse all siblings to element parents and remove active markers
-                $(this)
-                    .parents('li').addClass('active')
-                    .each(function () {
-                        $(this).siblings('li.open').smartCollapseToggle();
-                        $(this).siblings('li').removeClass('active')
-                    });
-
-                if ($body.hasClass('mobile-view-activated')) {
-                    $rootScope.$broadcast('requestToggleMenu');
-                }
-            });
-
-
-            scope.$on('$smartLayoutMenuOnTop', function (event, menuOnTop) {
-                if (menuOnTop) {
-                    $collapsible.filter('.open').smartCollapseToggle();
-                }
-            });
-        }
-    }
-});
-(function(){
-    "use strict";
-
-    angular.module('SmartAdmin.Layout').directive('smartMenuItems', function ($http, $rootScope, $compile) {
-    return {
-        restrict: 'A',
-        compile: function (element, attrs) {
-            
-
-            function createItem(item, parent, level){
-                var li = $('<li />' ,{'ui-sref-active': "active"})
-                var a = $('<a />');
-                var i = $('<i />');
-
-                li.append(a);
-
-                if(item.sref)
-                    a.attr('ui-sref', item.sref);
-                if(item.href)
-                    a.attr('href', item.href);
-                if(item.icon){
-                    i.attr('class', 'fa fa-lg fa-fw fa-'+item.icon);
-                    a.append(i);
-                }
-                if(item.title){
-                    a.attr('title', item.title);
-                    if(level == 1){ 
-                        a.append(' <span class="menu-item-parent">' + item.title + '</span>');
-                    } else {
-                        a.append(' ' + item.title);
-
-                    }
-                }
-
-                if(item.items){
-                    var ul = $('<ul />');
-                    li.append(ul);
-                    li.attr('data-menu-collapse', '');
-                    _.forEach(item.items, function(child) {
-                        createItem(child, ul, level+1);
-                    })
-                } 
-
-                parent.append(li); 
-            }
-
-
-            $http.get(attrs.smartMenuItems).then(function(res){
-                var ul = $('<ul />', {
-                    'smart-menu': ''
-                })
-                _.forEach(res.data.items, function(item) {
-                    createItem(item, ul, 1);
-                })
-                
-                var $scope = $rootScope.$new();
-                var html = $('<div>').append(ul).html(); 
-                var linkingFunction = $compile(html);
-                
-                var _element = linkingFunction($scope);
-
-                element.replaceWith(_element);                
-            })
-        }
-    }
-});
-})();
-/**
- * Jarvis Widget Directive
- *
- *    colorbutton="false"
- *    editbutton="false"
-      togglebutton="false"
-       deletebutton="false"
-        fullscreenbutton="false"
-        custombutton="false"
-        collapsed="true"
-          sortable="false"
- *
- *
- */
-"use strict";
-
-angular.module('SmartAdmin.Layout').directive('jarvisWidget', function($rootScope){
-    return {
-        restrict: "A",
-        compile: function(element, attributes){
-            if(element.data('widget-color'))
-                element.addClass('jarviswidget-color-' + element.data('widget-color'));
-
-
-            element.find('.widget-body').prepend('<div class="jarviswidget-editbox"><input class="form-control" type="text"></div>');
-
-            element.addClass('jarviswidget');
-            $rootScope.$emit('jarvisWidgetAdded', element )
-
-        }
-    }
-});
- "use strict";
- 
- angular.module('SmartAdmin.Layout').directive('widgetGrid', function ($rootScope, $compile, $q, $state, $timeout) {
-
-    var jarvisWidgetsDefaults = {
-        grid: 'article',
-        widgets: '.jarviswidget',
-        localStorage: true,
-        deleteSettingsKey: '#deletesettingskey-options',
-        settingsKeyLabel: 'Reset settings?',
-        deletePositionKey: '#deletepositionkey-options',
-        positionKeyLabel: 'Reset position?',
-        sortable: true,
-        buttonsHidden: false,
-        // toggle button
-        toggleButton: true,
-        toggleClass: 'fa fa-minus | fa fa-plus',
-        toggleSpeed: 200,
-        onToggle: function () {
-        },
-        // delete btn
-        deleteButton: true,
-        deleteMsg: 'Warning: This action cannot be undone!',
-        deleteClass: 'fa fa-times',
-        deleteSpeed: 200,
-        onDelete: function () {
-        },
-        // edit btn
-        editButton: true,
-        editPlaceholder: '.jarviswidget-editbox',
-        editClass: 'fa fa-cog | fa fa-save',
-        editSpeed: 200,
-        onEdit: function () {
-        },
-        // color button
-        colorButton: true,
-        // full screen
-        fullscreenButton: true,
-        fullscreenClass: 'fa fa-expand | fa fa-compress',
-        fullscreenDiff: 3,
-        onFullscreen: function () {
-        },
-        // custom btn
-        customButton: false,
-        customClass: 'folder-10 | next-10',
-        customStart: function () {
-            alert('Hello you, this is a custom button...');
-        },
-        customEnd: function () {
-            alert('bye, till next time...');
-        },
-        // order
-        buttonOrder: '%refresh% %custom% %edit% %toggle% %fullscreen% %delete%',
-        opacity: 1.0,
-        dragHandle: '> header',
-        placeholderClass: 'jarviswidget-placeholder',
-        indicator: true,
-        indicatorTime: 600,
-        ajax: true,
-        timestampPlaceholder: '.jarviswidget-timestamp',
-        timestampFormat: 'Last update: %m%/%d%/%y% %h%:%i%:%s%',
-        refreshButton: true,
-        refreshButtonClass: 'fa fa-refresh',
-        labelError: 'Sorry but there was a error:',
-        labelUpdated: 'Last Update:',
-        labelRefresh: 'Refresh',
-        labelDelete: 'Delete widget:',
-        afterLoad: function () {
-        },
-        rtl: false, // best not to toggle this!
-        onChange: function () {
-
-        },
-        onSave: function () {
-
-        },
-        ajaxnav: true
-
-    }
-
-    var dispatchedWidgetIds = [];
-    var setupWaiting = false;
-
-    var debug = 1;
-
-    var setupWidgets = function (element, widgetIds) {
-
-        if (!setupWaiting) {
-
-            if(_.intersection(widgetIds, dispatchedWidgetIds).length != widgetIds.length){
-
-                dispatchedWidgetIds = _.union(widgetIds, dispatchedWidgetIds);
-
-//                    console.log('setupWidgets', debug++);
-
-                element.data('jarvisWidgets') && element.data('jarvisWidgets').destroy();
-                element.jarvisWidgets(jarvisWidgetsDefaults);
-                initDropdowns(widgetIds);
-            }
-
-        } else {
-            if (!setupWaiting) {
-                setupWaiting = true;
-                $timeout(function () {
-                    setupWaiting = false;
-                    setupWidgets(element, widgetIds)
-                }, 200);
-            }
-        }
-
-    };
-
-    var destroyWidgets = function(element, widgetIds){
-        element.data('jarvisWidgets') && element.data('jarvisWidgets').destroy();
-        dispatchedWidgetIds = _.xor(dispatchedWidgetIds, widgetIds);
-    };
-
-    var initDropdowns = function (widgetIds) {
-        angular.forEach(widgetIds, function (wid) {
-            $('#' + wid + ' [data-toggle="dropdown"]').each(function () {
-                var $parent = $(this).parent();
-                // $(this).removeAttr('data-toggle');
-                if (!$parent.attr('dropdown')) {
-                    $(this).removeAttr('href');
-                    $parent.attr('dropdown', '');
-                    var compiled = $compile($parent)($parent.scope())
-                    $parent.replaceWith(compiled);
-                }
-            })
-        });
-    };
-
-    var jarvisWidgetAddedOff,
-        $viewContentLoadedOff,
-        $stateChangeStartOff;
-
-    return {
-        restrict: 'A',
-        compile: function(element){
-
-            element.removeAttr('widget-grid data-widget-grid');
-
-            var widgetIds = [];
-
-            $viewContentLoadedOff = $rootScope.$on('$viewContentLoaded', function (event, data) {
-                $timeout(function () {
-                    setupWidgets(element, widgetIds)
-                }, 100);
-            });
-
-
-            $stateChangeStartOff = $rootScope.$on('$stateChangeStart',
-                function(event, toState, toParams, fromState, fromParams){
-                    jarvisWidgetAddedOff();
-                    $viewContentLoadedOff();
-                    $stateChangeStartOff();
-                    destroyWidgets(element, widgetIds)
-                });
-
-            jarvisWidgetAddedOff = $rootScope.$on('jarvisWidgetAdded', function (event, widget) {
-                if (widgetIds.indexOf(widget.attr('id')) == -1) {
-                    widgetIds.push(widget.attr('id'));
-                    $timeout(function () {
-                        setupWidgets(element, widgetIds)
-                    }, 100);
-                }
-//                    console.log('jarvisWidgetAdded', widget.attr('id'));
-            });
 
         }
     }
