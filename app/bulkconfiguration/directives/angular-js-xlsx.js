@@ -3,7 +3,7 @@ angular.module('app.bulkconfig')
   .directive('jsXls', function () {
     return {
       restrict: 'E',
-      template: '<input type="file" />',
+      template: '<input type="file" accept=".xls,.xlsx"/>',
       replace: true,
       link: function (scope, element, attrs) {
 
@@ -12,6 +12,8 @@ angular.module('app.bulkconfig')
 
           var reader = new FileReader();
           var name = f.name;
+          scope.fileName = name;
+
           reader.onload = function(e) {
             var data = e.target.result;
 

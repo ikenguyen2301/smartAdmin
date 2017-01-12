@@ -2768,6 +2768,27 @@ angular.module('app.appViews').controller('ProjectsDemoCtrl', function ($scope, 
         "order": [[1, 'asc']]
     }
 });
+
+
+'use strict';
+
+angular.module('app.auth').factory('User', function ($http, $q, APP_CONFIG) {
+    var dfd = $q.defer();
+
+    var UserModel = {
+        initialized: dfd.promise,
+        username: undefined,
+        picture: undefined
+    };
+     $http.get(APP_CONFIG.apiRootUrl + '/user.json').then(function(response){
+         UserModel.username = response.data.username;
+         UserModel.picture= response.data.picture;
+         dfd.resolve(UserModel)
+     });
+
+    return UserModel;
+});
+
 "use strict";
 
 angular.module('app.auth').directive('loginInfo', function($rootScope){
@@ -2820,27 +2841,6 @@ angular.module('app.auth').controller('LoginCtrl', function ($scope, $rootScope,
 
 'use strict';
 
-angular.module('app.auth').factory('User', function ($http, $q, APP_CONFIG) {
-    var dfd = $q.defer();
-
-    var UserModel = {
-        initialized: dfd.promise,
-        username: undefined,
-        picture: undefined
-    };
-     $http.get(APP_CONFIG.apiRootUrl + '/user.json').then(function(response){
-         UserModel.username = response.data.username;
-         UserModel.picture= response.data.picture;
-         dfd.resolve(UserModel)
-     });
-
-    return UserModel;
-});
-
-
-
-'use strict';
-
 angular.module('app.auth').factory('AuthService', function ($http, $window) {
     var authService = {};
 
@@ -2885,85 +2885,12 @@ angular.module('app.auth').factory('AuthService', function ($http, $window) {
 
     return authService;
 })
-"use strict";
-
-angular.module('app').factory('beaconService', function($http, $log, APP_CONFIG, $rootScope) {
-	function getHttpConfig() {
-		var config = {
-			headers: {
-				'Content-Type': 'application/json',
-				'username': $rootScope.userLogin.username
-			}
-		};
-
-		return config;
-	}
-
-	function getAllBulkconfiguration(callback){
-
-		$http.get(APP_CONFIG.serverUrl + 'bulkconfiguration/all', getHttpConfig()).success(function(data){
-			callback(data);
-		}).error(function(){
-			$log.log('Error');
-			callback([]);
-		});
-	}
-	function getBulkconfigurationById(id,callback){
-		$http.get(APP_CONFIG.serverUrl + 'bulkconfiguration/'+ id, getHttpConfig()).success(function(data){
-			callback(data);
-		}).error(function(){
-			$log.log('Error');
-			callback([]);
-		});
-	}
-	function createNewBulk(data,callback){
-		$http.post(APP_CONFIG.serverUrl + 'bulkconfiguration/', data, getHttpConfig()).success(function(data){
-			callback(data);
-		}).error(function(){
-			$log.log('Error');
-			callback([]);
-		});
-	}
-	function updateBulk(data,callback){
-		$http.put(APP_CONFIG.serverUrl + 'bulkconfiguration/' + data.objectId, data, getHttpConfig()).success(function(data){
-			callback(data);
-		}).error(function(){
-			$log.log('Error');
-			callback([]);
-		});
-	}
-	function deleteBulk(objectId,callback){
-		$http.delete(APP_CONFIG.serverUrl + 'bulkconfiguration/' + objectId, getHttpConfig()).success(function(data){
-			callback(data);
-		}).error(function(){
-			$log.log('Error');
-			callback(false);
-		});
-	}
-	return {
-		getAll:function(callback){
-			getAllBulkconfiguration(callback);
-		},
-		get:function(id,callback){
-			getBulkconfigurationById(id,callback);
-		},
-		post:function(data,callback){
-			createNewBulk(data,callback);
-		},
-		put:function(data,callback){
-			updateBulk(data,callback);
-		},
-		delete:function(data,callback){
-			deleteBulk(data,callback);
-		}
-	}
-});
 'use strict';
 angular.module('app.bulkconfig')
   .directive('jsXls', function () {
     return {
       restrict: 'E',
-      template: '<input type="file" />',
+      template: '<input type="file" accept=".xls,.xlsx"/>',
       replace: true,
       link: function (scope, element, attrs) {
 
@@ -2972,6 +2899,8 @@ angular.module('app.bulkconfig')
 
           var reader = new FileReader();
           var name = f.name;
+          scope.fileName = name;
+
           reader.onload = function(e) {
             var data = e.target.result;
 
@@ -3121,6 +3050,79 @@ angular.module('app').factory('bulkConfigService', function($http, $log, APP_CON
 		}
 	}
 });
+"use strict";
+
+angular.module('app').factory('beaconService', function($http, $log, APP_CONFIG, $rootScope) {
+	function getHttpConfig() {
+		var config = {
+			headers: {
+				'Content-Type': 'application/json',
+				'username': $rootScope.userLogin.username
+			}
+		};
+
+		return config;
+	}
+
+	function getAllBulkconfiguration(callback){
+
+		$http.get(APP_CONFIG.serverUrl + 'bulkconfiguration/all', getHttpConfig()).success(function(data){
+			callback(data);
+		}).error(function(){
+			$log.log('Error');
+			callback([]);
+		});
+	}
+	function getBulkconfigurationById(id,callback){
+		$http.get(APP_CONFIG.serverUrl + 'bulkconfiguration/'+ id, getHttpConfig()).success(function(data){
+			callback(data);
+		}).error(function(){
+			$log.log('Error');
+			callback([]);
+		});
+	}
+	function createNewBulk(data,callback){
+		$http.post(APP_CONFIG.serverUrl + 'bulkconfiguration/', data, getHttpConfig()).success(function(data){
+			callback(data);
+		}).error(function(){
+			$log.log('Error');
+			callback([]);
+		});
+	}
+	function updateBulk(data,callback){
+		$http.put(APP_CONFIG.serverUrl + 'bulkconfiguration/' + data.objectId, data, getHttpConfig()).success(function(data){
+			callback(data);
+		}).error(function(){
+			$log.log('Error');
+			callback([]);
+		});
+	}
+	function deleteBulk(objectId,callback){
+		$http.delete(APP_CONFIG.serverUrl + 'bulkconfiguration/' + objectId, getHttpConfig()).success(function(data){
+			callback(data);
+		}).error(function(){
+			$log.log('Error');
+			callback(false);
+		});
+	}
+	return {
+		getAll:function(callback){
+			getAllBulkconfiguration(callback);
+		},
+		get:function(id,callback){
+			getBulkconfigurationById(id,callback);
+		},
+		post:function(data,callback){
+			createNewBulk(data,callback);
+		},
+		put:function(data,callback){
+			updateBulk(data,callback);
+		},
+		delete:function(data,callback){
+			deleteBulk(data,callback);
+		}
+	}
+});
 'use strict';
 
 angular.module('app.calendar').controller('CalendarCtrl', function ($scope, $log, CalendarEvent) {
@@ -3186,6 +3188,12 @@ angular.module('app.calendar').controller('CalendarCtrl', function ($scope, $log
 
 });
 
+
+"use strict";
+
+angular.module('app.calendar').factory('CalendarEvent', function($resource, APP_CONFIG){
+    return $resource( APP_CONFIG.apiRootUrl + '/events.json', {_id:'@id'})
+});
 "use strict";
 
 angular.module('app.calendar').directive('dragableEvent', function ($log) {
@@ -3343,12 +3351,6 @@ angular.module('app.calendar').directive('fullCalendar', function (CalendarEvent
             };
         }
     }
-});
-
-"use strict";
-
-angular.module('app.calendar').factory('CalendarEvent', function($resource, APP_CONFIG){
-    return $resource( APP_CONFIG.apiRootUrl + '/events.json', {_id:'@id'})
 });
 "use strict";	
 

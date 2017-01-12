@@ -15,14 +15,10 @@
                     <span class="button">
                         <js-xls onread="handleRead"
                                 onerror="error"
-                                id="file" name="file"
-                                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                id="file" name="file">
                         </js-xls>
-                        <!--<input type="file" id="file" name="file"-->
-                                                <!---->
-                                                <!--onchange="this.parentNode.nextSibling.value = this.value">-->
                         Browse</span>
-                        <input type="text" placeholder="Include some files" readonly="">
+                        <input type="text" placeholder="Include a file" readonly="" ng-model="fileName">
                 </div>
             </section>
         </div>
