@@ -20,6 +20,62 @@ angular.module('app.bulkconfig').controller('BulkConfigFormCtrl', function ($sco
         $scope.getDetail();
     }
 
+    var validateBeacon = {
+      isInteger: function (value) {
+        value = parseInt(value);
+        return Number.isInteger(value) ? value : null;
+      },
+      proximityUuid: function (value) {
+        if(!value){
+          return null;
+        }
+
+        value = value.trim();
+        if (/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(value)) {
+          return value;
+        }
+
+        return null;
+      },
+      namespaceId: function (value) {
+        if(!value){
+          return null;
+        }
+
+        value = value.trim();
+        if (/^[0-9a-fA-F]{20}$/.test(value)) {
+          return value;
+        }
+
+        return null;
+      },
+      instanceId: function (value) {
+        if(!value){
+          return null;
+        }
+
+        value = value.trim();
+        if (/^[0-9a-fA-F]{9,16}$/.test(value)) {
+          return value;
+        }
+
+        return null;
+      },
+      isHttpUrl: function (value) {
+        if(!value){
+          return null;
+        }
+
+        value = value.trim();
+        if (/^http:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$/.test(value)) {
+          return value;
+        }
+
+        return null;
+      }
+    };
+
+
     $scope.handleRead = function (workbook) {
 
         $scope.workbook = workbook;
@@ -32,25 +88,28 @@ angular.module('app.bulkconfig').controller('BulkConfigFormCtrl', function ($sco
               beaconId : value['Beacon ID'],
               preset: '',
               profile: value['Profile'],
-              major: value['Major'],
-              minor: value['Minor'],
-              interval: value['Interval'],
-              txPower: value['TX Power'],
-              proximityUuid: value['Proximity UUID'],
-              namespace: value['Namspace ID'],
-              instanceId: value['Instance ID'],
-              url: value['URL'],
+              major: validateBeacon.isInteger(value['Major']),
+              minor: validateBeacon.isInteger(value['Minor']),
+              interval: validateBeacon.isInteger(value['Interval']),
+              txPower: validateBeacon.isInteger(value['TX Power']),
+              proximityUuid: validateBeacon.proximityUuid(value['Proximity UUID']),
+              namespace: validateBeacon.namespaceId(value['Namspace ID']),
+              instanceId: validateBeacon.instanceId(value['Instance ID']),
+              url: validateBeacon.isHttpUrl(value['URL']),
               alias: value['Custom Name']
             };
-              if(beaconIds.indexOf(item.beaconId) == -1) {
-                  beaconIds.push(item.beaconId);
-                  if (value['Profile'] == 'iBeacon' && value['Beacon ID'] && value['Proximity UUID'] && value['Major'] && value['Minor'] && value['Interval'] && value['TX Power'] && value['Custom Name']) {
-                      $scope.itemDetail.details.push(item);
-                  } else if (value['Profile'] == 'Eddystone' && value['Beacon ID'] && value['Namspace ID'] && value['Instance ID'] && value['URL'] && value['Interval'] && value['TX Power'] && value['Custom Name']) {
-                      $scope.itemDetail.details.push(item);
-                  }
-              }
+
+            if(beaconIds.indexOf(item.beaconId) == -1) {
+                beaconIds.push(item.beaconId);
+                if (item.profile == 'iBeacon' && item.beaconId && item.proximityUuid && item.major && item.minor && item.interval && item.txPower && item.alias) {
+                    $scope.itemDetail.details.push(item);
+                } else if (item.profile == 'Eddystone' && item.beaconId && item.namespace && item.instanceId && item.url && item.interval && item.txPower && item.alias) {
+                    $scope.itemDetail.details.push(item);
+                }
+            }
           });
+
+          console.log('$scope.itemDetail.details', $scope.itemDetail.details);
         } else {
            $.smallBox({
               title: "Warning",
