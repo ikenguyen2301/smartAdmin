@@ -14,6 +14,9 @@ angular.module('app.bulkconfig').controller('BulkConfigDetailCtrl', function ($s
     $scope.editBulk = function(){
         $state.go("app.bulkconfig.form",{id: $scope.itemDetail.objectId});
     }
+    $scope.back = function(){
+        $state.go("app.bulkconfig");
+    }
 
     $scope.deleteBulk =  function () {
         $.SmartMessageBox({

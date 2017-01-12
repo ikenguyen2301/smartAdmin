@@ -6,6 +6,7 @@
 		<!--<div smart-include="app/layout/partials/sub-header.tpl.html"></div>-->
 	<!--</div>-->
 	<!-- widget grid -->
+	<p class="text-right"><button class="btn btn-success dropdown-toggle icon-" ng-click="addBulk()"><i class="fa fa-plus"></i> Add New</button></p>
 	<section id="widget-grid" >
 
 		<div jarvis-widget id="standard-datatable-widget" data-widget-color="darken" data-widget-editbutton="false">
@@ -18,11 +19,11 @@
 					<table   class="table table-striped table-bordered table-hover" width="100%">
 						<thead>
 						<tr>
-							<th data-hide="phone">NO.</th>
-							<th data-hide="phone">ID</th>
+							<th width="100" data-hide="phone">NO.</th>
+							<th width="150" data-hide="phone">ID</th>
 							<th data-class="expand">Alias</th>
-							<th data-hide="phone,tablet">Updated At</th>
-							<th data-hide="phone,tablet"><button class="btn btn-xs btn btn-success dropdown-toggle icon-" ng-click="addBulk()"><i class="fa fa-plus"></i> Add New</button> </th>
+							<th width="150" data-hide="phone,tablet">Updated At</th>
+							<th width="250" data-hide="phone,tablet">Actions</th>
 						</tr>
 						</thead>
 						<tr ng-repeat="item in bulklist | orderBy:'-updatedAt'">
