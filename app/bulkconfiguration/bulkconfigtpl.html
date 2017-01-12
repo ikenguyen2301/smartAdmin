@@ -20,8 +20,7 @@
 						<tr>
 							<th data-hide="phone">NO.</th>
 							<th data-hide="phone">ID</th>
-							<th data-class="expand"> Alias</th>
-							<th data-hide="phone,tablet">File name</th>
+							<th data-class="expand">Alias</th>
 							<th data-hide="phone,tablet">Updated At</th>
 							<th data-hide="phone,tablet"><button class="btn btn-xs btn btn-success dropdown-toggle icon-" ng-click="addBulk()"><i class="fa fa-plus"></i> Add New</button> </th>
 						</tr>
@@ -30,11 +29,11 @@
 							<td>{{bulklist.indexOf(item) +1}}</td>
 							<td>{{item.objectId}}</td>
 							<td>{{item.alias}}</td>
-							<td>{{item.fileName}}</td>
 							<td>{{item.updatedAt | date:'yyyy-MM-dd HH:mm'}}</td>
 							<td>
-								<button class="btn btn-xs btn-default dropdown-toggle" ng-click="editBulk(item)">Edit</button>
-								<button class="btn btn-xs btn-danger dropdown-toggle" ng-click="deleteBulk($index)">Delete</button>
+								<button class="btn btn-xs btn-info" ng-click="viewBulk(item)">Detail</button>
+								<button class="btn btn-xs btn-default" ng-click="editBulk(item)">Edit</button>
+								<button class="btn btn-xs btn-danger" ng-click="deleteBulk($index)">Delete</button>
 							</td>
 						</tr>
 					</table>

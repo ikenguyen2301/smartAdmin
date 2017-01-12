@@ -1,101 +1,40 @@
 'use strict';
 
-angular.module('app.bulkconfig').controller('BulkConfigDetailCtrl', function ($scope, $interval, CalendarEvent, bulkConfigService,$stateParams,$state) {
-    var url = 'http://transx.com/eddystone';
+angular.module('app.bulkconfig').controller('BulkConfigDetailCtrl', function ($scope, $interval, CalendarEvent, bulkConfigService,$state, $stateParams) {
 
     $scope.getDetail = function(){
         $scope.id = $stateParams.id;
         bulkConfigService.get($scope.id, function(data){
             $scope.itemDetail = data.data;
-            if(!$scope.itemDetail.url){
-              $scope.itemDetail.url = url;
-            }
-            console.log("scope.itemDetail",$scope.itemDetail);
         });
     };
 
-    if(!$stateParams.id){
-        $scope.itemDetail = {
-          alias: 'TransX',
-          details: []
-        };
-    }else{
-        $scope.getDetail();
+    $scope.getDetail();
+
+    $scope.editBulk = function(){
+        $state.go("app.bulkconfig.form",{id: $scope.itemDetail.objectId});
     }
 
-    $scope.handleRead = function (workbook) {
-
-        $scope.workbook = workbook;
-        if($scope.workbook && $scope.workbook.length){
-          $scope.itemDetail.details = [];
-
-          angular.forEach($scope.workbook, function(value, key) {
-            var item = {
-              beaconId : value['Beacon ID'],
-              preset: '',
-              profile: value['Profile'],
-              major: value['Major'],
-              minor: value['Minor'],
-              interval: value['Interval'],
-              txPower: value['TX Power'],
-              proximityUuid: value['Proximity UUID'],
-              namespace: value['Namspace ID'],
-              instanceId: value['Instance ID'],
-              url: value['URL'],
-              alias: value['Custom Name']
-            };
-            if(value['Profile'] == 'iBeacon' && value['Beacon ID'] && value['Proximity UUID'] && value['Major'] &&  value['Minor'] &&  value['Interval'] &&  value['TX Power'] &&  value['Custom Name']){
-              $scope.itemDetail.details.push(item);
-            } else if(value['Profile'] == 'Eddystone' && value['Beacon ID'] && value['Namspace ID'] && value['Instance ID'] && value['URL'] && value['Interval'] &&  value['TX Power'] &&  value['Custom Name']){
-              $scope.itemDetail.details.push(item);
+    $scope.deleteBulk =  function () {
+        $.SmartMessageBox({
+            title: "Delete!",
+            content: "Are you sure you want to delete this item?",
+            buttons: '[No][Yes]'
+        }, function (ButtonPressed) {
+            if (ButtonPressed === "Yes") {
+                bulkConfigService.delete($scope.itemDetail.objectId, function(data){
+                    if(data){
+                        $.smallBox({
+                            title: "Deleted!",
+                            content: "<i class='fa fa-clock-o'></i> <i>Bulk Configuration deleted successfully.</i>",
+                            color: "#659265",
+                            iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                            timeout: 4000
+                        });
+                        $state.go("app.bulkconfig");
+                    }
+                });
             }
-          });
-        } else {
-           $.smallBox({
-              title: "Warning",
-              content: "File data have error!",
-              color: "#F90",
-              iconSmall: "fa fa-check fa-2x fadeInRight animated",
-              timeout: 4000
-          });
-        }
+        });
     };
-
-    $scope.save = function(isValid){
-        if(isValid && $scope.itemDetail.details.length){
-            if(!$scope.itemDetail.objectId) {
-                bulkConfigService.post($scope.itemDetail, function (data) {
-                    // Implement toaster here when create successful
-                     $.smallBox({
-                                title: "Create Notification ",
-                                content: "Created successful!",
-                                color: "#659265",
-                                iconSmall: "fa fa-check fa-2x fadeInRight animated",
-                                timeout: 4000
-                            });
-                    $state.go("app.bulkconfig");
-                });
-                } else {
-                bulkConfigService.put($scope.itemDetail, function (data) {
-                    // Implement toaster here when create successful
-                    $.smallBox({
-                                title: "Update Notification",
-                                content: "Updated successful!",
-                                color: "#659265",
-                                iconSmall: "fa fa-check fa-2x fadeInRight animated",
-                                timeout: 4000
-                            });
-                    $state.go("app.bulkconfig");
-                });
-            }
-        } else if(isValid && !$scope.itemDetail.details.length){
-          $.smallBox({
-            title: "Error",
-            content: "Select file upload",
-            color: "#a90329",
-            iconSmall: "fa fa-check fa-2x fadeInRight animated",
-            timeout: 4000
-          });
-        }
-    }
 });

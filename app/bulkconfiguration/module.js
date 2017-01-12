@@ -25,7 +25,7 @@ angular.module('app.bulkconfig', [
 .config(function ($stateProvider) {
     $stateProvider
         .state('app.bulkconfig', {
-            url: '/bulkconfig2',
+            url: '/bulkconfig',
             views: {
                 "content@app": {
                     controller: 'BulkConfigCtrl',
@@ -37,11 +37,24 @@ angular.module('app.bulkconfig', [
                 requireLogin : true
             }
         })
-        .state('app.bulkconfig.detail', {
+        .state('app.bulkconfig.form', {
             url: '/compose?:id',
             views: {
                 "content@app": {
                     templateUrl: 'app/bulkconfiguration/bulkConfigForm.html',
+                    controller: 'BulkConfigFormCtrl'
+                }
+            },
+            data:{
+                title: 'Bulk Configuration Detail',
+                requireLogin : true
+            }
+        })
+        .state('app.bulkconfig.detail', {
+            url: '/:id',
+            views: {
+                "content@app": {
+                    templateUrl: 'app/bulkconfiguration/bulkConfigDetail.html',
                     controller: 'BulkConfigDetailCtrl'
                 }
             },

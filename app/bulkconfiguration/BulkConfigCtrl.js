@@ -11,11 +11,15 @@ angular.module('app.bulkconfig').controller('BulkConfigCtrl', function ($scope, 
     $scope.getBulkConfiguration();
 
     $scope.editBulk = function(item){
+        $state.go("app.bulkconfig.form",{id:item.objectId});
+    }
+
+    $scope.viewBulk = function(item){
         $state.go("app.bulkconfig.detail",{id:item.objectId});
     }
 
     $scope.addBulk = function(){
-        $state.go("app.bulkconfig.detail",{});
+        $state.go("app.bulkconfig.form",{});
     }
 
     $scope.deleteBulk =  function (index) {

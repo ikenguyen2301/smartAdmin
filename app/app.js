@@ -36,7 +36,7 @@ angular.module('app', [
     'app.misc',
     'app.smartAdmin',
     'app.eCommerce',
-    'app.beacon',
+    // 'app.beacon',
     'app.bulkconfig'
 ])
 .config(function ($provide, $httpProvider, RestangularProvider) {
