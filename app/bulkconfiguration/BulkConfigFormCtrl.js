@@ -7,10 +7,7 @@ angular.module('app.bulkconfig').controller('BulkConfigFormCtrl', function ($sco
         $scope.id = $stateParams.id;
         bulkConfigService.get($scope.id, function(data){
             $scope.itemDetail = data.data;
-            if(!$scope.itemDetail.url){
-              $scope.itemDetail.url = url;
-            }
-            console.log("scope.itemDetail",$scope.itemDetail);
+            $scope.itemDetail.details = [];
         });
     };
 

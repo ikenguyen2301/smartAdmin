@@ -25,7 +25,7 @@ angular.module('app.bulkconfig').controller('BulkConfigCtrl', function ($scope, 
     $scope.deleteBulk =  function (index) {
         $.SmartMessageBox({
             title: "Delete!",
-            content: "Are you sure you want to delete this item?",
+            content: "Are you sure to delete this item?",
             buttons: '[No][Yes]'
         }, function (ButtonPressed) {
             if (ButtonPressed === "Yes") {
