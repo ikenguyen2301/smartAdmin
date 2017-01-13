@@ -14,6 +14,9 @@
 		<p>Created at: {{itemDetail.createdAt | date:'yyyy-MM-dd HH:mm'}}</p>
 		<p>Updated at: {{itemDetail.updatedAt | date:'yyyy-MM-dd HH:mm'}}</p>
 
+		<p class="text-right">
+			Filter: <a class="label label-default" ng-class="{'label-primary': filterBy == 'all'}" ng-click="changeFilter('all')">All items</a> <a class="label label-default" ng-class="{'label-primary': filterBy == 'true'}" ng-click="changeFilter('true')">Success</a>  <a class="label label-default" ng-class="{'label-primary': filterBy == 'false'}" ng-click="changeFilter('false')">Error</a>
+		</p>
 		<div jarvis-widget id="standard-datatable-widget" data-widget-color="darken" data-widget-editbutton="false">
 			<header>
 				<span class="widget-icon"> <i class="fa fa-cog"></i> </span>
@@ -21,6 +24,7 @@
 			</header>
 			<div>
 				<div class="widget-body no-padding">
+
 					<table   class="table table-striped table-bordered table-hover" width="100%">
 						<thead>
 						<tr>
@@ -35,11 +39,11 @@
 							<th data-hide="phone,tablet">Interval</th>
 							<th data-hide="phone,tablet">TXPower</th>
 							<th data-hide="phone,tablet">Custom Name</th>
-							<th data-hide="phone,tablet">Error</th>
+							<!--<th data-hide="phone,tablet">Error</th>-->
 						</tr>
 						</thead>
-						<tr ng-repeat="item in itemDetail.details" ng-class="{'danger': item.error == 'true'}">
-							<td>{{item.beaconId}} {{item.error == 'true'}}</td>
+						<tr ng-repeat="item in itemDetail.details | filter: itemFilter" ng-class="{'text-danger': item.error == 'true'}">
+							<td>{{item.beaconId}}</td>
 							<td>{{item.profile}}</td>
 							<td>{{item.proximityUuid}}</td>
 							<td>{{item.major}}</td>
@@ -50,7 +54,7 @@
 							<td>{{item.interval}}</td>
 							<td>{{item.txPower}}</td>
 							<td>{{item.alias}}</td>
-							<td>{{item.error}}</td>
+							<!--<td>{{item.error}}</td>-->
 						</tr>
 					</table>
 				</div>

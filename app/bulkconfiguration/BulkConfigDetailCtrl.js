@@ -2,11 +2,24 @@
 
 angular.module('app.bulkconfig').controller('BulkConfigDetailCtrl', function ($scope, $interval, CalendarEvent, bulkConfigService,$state, $stateParams) {
 
+    $scope.filterBy = 'all';
+
     $scope.getDetail = function(){
         $scope.id = $stateParams.id;
         bulkConfigService.get($scope.id, function(data){
             $scope.itemDetail = data.data;
         });
+    };
+
+    $scope.itemFilter = function (item) {
+        if($scope.filterBy == 'all'){
+            return true;
+        }
+        return item.error == $scope.filterBy;
+    };
+
+    $scope.changeFilter = function (type) {
+        $scope.filterBy = type;
     };
 
     $scope.getDetail();
