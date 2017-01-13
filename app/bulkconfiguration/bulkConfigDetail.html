@@ -35,10 +35,11 @@
 							<th data-hide="phone,tablet">Interval</th>
 							<th data-hide="phone,tablet">TXPower</th>
 							<th data-hide="phone,tablet">Custom Name</th>
+							<th data-hide="phone,tablet">Error</th>
 						</tr>
 						</thead>
-						<tr ng-repeat="item in itemDetail.details">
-							<td>{{item.beaconId}}</td>
+						<tr ng-repeat="item in itemDetail.details" ng-class="{'danger': item.error == 'true'}">
+							<td>{{item.beaconId}} {{item.error == 'true'}}</td>
 							<td>{{item.profile}}</td>
 							<td>{{item.proximityUuid}}</td>
 							<td>{{item.major}}</td>
@@ -49,6 +50,7 @@
 							<td>{{item.interval}}</td>
 							<td>{{item.txPower}}</td>
 							<td>{{item.alias}}</td>
+							<td>{{item.error}}</td>
 						</tr>
 					</table>
 				</div>

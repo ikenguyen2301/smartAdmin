@@ -21,57 +21,70 @@ angular.module('app.bulkconfig').controller('BulkConfigFormCtrl', function ($sco
     }
 
     var validateBeacon = {
+      trim: function (value) {
+        return typeof value == 'string' ? value.trim() : value;
+      },
+      profile: function (value) {
+        return ['iBeacon', 'Eddystone'].indexOf(value) > -1;
+      },
       isInteger: function (value) {
         value = parseInt(value);
-        return Number.isInteger(value) ? value : null;
+        return Number.isInteger(value);
       },
       proximityUuid: function (value) {
-        if(!value){
-          return null;
-        }
-
-        value = value.trim();
-        if (/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(value)) {
-          return value;
-        }
-
-        return null;
+        return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(value);
       },
       namespaceId: function (value) {
-        if(!value){
-          return null;
-        }
-
-        value = value.trim();
-        if (/^[0-9a-fA-F]{20}$/.test(value)) {
-          return value;
-        }
-
-        return null;
+        return /^[0-9a-fA-F]{20}$/.test(value);
       },
       instanceId: function (value) {
-        if(!value){
-          return null;
-        }
-
-        value = value.trim();
-        if (/^[0-9a-fA-F]{9,16}$/.test(value)) {
-          return value;
-        }
-
-        return null;
+        return /^[0-9a-fA-F]{9,16}$/.test(value);
       },
       isHttpUrl: function (value) {
-        if(!value){
-          return null;
+        return /^http:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$/.test(value);
+      },
+      isItemError: function (item) {
+        //check data type
+        if(!validateBeacon.profile(item.profile)){
+          return true;
+        }
+        if(!validateBeacon.isInteger(item.major)){
+          return true;
+        }
+        if(!validateBeacon.isInteger(item.minor)){
+          return true;
+        }
+        if(!validateBeacon.isInteger(item.interval)){
+          return true;
+        }
+        if(!validateBeacon.isInteger(item.txPower)){
+          return true;
+        }
+        if(!validateBeacon.proximityUuid(item.proximityUuid)){
+          return true;
+        }
+        if(!validateBeacon.namespaceId(item.namespace)){
+          return true;
+        }
+        if(!validateBeacon.instanceId(item.instanceId)){
+          return true;
+        }
+        if(!validateBeacon.isHttpUrl(item.url)){
+          return true;
+        }
+        if(!item.alias){
+          return true;
         }
 
-        value = value.trim();
-        if (/^http:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$/.test(value)) {
-          return value;
-        }
+        //check required
+        var isError = false;
+        angular.forEach(item, function (value, key) {
+          if(!value){
+            isError = true
+          }
+        });
 
-        return null;
+        return isError;
       }
     };
 
@@ -85,27 +98,23 @@ angular.module('app.bulkconfig').controller('BulkConfigFormCtrl', function ($sco
 
           angular.forEach($scope.workbook, function(value, key) {
             var item = {
-              beaconId : value['Beacon ID'],
-              preset: '',
-              profile: value['Profile'],
-              major: validateBeacon.isInteger(value['Major']),
-              minor: validateBeacon.isInteger(value['Minor']),
-              interval: validateBeacon.isInteger(value['Interval']),
-              txPower: validateBeacon.isInteger(value['TX Power']),
-              proximityUuid: validateBeacon.proximityUuid(value['Proximity UUID']),
-              namespace: validateBeacon.namespaceId(value['Namspace ID']),
-              instanceId: validateBeacon.instanceId(value['Instance ID']),
-              url: validateBeacon.isHttpUrl(value['URL']),
-              alias: value['Custom Name']
+              beaconId : validateBeacon.trim(value['Beacon ID']),
+              profile: validateBeacon.trim(value['Profile']),
+              major: validateBeacon.trim(value['Major']),
+              minor: validateBeacon.trim(value['Minor']),
+              interval: validateBeacon.trim(value['Interval']),
+              txPower: validateBeacon.trim(value['TX Power']),
+              proximityUuid: validateBeacon.trim(value['Proximity UUID']),
+              namespace: validateBeacon.trim(value['Namspace ID']),
+              instanceId: validateBeacon.trim(value['Instance ID']),
+              url: validateBeacon.trim(value['URL']),
+              alias: validateBeacon.trim(value['Custom Name'])
             };
 
             if(beaconIds.indexOf(item.beaconId) == -1) {
                 beaconIds.push(item.beaconId);
-                if (item.profile == 'iBeacon' && item.beaconId && item.proximityUuid && item.major && item.minor && item.interval && item.txPower && item.alias) {
-                    $scope.itemDetail.details.push(item);
-                } else if (item.profile == 'Eddystone' && item.beaconId && item.namespace && item.instanceId && item.url && item.interval && item.txPower && item.alias) {
-                    $scope.itemDetail.details.push(item);
-                }
+                item.error = validateBeacon.isItemError(item).toString();
+                $scope.itemDetail.details.push(item);
             }
           });
 
