@@ -15,7 +15,7 @@
 		<p>Updated at: {{itemDetail.updatedAt | date:'yyyy-MM-dd HH:mm'}}</p>
 
 		<p class="text-right">
-			Filter: <a class="label label-default" ng-class="{'label-primary': filterBy == 'all'}" ng-click="changeFilter('all')">All items</a> <a class="label label-default" ng-class="{'label-primary': filterBy == 'true'}" ng-click="changeFilter('true')">Success</a>  <a class="label label-default" ng-class="{'label-primary': filterBy == 'false'}" ng-click="changeFilter('false')">Error</a>
+			Filter: <a class="label label-default" ng-class="{'label-primary': filterBy == 'all'}" ng-click="changeFilter('all')">All items</a> <a class="label label-default" ng-class="{'label-primary': filterBy == 'false'}" ng-click="changeFilter('true')">Success</a>  <a class="label label-default" ng-class="{'label-primary': filterBy == 'false'}" ng-click="changeFilter('true')">Error</a>
 		</p>
 		<div jarvis-widget id="standard-datatable-widget" data-widget-color="darken" data-widget-editbutton="false">
 			<header>
