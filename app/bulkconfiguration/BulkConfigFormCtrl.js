@@ -28,8 +28,8 @@ angular.module('app.bulkconfig').controller('BulkConfigFormCtrl', function ($sco
         return ['iBeacon', 'Eddystone'].indexOf(value) > -1;
       },
       isInteger: function (value) {
-        value = parseInt(value);
-        return Number.isInteger(value);
+        var n = Math.floor(Number(value));
+        return String(n) === value && n >= 0;
       },
       proximityUuid: function (value) {
         return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(value);
